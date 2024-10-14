@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "859455980881",
+    "project_id": "financial-planner-72109",
+    "storage_bucket": "financial-planner-72109.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:859455980881:android:a92c0f3f52149408903f70",
+        "android_client_info": {
+          "package_name": "me.salint.financialplanner"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "859455980881-dl15pgkmtqfkk8i86g5trvqiseaig7oo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCxA9Louij8gPQFHF4IzFXbzQr3i0NeSLA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "859455980881-dl15pgkmtqfkk8i86g5trvqiseaig7oo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
