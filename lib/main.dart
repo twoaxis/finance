@@ -39,6 +39,10 @@ class _MyAppState extends State<MyApp> {
             LiabilitiesPage(),
           ],
         ),
+        appBar: AppBar(
+          title: const Text("Financial Planner"),
+          backgroundColor: lightTheme.surfaceContainer,
+        ),
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           currentIndex: selected,
