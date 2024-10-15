@@ -1,10 +1,9 @@
-import 'package:financial_planner_mobile/pages/assets.dart';
-import 'package:financial_planner_mobile/pages/expenses.dart';
-import 'package:financial_planner_mobile/pages/income.dart';
-import 'package:financial_planner_mobile/pages/liabilities.dart';
+import 'package:financial_planner_mobile/ui/app/app.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:financial_planner_mobile/ui/onboarding/onboarding.dart';
 import 'package:financial_planner_mobile/util/theme.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -13,21 +12,32 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  runApp(const MyApp());
+  runApp(const FinancialPlanner());
 }
 
-class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+class FinancialPlanner extends StatefulWidget{
+  const FinancialPlanner({super.key});
 
   @override
-  State<MyApp> createState() => _MyAppState();
+  State<FinancialPlanner> createState() => _FinancialPlannerState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _FinancialPlannerState extends State<FinancialPlanner> {
 
-  int selected = 0;
+  bool loggedIn = false;
 
-  // This widget is the root of your application.
+  @override
+  void initState() {
+    super.initState();
+
+    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+
+      setState(() {
+        loggedIn = (user != null);
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -36,36 +46,7 @@ class _MyAppState extends State<MyApp> {
         colorScheme: lightTheme,
         useMaterial3: true,
       ),
-      home: Scaffold(
-        body: IndexedStack(
-          index: selected,
-          children: const [
-            IncomePage(),
-            ExpensesPage(),
-            AssetsPage(),
-            LiabilitiesPage(),
-          ],
-        ),
-        appBar: AppBar(
-          title: const Text("Financial Planner"),
-          backgroundColor: lightTheme.surfaceContainer,
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          currentIndex: selected,
-          items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.attach_money), label: "Income"),
-            BottomNavigationBarItem(icon: Icon(Icons.shopping_bag), label: "Expenses"),
-            BottomNavigationBarItem(icon: Icon(Icons.house), label: "Assets"),
-            BottomNavigationBarItem(icon: Icon(Icons.payment), label: "Liabilities")
-          ],
-          onTap: (index) {
-            setState(() {
-              selected = index;
-            });
-          },
-        ),
-      )
+      home: loggedIn ? const App() : const Onboarding()
     );
   }
 }
