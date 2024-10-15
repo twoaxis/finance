@@ -44,9 +44,11 @@ class _AppState extends State<App> {
                 await FirebaseAuth.instance.signOut();
               }
             },
+
             offset: const Offset(0, 50),
             itemBuilder: (BuildContext context) {
               return const [
+
                 PopupMenuItem(
                   value: 'Log out',
                   child: Text('Log out'),
