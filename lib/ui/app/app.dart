@@ -16,6 +16,12 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   int selected = 0;
 
+  final List<String>  list = [
+    'Income',
+    'Expenses',
+    'Assets',
+    'Liabilities'
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +35,7 @@ class _AppState extends State<App> {
         ],
       ),
       appBar: AppBar(
-        title: const Text("Financial Planner"),
+        title: Text(list[selected]),
         backgroundColor: lightTheme.surfaceContainer,
         actions: [
           PopupMenuButton(
@@ -38,9 +44,11 @@ class _AppState extends State<App> {
                 await FirebaseAuth.instance.signOut();
               }
             },
-            offset: Offset(0, 50),
+
+            offset: const Offset(0, 50),
             itemBuilder: (BuildContext context) {
-              return [
+              return const [
+
                 PopupMenuItem(
                   value: 'Log out',
                   child: Text('Log out'),
