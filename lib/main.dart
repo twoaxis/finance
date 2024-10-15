@@ -1,4 +1,6 @@
+import 'package:financial_planner_mobile/ui/app/app.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:financial_planner_mobile/ui/onboarding/onboarding.dart';
 import 'package:financial_planner_mobile/util/theme.dart';
 import 'package:flutter/material.dart';
@@ -13,10 +15,29 @@ void main() async {
   runApp(const FinancialPlanner());
 }
 
-class FinancialPlanner extends StatelessWidget{
+class FinancialPlanner extends StatefulWidget{
   const FinancialPlanner({super.key});
 
-  // This widget is the root of your application.
+  @override
+  State<FinancialPlanner> createState() => _FinancialPlannerState();
+}
+
+class _FinancialPlannerState extends State<FinancialPlanner> {
+
+  bool loggedIn = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+
+      setState(() {
+        loggedIn = (user != null);
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -25,7 +46,7 @@ class FinancialPlanner extends StatelessWidget{
         colorScheme: lightTheme,
         useMaterial3: true,
       ),
-      home: Onboarding()
+      home: loggedIn ? const App() : const Onboarding()
     );
   }
 }

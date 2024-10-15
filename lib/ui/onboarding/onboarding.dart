@@ -1,3 +1,4 @@
+import 'package:financial_planner_mobile/ui/onboarding/screens/login.dart';
 import 'package:financial_planner_mobile/ui/onboarding/screens/signup.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +12,7 @@ class Onboarding extends StatefulWidget {
 
 class _OnboardingState extends State<Onboarding> {
 
-  int page = 1;
+  int page = 0;
 
   void changePage(int x) {
     setState(() {
@@ -26,7 +27,7 @@ class _OnboardingState extends State<Onboarding> {
         child: IndexedStack(
           index: page,
           children: [
-            const Text("blah"),
+            LoginPage(changePage: changePage),
             SignupPage(changePage: changePage)
           ],
         )
