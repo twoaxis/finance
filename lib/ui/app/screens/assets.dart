@@ -20,24 +20,16 @@ class _AssetsPageState extends State<AssetsPage> {
   void initState() {
     super.initState();
 
-    getData();
-
-  }
-
-  Future<void> getData() async {
-    try {
-      var doc = await FirebaseFirestore.instance.collection("users").doc(FirebaseAuth.instance.currentUser?.uid).get();
-      final data = doc.data();
-
+    FirebaseFirestore.instance.collection("users").doc(FirebaseAuth.instance.currentUser?.uid).snapshots().listen((e) {
       setState(() {
-        assets = data?["assets"];
+        assets = e.data()?["assets"];
       });
-    }
-    on Exception catch (e) {
+    }, onError: (e) {
       setState(() {
         error = true;
       });
-    }
+    });
+
   }
 
   @override
@@ -111,13 +103,10 @@ class _AssetsPageState extends State<AssetsPage> {
                                             onPressed: () {
                                               Navigator.of(context).pop();
 
-                                              setState(() {
-                                                assets.removeAt(index);
-                                              });
 
                                               // TODO: Error handling.
                                               FirebaseFirestore.instance.collection("users").doc(FirebaseAuth.instance.currentUser?.uid).update({
-                                                "assets": assets
+                                                "assets": FieldValue.arrayRemove([assets[index]])
                                               });
                                             },
                                             child: const Text("Yes"),
@@ -128,11 +117,6 @@ class _AssetsPageState extends State<AssetsPage> {
                                 },
                                 icon: const Icon(Icons.delete)
                             ),
-          
-                            IconButton(
-                                onPressed: () {},
-                                icon: const Icon(Icons.edit)
-                            )
                           ],
                         ),
                       )

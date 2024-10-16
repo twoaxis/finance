@@ -6,6 +6,8 @@ import 'package:financial_planner_mobile/util/theme.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import 'widgets/assets/asset_action_button.dart';
+
 class App extends StatefulWidget {
   const App({super.key});
 
@@ -16,12 +18,20 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   int selected = 0;
 
-  final List<String>  list = [
+  final List<String> nameList = [
     'Income',
     'Expenses',
     'Assets',
     'Liabilities'
   ];
+
+  final List<Widget?> buttonList = [
+    null,
+    null,
+    const AssetActionButton(),
+    null
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,9 +45,11 @@ class _AppState extends State<App> {
         ],
       ),
       appBar: AppBar(
-        title: Text(list[selected]),
+        title: Text(nameList[selected]),
         backgroundColor: lightTheme.surfaceContainer,
         actions: [
+          if (buttonList[selected] != null)
+            buttonList[selected]!,
           PopupMenuButton(
             onSelected: (value) async {
               if (value == 'Log out') {
