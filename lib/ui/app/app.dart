@@ -45,7 +45,13 @@ class _AppState extends State<App> {
         ],
       ),
       appBar: AppBar(
-        title: Text(nameList[selected]),
+        title: Text(
+            nameList[selected],
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 30
+            )
+        ),
         backgroundColor: lightTheme.surfaceContainer,
         actions: [
           if (buttonList[selected] != null)
@@ -56,11 +62,10 @@ class _AppState extends State<App> {
                 await FirebaseAuth.instance.signOut();
               }
             },
-
+            surfaceTintColor: lightTheme.primary,
             offset: const Offset(0, 50),
             itemBuilder: (BuildContext context) {
               return const [
-
                 PopupMenuItem(
                   value: 'Log out',
                   child: Text('Log out'),
@@ -72,6 +77,7 @@ class _AppState extends State<App> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
+        backgroundColor: lightTheme.surfaceContainer,
         currentIndex: selected,
         items: const [
           BottomNavigationBarItem(
