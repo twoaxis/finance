@@ -2,6 +2,7 @@ import 'package:financial_planner_mobile/ui/app/screens/assets.dart';
 import 'package:financial_planner_mobile/ui/app/screens/expenses.dart';
 import 'package:financial_planner_mobile/ui/app/screens/income.dart';
 import 'package:financial_planner_mobile/ui/app/screens/liabilities.dart';
+import 'package:financial_planner_mobile/ui/app/widgets/liabilities/liabilities_action_button.dart';
 import 'package:financial_planner_mobile/util/theme.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +30,7 @@ class _AppState extends State<App> {
     null,
     null,
     const AssetActionButton(),
-    null
+    const LiabilitiesActionButton()
   ];
 
   @override
