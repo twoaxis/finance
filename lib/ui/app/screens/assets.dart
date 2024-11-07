@@ -48,10 +48,10 @@ class _AssetsPageState extends State<AssetsPage> {
                 child: Container(
                   padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                   decoration: BoxDecoration(
-                    color: lightTheme.surfaceContainer,
+                    color: darkTheme.surfaceContainer,
                     border: Border(
                         bottom: BorderSide(
-                            color: lightTheme.surfaceDim,
+                            color: darkTheme.surfaceDim,
                             width: 3
                         )
                     ),
@@ -75,7 +75,7 @@ class _AssetsPageState extends State<AssetsPage> {
                             child: Text(
                                 "\$${NumberFormat('#,##0').format(assets[index]["value"]).toString()}",
                                 style: TextStyle(
-                                    color: lightTheme.surfaceTint,
+                                    color: darkTheme.surfaceTint,
                                     fontSize: 15
                                 )
                             ),

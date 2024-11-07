@@ -43,7 +43,7 @@ class _FinancialPlannerState extends State<FinancialPlanner> {
     return MaterialApp(
       title: 'Financial Planner',
       theme: ThemeData(
-        colorScheme: lightTheme,
+        colorScheme: darkTheme,
         useMaterial3: true,
       ),
       home: loggedIn ? const App() : const Onboarding()

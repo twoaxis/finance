@@ -2,14 +2,14 @@
   "project_info": {
     "project_number": "859455980881",
     "project_id": "financial-planner-72109",
-    "storage_bucket": "financial-planner-72109.appspot.com"
+    "storage_bucket": "financial-planner-72109.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:859455980881:android:a92c0f3f52149408903f70",
+        "mobilesdk_app_id": "1:859455980881:android:5f5fa8e02fec6436903f70",
         "android_client_info": {
-          "package_name": "me.salint.financialplanner"
+          "package_name": "xyz.twoaxis.finance"
         }
       },
       "oauth_client": [
