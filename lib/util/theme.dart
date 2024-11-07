@@ -10,5 +10,5 @@ var darkTheme = const ColorScheme.dark(
   onSecondary: Colors.white,
   surface: Color.fromARGB(255, 20, 20, 20),
   surfaceContainer: Color.fromARGB(255, 30, 30, 30),
-
+  onSurfaceVariant: Colors.grey
 );

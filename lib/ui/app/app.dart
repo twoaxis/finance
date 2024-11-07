@@ -1,6 +1,7 @@
 import 'package:financial_planner_mobile/ui/app/screens/assets.dart';
 import 'package:financial_planner_mobile/ui/app/screens/expenses.dart';
 import 'package:financial_planner_mobile/ui/app/screens/income.dart';
+import 'package:financial_planner_mobile/ui/app/screens/info.dart';
 import 'package:financial_planner_mobile/ui/app/screens/liabilities.dart';
 import 'package:financial_planner_mobile/ui/app/widgets/income/income_action_button.dart';
 import 'package:financial_planner_mobile/ui/app/widgets/liabilities/liabilities_action_button.dart';
@@ -66,17 +67,27 @@ class _AppState extends State<App> {
             buttonList[selected]!,
           PopupMenuButton(
             onSelected: (value) async {
-              if (value == 'Log out') {
+              if (value == "logout") {
                 await FirebaseAuth.instance.signOut();
               }
+              else if (value == "info") {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const InfoPage())
+                );
+              }
             },
-            surfaceTintColor: darkTheme.primary,
+            color: darkTheme.surface,
             offset: const Offset(0, 50),
             itemBuilder: (BuildContext context) {
               return const [
                 PopupMenuItem(
-                  value: 'Log out',
+                  value: 'logout',
                   child: Text('Log out'),
+                ),
+                PopupMenuItem(
+                  value: 'info',
+                  child: Text('About'),
                 ),
               ];
             },
