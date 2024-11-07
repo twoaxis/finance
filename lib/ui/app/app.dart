@@ -34,18 +34,11 @@ class _AppState extends State<App> {
     const LiabilitiesActionButton()
   ];
 
-  final PageController _pageController = PageController();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: PageView(
-        controller: _pageController,
-        onPageChanged: (index) {
-          setState(() {
-            selected = index;
-          });
-        },
+      body: IndexedStack(
+        index: selected,
         children: const [
           IncomePage(),
           ExpensesPage(),
@@ -112,11 +105,6 @@ class _AppState extends State<App> {
           setState(() {
             selected = index;
           });
-          _pageController.animateToPage(
-            index,
-            duration: const Duration(milliseconds: 300),
-            curve: Curves.easeInOut,
-          );
         },
       ),
     );
