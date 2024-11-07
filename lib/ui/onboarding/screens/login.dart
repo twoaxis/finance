@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import '../../../util/theme.dart';
+
 class LoginPage extends StatefulWidget {
   final Function(int page) changePage;
 
@@ -11,7 +13,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-
   bool pending = false;
   String error = "";
 
@@ -20,7 +21,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return  Column(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -30,22 +31,18 @@ class _LoginPageState extends State<LoginPage> {
         ),
         const SizedBox(
           height: 20,
-
         ),
-        error.isNotEmpty ?
-        Text(
-          error,
-          style: const TextStyle(
-              color: Colors.red,
-              fontSize: 20
-          ),
-        )
-            :
-        const SizedBox(
-          height: 20,
-        ),
+        error.isNotEmpty
+            ? Text(
+                error,
+                style: const TextStyle(color: Colors.red, fontSize: 20),
+              )
+            : const SizedBox(
+                height: 20,
+              ),
         SizedBox(
-          width: MediaQuery.of(context).size.width * 0.7, // Set width to 90% of screen size
+          width: MediaQuery.of(context).size.width *
+              0.7, // Set width to 90% of screen size
           child: TextField(
             controller: emailController,
             enabled: !pending,
@@ -61,7 +58,8 @@ class _LoginPageState extends State<LoginPage> {
           height: 20,
         ),
         SizedBox(
-          width: MediaQuery.of(context).size.width * 0.7, // Set width to 90% of screen size
+          width: MediaQuery.of(context).size.width *
+              0.7, // Set width to 90% of screen size
           child: TextField(
               obscureText: true,
               controller: passwordController,
@@ -71,52 +69,59 @@ class _LoginPageState extends State<LoginPage> {
                 icon: Icon(Icons.password),
                 hintText: "⦁⦁⦁⦁⦁⦁⦁⦁⦁⦁⦁",
                 labelText: "Password",
-              )
-          ),
+              )),
         ),
         const SizedBox(
           height: 20,
         ),
-        ElevatedButton(onPressed: pending ? null : () async {
+        ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: darkTheme.primary,
+              foregroundColor: darkTheme.onPrimary
+            ),
+            onPressed: pending
+                ? null
+                : () async {
+                    setState(() {
+                      pending = true;
+                      error = "";
+                    });
 
-          setState(() {
-            pending = true;
-            error = "";
-          });
-
-          try {
-            if(emailController.text.isEmpty || passwordController.text.isEmpty) {
-              setState(() {
-                error = "Please fill all fields";
-              });
-            }
-            else {
-              await FirebaseAuth.instance.signInWithEmailAndPassword(
-                email: emailController.text,
-                password: passwordController.text,
-              );
-            }
-          }
-          on FirebaseAuthException catch (e) {
-            if (e.code == 'invalid-email' || e.code == 'invalid-credential' || e.code == 'user-not-found' || e.code == 'wrong-password')  {
-              setState(() {
-                error = "Invalid E-mail or password";
-              });
-            }
-
-          }
-          finally {
-
-            setState(() {
-              pending = false;
-            });
-          }
-
-        }, child: const Text("Login")),
-        TextButton(onPressed: pending ? null : () async {
-          widget.changePage(1);
-
-        }, child: const Text("Don't have an account?"))
+                    try {
+                      if (emailController.text.isEmpty ||
+                          passwordController.text.isEmpty) {
+                        setState(() {
+                          error = "Please fill all fields";
+                        });
+                      } else {
+                        await FirebaseAuth.instance.signInWithEmailAndPassword(
+                          email: emailController.text,
+                          password: passwordController.text,
+                        );
+                      }
+                    } on FirebaseAuthException catch (e) {
+                      if (e.code == 'invalid-email' ||
+                          e.code == 'invalid-credential' ||
+                          e.code == 'user-not-found' ||
+                          e.code == 'wrong-password') {
+                        setState(() {
+                          error = "Invalid E-mail or password";
+                        });
+                      }
+                    } finally {
+                      setState(() {
+                        pending = false;
+                      });
+                    }
+                  },
+            child: const Text("Login")),
+        TextButton(
+            onPressed: pending
+                ? null
+                : () async {
+                    widget.changePage(1);
+                  },
+            child: const Text("Don't have an account?"))
       ],
     );
   }

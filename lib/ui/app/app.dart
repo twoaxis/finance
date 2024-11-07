@@ -60,7 +60,7 @@ class _AppState extends State<App> {
               fontSize: 30
             )
         ),
-        backgroundColor: lightTheme.surfaceContainer,
+        backgroundColor: darkTheme.surfaceContainer,
         actions: [
           if (buttonList[selected] != null)
             buttonList[selected]!,
@@ -70,7 +70,7 @@ class _AppState extends State<App> {
                 await FirebaseAuth.instance.signOut();
               }
             },
-            surfaceTintColor: lightTheme.primary,
+            surfaceTintColor: darkTheme.primary,
             offset: const Offset(0, 50),
             itemBuilder: (BuildContext context) {
               return const [
@@ -85,7 +85,8 @@ class _AppState extends State<App> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        backgroundColor: lightTheme.surfaceContainer,
+        selectedItemColor: darkTheme.primary,
+        backgroundColor: darkTheme.surfaceContainer,
         currentIndex: selected,
         items: const [
           BottomNavigationBarItem(
