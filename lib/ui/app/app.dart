@@ -1,14 +1,14 @@
-import 'package:financial_planner_mobile/ui/app/screens/assets.dart';
-import 'package:financial_planner_mobile/ui/app/screens/expenses.dart';
-import 'package:financial_planner_mobile/ui/app/screens/income.dart';
-import 'package:financial_planner_mobile/ui/app/screens/info.dart';
-import 'package:financial_planner_mobile/ui/app/screens/liabilities.dart';
-import 'package:financial_planner_mobile/ui/app/widgets/income/income_action_button.dart';
-import 'package:financial_planner_mobile/ui/app/widgets/liabilities/liabilities_action_button.dart';
+import 'package:financial_planner_mobile/ui/app/assets/assets.dart';
+import 'package:financial_planner_mobile/ui/app/expenses/expenses.dart';
+import 'package:financial_planner_mobile/ui/app/income/income.dart';
+import 'package:financial_planner_mobile/ui/app/info/info.dart';
+import 'package:financial_planner_mobile/ui/app/liabilities/liabilities.dart';
+import 'package:financial_planner_mobile/ui/app/income/income_action_button.dart';
+import 'package:financial_planner_mobile/ui/app/liabilities/liabilities_action_button.dart';
 import 'package:financial_planner_mobile/util/theme.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'widgets/assets/asset_action_button.dart';
+import 'assets/asset_action_button.dart';
 
 class App extends StatefulWidget {
   const App({super.key});
