@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -123,6 +124,16 @@ class _SignupPageState extends State<SignupPage> {
                           email: emailController.text,
                           password: passwordController.text,
                         );
+
+                        await FirebaseFirestore.instance.collection("users").doc(credential.user!.uid).set(
+                            {
+                              "assets": [],
+                              "expenses": [],
+                              "income": [],
+                              "liabilities": [],
+                              "fixedExpenses": [],
+
+                            });
 
                         await credential.user?.sendEmailVerification();
                       }
