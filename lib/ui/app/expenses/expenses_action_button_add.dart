@@ -2,27 +2,22 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class ExpensesActionButton extends StatefulWidget {
-  const ExpensesActionButton({super.key});
+class ExpensesActionButtonAdd extends StatefulWidget {
+  const ExpensesActionButtonAdd({super.key});
 
   @override
-  State<ExpensesActionButton> createState() => _ExpensesActionButtonState();
+  State<ExpensesActionButtonAdd> createState() => _ExpensesActionButtonAddState();
 }
 
-class _ExpensesActionButtonState extends State<ExpensesActionButton> {
+class _ExpensesActionButtonAddState extends State<ExpensesActionButtonAdd> {
   bool pending = false;
   String error = "";
   TextEditingController nameController = TextEditingController();
   TextEditingController valueController = TextEditingController();
   bool isFixed = false;
 
-  late BuildContext currentContext;
-
   @override
   Widget build(BuildContext context) {
-    setState(() {
-      currentContext = context;
-    });
     return IconButton(
         onPressed: () {
           showDialog(
@@ -141,7 +136,7 @@ class _ExpensesActionButtonState extends State<ExpensesActionButton> {
                                       isFixed = false;
                                     });
 
-                                    Navigator.of(currentContext).pop();
+                                    Navigator.of(context).pop();
                                   }
                                 } on Exception catch (e) {
                                   setState(() {

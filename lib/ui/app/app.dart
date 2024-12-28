@@ -1,6 +1,7 @@
 import 'package:financial_planner_mobile/ui/app/assets/assets.dart';
 import 'package:financial_planner_mobile/ui/app/expenses/expenses.dart';
-import 'package:financial_planner_mobile/ui/app/expenses/expenses_action_button.dart';
+import 'package:financial_planner_mobile/ui/app/expenses/expenses_action_button_add.dart';
+import 'package:financial_planner_mobile/ui/app/expenses/expenses_action_button_options.dart';
 import 'package:financial_planner_mobile/ui/app/income/income.dart';
 import 'package:financial_planner_mobile/ui/app/info/info.dart';
 import 'package:financial_planner_mobile/ui/app/liabilities/liabilities.dart';
@@ -28,11 +29,11 @@ class _AppState extends State<App> {
     'Liabilities'
   ];
 
-  final List<Widget?> buttonList = [
-    const IncomeActionButton(),
-    const ExpensesActionButton(),
-    const AssetActionButton(),
-    const LiabilitiesActionButton()
+  final List<List<Widget>?> buttonList = [
+    [const IncomeActionButton()], // Income page buttons
+    [const ExpensesActionButtonAdd(), const ExpensesActionButtonOptions()], // Expenses page buttons
+    [const AssetActionButton()], // Assets page buttons
+    [const LiabilitiesActionButton()] // Liabilities page buttons
   ];
 
   @override
@@ -58,7 +59,7 @@ class _AppState extends State<App> {
         backgroundColor: darkTheme.surfaceContainer,
         actions: [
           if (buttonList[selected] != null)
-            buttonList[selected]!,
+            ...buttonList[selected]!,
           PopupMenuButton(
             onSelected: (value) async {
               if (value == "logout") {

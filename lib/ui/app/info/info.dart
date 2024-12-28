@@ -17,7 +17,7 @@ class InfoPage extends StatelessWidget {
             ListTile(
               title: Text("Version",
                   style: TextStyle(color: darkTheme.onSurfaceVariant)),
-              subtitle: Text("1.0.0-beta",
+              subtitle: Text("2.0.0-beta",
                   style: TextStyle(color: darkTheme.onSurfaceVariant)),
               leading: Icon(Icons.build, color: darkTheme.onSurfaceVariant),
               onTap: () {},
@@ -26,7 +26,7 @@ class InfoPage extends StatelessWidget {
             ListTile(
               title: Text("Build Number",
                   style: TextStyle(color: darkTheme.onSurfaceVariant)),
-              subtitle: Text("13",
+              subtitle: Text("14",
                   style: TextStyle(color: darkTheme.onSurfaceVariant)),
               leading: Icon(Icons.build, color: darkTheme.onSurfaceVariant),
               onTap: () {},

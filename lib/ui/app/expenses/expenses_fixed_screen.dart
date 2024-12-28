@@ -129,7 +129,7 @@ class _FixedExpensesScreenState extends State<FixedExpensesScreen> {
                                               child: const Text("Cancel"),
                                             ),
                                             TextButton(
-                                              onPressed: () {
+                                              onPressed: () async {
                                                 Navigator.of(context).pop();
 
                                                 FirebaseFirestore.instance
