@@ -1,3 +1,4 @@
+import 'package:financial_planner_mobile/ui/onboarding/screens/forgetpassword.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -121,7 +122,10 @@ class _LoginPageState extends State<LoginPage> {
                 : () async {
                     widget.changePage(1);
                   },
-            child: const Text("Don't have an account?"))
+            child: const Text("Don't have an account?")),
+        TextButton(onPressed: pending ? null : () async {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => ForgetPassword(),),);
+        }, child: const Text("Forgot your password"))
       ],
     );
   }
