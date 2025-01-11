@@ -1,8 +1,8 @@
-import 'package:financial_planner_mobile/ui/onboarding/screens/forgetpassword.dart';
-import 'package:flutter/material.dart';
+import 'package:financial_planner_mobile/ui/onboarding/screens/forget_password.dart';
+import 'package:financial_planner_mobile/util/theme.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
-import '../../../util/theme.dart';
 
 class LoginPage extends StatefulWidget {
   final Function(int page) changePage;
@@ -122,10 +122,18 @@ class _LoginPageState extends State<LoginPage> {
                 : () async {
                     widget.changePage(1);
                   },
-            child: const Text("Don't have an account?")),
+          child: const Text("Don't have an account?"),
+        ),
         TextButton(onPressed: pending ? null : () async {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => ForgetPassword(),),);
-        }, child: const Text("Forgot your password"))
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ForgetPassword(),
+                    ),
+                  );
+                },
+          child: const Text("Forgot your password"),
+        ),
       ],
     );
   }

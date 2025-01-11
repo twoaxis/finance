@@ -19,16 +19,6 @@ class _ForgetPasswordState extends State<ForgetPassword> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: Icon(Icons.arrow_back),
-          color: darkTheme.primary,
-          iconSize: 30,
-        ),
-      ),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(
@@ -45,7 +35,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                   fontSize: 30,
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               TextField(
                 controller: emailController,
                 enabled: !pending,
@@ -56,7 +46,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                   labelText: "E-mail",
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: darkTheme.primary,
@@ -89,7 +79,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                     );
                   }
                 },
-                child: Text(
+                child: const Text(
                   "Reset Password",
                 ),
               ),

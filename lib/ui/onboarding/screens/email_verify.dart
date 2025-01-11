@@ -7,28 +7,14 @@ class EmailVerify extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: Icon(
-            Icons.arrow_back,
-            size: 30,
-            color: darkTheme.primary,
-          ),
-        ),
-      ),
       body: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(
-              height: 80,
-            ),
             Image.asset(
               'asset/images/email.png',
             ),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
             Text(
@@ -39,7 +25,7 @@ class EmailVerify extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Text(
@@ -50,7 +36,7 @@ class EmailVerify extends StatelessWidget {
                 fontSize: 18,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
           ],
