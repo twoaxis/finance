@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
+import 'package:financial_planner_mobile/util/theme.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
-import '../../../util/theme.dart';
+
 
 class SignupPage extends StatefulWidget {
   final Function(int page) changePage;
@@ -153,14 +154,16 @@ class _SignupPageState extends State<SignupPage> {
                       });
                     }
                   },
-            child: const Text("Sign up")),
+          child: const Text("Sign up"),
+        ),
         TextButton(
             onPressed: pending
                 ? null
                 : () async {
                     widget.changePage(0);
                   },
-            child: const Text("Already have an account?"))
+          child: const Text("Already have an account?"),
+        ),
       ],
     );
   }

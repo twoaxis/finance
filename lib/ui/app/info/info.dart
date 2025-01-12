@@ -9,7 +9,8 @@ class InfoPage extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: const Text("About",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30)),
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+          ),
           backgroundColor: darkTheme.surfaceContainer,
         ),
         body: ListView(
@@ -17,7 +18,7 @@ class InfoPage extends StatelessWidget {
             ListTile(
               title: Text("Version",
                   style: TextStyle(color: darkTheme.onSurfaceVariant)),
-              subtitle: Text("2.0.0-beta",
+              subtitle: Text("2.1.0-beta",
                   style: TextStyle(color: darkTheme.onSurfaceVariant)),
               leading: Icon(Icons.build, color: darkTheme.onSurfaceVariant),
               onTap: () {},
@@ -26,7 +27,7 @@ class InfoPage extends StatelessWidget {
             ListTile(
               title: Text("Build Number",
                   style: TextStyle(color: darkTheme.onSurfaceVariant)),
-              subtitle: Text("14",
+              subtitle: Text("15",
                   style: TextStyle(color: darkTheme.onSurfaceVariant)),
               leading: Icon(Icons.build, color: darkTheme.onSurfaceVariant),
               onTap: () {},
