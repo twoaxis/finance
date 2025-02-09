@@ -41,6 +41,7 @@ class _FinancialPlannerState extends State<FinancialPlanner> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Financial Planner',
       theme: ThemeData(
         colorScheme: darkTheme,

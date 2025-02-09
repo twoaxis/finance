@@ -23,18 +23,17 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   int selected = 0;
 
-  final List<String> nameList = [
-    'Income',
-    'Expenses',
-    'Assets',
-    'Liabilities'
-  ];
+  final List<String> nameList = ['Income', 'Expenses', 'Assets', 'Liabilities'];
 
   final List<List<Widget>?> buttonList = [
-    [const IncomeActionButton()], // Income page buttons
-    [const ExpensesActionButtonAdd(), const ExpensesActionButtonOptions()], // Expenses page buttons
-    [const AssetActionButton()], // Assets page buttons
-    [const LiabilitiesActionButton()] // Liabilities page buttons
+    [const IncomeActionButton()],
+    // Income page buttons
+    [const ExpensesActionButtonAdd(), const ExpensesActionButtonOptions()],
+    // Expenses page buttons
+    [const AssetActionButton()],
+    // Assets page buttons
+    [const LiabilitiesActionButton()]
+    // Liabilities page buttons
   ];
 
   @override
@@ -49,33 +48,118 @@ class _AppState extends State<App> {
           LiabilitiesPage(),
         ],
       ),
+      drawer: Drawer(
+          child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Container(
+            height: 150,
+            padding: EdgeInsets.all(24),
+            decoration: BoxDecoration(color: darkTheme.surfaceContainer),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 50,
+                ),
+                Text(
+                  "Logged in as:",
+                  style: TextStyle(fontSize: 20),
+                ),
+                Text(FirebaseAuth.instance.currentUser!.email!)
+              ],
+            ),
+          ),
+          Expanded(
+            child: ListView(
+              children: [
+                ListTile(
+                  title: Text("Income"),
+                  leading: Icon(Icons.attach_money,
+                      color: darkTheme.onSurfaceVariant),
+                  onTap: () {
+                    setState(() {
+                      selected = 0;
+                    });
+                    Navigator.pop(context);
+                  },
+                ),
+                ListTile(
+                  title: Text("Expenses"),
+                  leading: Icon(Icons.shopping_bag,
+                      color: darkTheme.onSurfaceVariant),
+                  onTap: () {
+                    setState(() {
+                      selected = 1;
+                    });
+                    Navigator.pop(context);
+                  },
+                ),
+                ListTile(
+                  title: Text("Income"),
+                  leading: Icon(Icons.house, color: darkTheme.onSurfaceVariant),
+                  onTap: () {
+                    setState(() {
+                      selected = 2;
+                    });
+                    Navigator.pop(context);
+                  },
+                ),
+                ListTile(
+                  title: Text("Liabilities"),
+                  leading:
+                      Icon(Icons.payment, color: darkTheme.onSurfaceVariant),
+                  onTap: () {
+                    setState(() {
+                      selected = 3;
+                    });
+                    Navigator.pop(context);
+                  },
+                )
+              ],
+            ),
+          ),
+          ListTile(
+            title: Text("Settings"),
+            leading: Icon(Icons.settings, color: darkTheme.onSurfaceVariant),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const SettingsPage(),
+                ),
+              );
+            },
+          ),
+          ListTile(
+            title: Text(
+              "Log out",
+              style: const TextStyle(color: Colors.red),
+            ),
+            leading: Icon(Icons.logout, color: Colors.red),
+            onTap: () async {
+              await FirebaseAuth.instance.signOut();
+            },
+          ),
+          SizedBox(
+            height: 50,
+          )
+        ],
+      )),
       appBar: AppBar(
-        title: Text(
-            nameList[selected],
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 30
-            )
-        ),
+        title: Text(nameList[selected],
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 30)),
         backgroundColor: darkTheme.surfaceContainer,
         actions: [
-          if (buttonList[selected] != null)
-            ...buttonList[selected]!,
+          if (buttonList[selected] != null) ...buttonList[selected]!,
           PopupMenuButton(
             onSelected: (value) async {
-              if (value == "settings") {
+              if (value == "info") {
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const SettingsPage())
-                );
-              }
-              if (value == "logout") {
-                await FirebaseAuth.instance.signOut();
-              }
-              else if (value == "info") {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const InfoPage())
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const InfoPage(),
+                  ),
                 );
               }
             },
@@ -84,14 +168,6 @@ class _AppState extends State<App> {
             itemBuilder: (BuildContext context) {
               return const [
                 PopupMenuItem(
-                  value: 'settings',
-                  child: Text('Settings'),
-                ),
-                PopupMenuItem(
-                  value: 'logout',
-                  child: Text('Log out'),
-                ),
-                PopupMenuItem(
                   value: 'info',
                   child: Text('About'),
                 ),
@@ -99,26 +175,6 @@ class _AppState extends State<App> {
             },
           ),
         ],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        selectedItemColor: darkTheme.primary,
-        backgroundColor: darkTheme.surfaceContainer,
-        currentIndex: selected,
-        items: const [
-          BottomNavigationBarItem(
-              icon: Icon(Icons.attach_money), label: "Income"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.shopping_bag), label: "Expenses"),
-          BottomNavigationBarItem(icon: Icon(Icons.house), label: "Assets"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.payment), label: "Liabilities")
-        ],
-        onTap: (index) {
-          setState(() {
-            selected = index;
-          });
-        },
       ),
     );
   }
