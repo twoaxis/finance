@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:859455980881:android:5f5fa8e02fec6436903f70",
+        "mobilesdk_app_id": "1:859455980881:android:8f21d0626a1810ac903f70",
         "android_client_info": {
-          "package_name": "xyz.twoaxis.finance"
+          "package_name": "org.twoaxis.finance"
         }
       },
       "oauth_client": [

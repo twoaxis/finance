@@ -54,7 +54,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyCxA9Louij8gPQFHF4IzFXbzQr3i0NeSLA',
-    appId: '1:859455980881:android:5f5fa8e02fec6436903f70',
+    appId: '1:859455980881:android:8f21d0626a1810ac903f70',
     messagingSenderId: '859455980881',
     projectId: 'financial-planner-72109',
     storageBucket: 'financial-planner-72109.firebasestorage.app',

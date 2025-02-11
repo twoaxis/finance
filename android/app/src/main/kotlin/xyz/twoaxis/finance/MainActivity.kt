@@ -1,4 +1,4 @@
-package xyz.twoaxis.finance
+package org.twoaxis.finance
 
 import io.flutter.embedding.android.FlutterActivity
 
