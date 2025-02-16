@@ -106,28 +106,24 @@ class _OnboardingState extends State<Onboarding> {
 
                   await launchUrl(uri, mode: LaunchMode.externalApplication);
                 },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text.rich(
+                child: Text.rich(
+                  TextSpan(
+                    text: "By using our app, you're subject to our ",
+                    // Normal text
+                    children: [
                       TextSpan(
-                        text: "By using our app, you're subject to our ",
-                        // Normal text
-                        children: [
-                          TextSpan(
-                            text: "Privacy Policy", // Underlined part
-                            style: TextStyle(
-                              decoration: TextDecoration.underline,
-                              decorationColor: Color(0x66FFFFFF),
-                              decorationThickness: 2,
-                            ),
-                          ),
-                          TextSpan(text: ".")
-                        ],
+                        text: "Privacy Policy", // Underlined part
+                        style: TextStyle(
+                          decoration: TextDecoration.underline,
+                          decorationColor: Color(0x66FFFFFF),
+                          decorationThickness: 2,
+                        ),
                       ),
-                      style: TextStyle(color: Color(0x66FFFFFF)),
-                    )
-                  ],
+                      TextSpan(text: ".")
+                    ],
+                  ),
+                  style: TextStyle(color: Color(0x66FFFFFF)),
+                  textAlign: TextAlign.center,
                 ),
               ),
               SizedBox(
