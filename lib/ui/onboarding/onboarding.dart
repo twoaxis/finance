@@ -1,7 +1,6 @@
 import 'package:financial_planner_mobile/ui/onboarding/screens/login.dart';
 import 'package:financial_planner_mobile/ui/onboarding/screens/signup.dart';
 import 'package:financial_planner_mobile/util/theme.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class Onboarding extends StatefulWidget {
@@ -28,9 +27,9 @@ class _OnboardingState extends State<Onboarding> {
             height: double.infinity,
             decoration: BoxDecoration(
                 image: DecorationImage(
-              image: AssetImage("asset/images/onboarding.jpg"),
+              image: AssetImage("asset/images/onboarding.png"),
               fit: BoxFit.cover,
-                  alignment: Alignment(0.4, 0)
+                  alignment: Alignment.center
             )),
             child: Container(
               padding: EdgeInsets.all(24),
