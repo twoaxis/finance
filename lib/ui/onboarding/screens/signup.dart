@@ -137,8 +137,10 @@ class _SignupPageState extends State<SignupPage> {
                           });
 
                           await credential.user?.sendEmailVerification();
-                          // ignore: use_build_context_synchronously
-                          Navigator.pop(context);
+
+                          if (context.mounted) {
+                            Navigator.pop(context);
+                          }
                         }
                       } on FirebaseAuthException catch (e) {
                         if (e.code == 'weak-password') {
