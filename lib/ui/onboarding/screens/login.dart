@@ -95,10 +95,14 @@ class _LoginPageState extends State<LoginPage> {
                             error = "Please fill all fields";
                           });
                         } else {
-                          await FirebaseAuth.instance.signInWithEmailAndPassword(
+                          await FirebaseAuth.instance
+                              .signInWithEmailAndPassword(
                             email: emailController.text,
                             password: passwordController.text,
                           );
+                          if(context.mounted) {
+                            Navigator.pop(context);
+                          }
                         }
                       } on FirebaseAuthException catch (e) {
                         if (e.code == 'invalid-email' ||

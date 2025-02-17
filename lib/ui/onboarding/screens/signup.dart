@@ -3,8 +3,6 @@ import 'package:financial_planner_mobile/util/theme.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-
-
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
 
@@ -97,65 +95,69 @@ class _SignupPageState extends State<SignupPage> {
               height: 20,
             ),
             ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: darkTheme.primary,
-                    foregroundColor: darkTheme.onPrimary
-                ),
-                onPressed: pending
-                    ? null
-                    : () async {
-                        setState(() {
-                          pending = true;
-                          error = "";
-                        });
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: darkTheme.primary,
+                  foregroundColor: darkTheme.onPrimary),
+              onPressed: pending
+                  ? null
+                  : () async {
+                      setState(() {
+                        pending = true;
+                        error = "";
+                      });
 
-                        try {
-                          if (emailController.text.isEmpty ||
-                              passwordController.text.isEmpty ||
-                              repeatPasswordController.text.isEmpty) {
-                            setState(() {
-                              error = "Please fill all fields";
-                            });
-                          } else if (passwordController.text !=
-                              repeatPasswordController.text) {
-                            setState(() {
-                              error = "The passwords don't match";
-                            });
-                          } else {
-                            final credential = await FirebaseAuth.instance
-                                .createUserWithEmailAndPassword(
-                              email: emailController.text,
-                              password: passwordController.text,
-                            );
-
-                            await FirebaseFirestore.instance.collection("users").doc(credential.user!.uid).set(
-                                {
-                                  "assets": [],
-                                  "expenses": [],
-                                  "income": [],
-                                  "liabilities": [],
-                                  "fixedExpenses": [],
-
-                                });
-
-                            await credential.user?.sendEmailVerification();
-                          }
-                        } on FirebaseAuthException catch (e) {
-                          if (e.code == 'weak-password') {
-                            setState(() {
-                              error = "Your password is too weak";
-                            });
-                          } else if (e.code == 'email-already-in-use') {
-                            setState(() {
-                              error = "E-mail is already in use";
-                            });
-                          }
-                        } finally {
+                      try {
+                        if (emailController.text.isEmpty ||
+                            passwordController.text.isEmpty ||
+                            repeatPasswordController.text.isEmpty) {
                           setState(() {
-                            pending = false;
+                            error = "Please fill all fields";
+                          });
+                        } else if (passwordController.text !=
+                            repeatPasswordController.text) {
+                          setState(() {
+                            error = "The passwords don't match";
+                          });
+                        } else {
+                          final credential = await FirebaseAuth.instance
+                              .createUserWithEmailAndPassword(
+                            email: emailController.text,
+                            password: passwordController.text,
+                          );
+
+                          await FirebaseFirestore.instance
+                              .collection("users")
+                              .doc(credential.user!.uid)
+                              .set({
+                            "assets": [],
+                            "expenses": [],
+                            "income": [],
+                            "liabilities": [],
+                            "fixedExpenses": [],
+                          });
+
+                          await credential.user?.sendEmailVerification();
+
+                          if (context.mounted) {
+                            Navigator.pop(context);
+                          }
+                        }
+                      } on FirebaseAuthException catch (e) {
+                        if (e.code == 'weak-password') {
+                          setState(() {
+                            error = "Your password is too weak";
+                          });
+                        } else if (e.code == 'email-already-in-use') {
+                          setState(() {
+                            error = "E-mail is already in use";
                           });
                         }
-                      },
+                      } finally {
+                        setState(() {
+                          pending = false;
+                        });
+                      }
+                    },
               child: const Text("Sign up"),
             ),
           ],
