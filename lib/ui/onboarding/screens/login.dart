@@ -99,6 +99,8 @@ class _LoginPageState extends State<LoginPage> {
                             email: emailController.text,
                             password: passwordController.text,
                           );
+                          // ignore: use_build_context_synchronously
+                          Navigator.pop(context);
                         }
                       } on FirebaseAuthException catch (e) {
                         if (e.code == 'invalid-email' ||
