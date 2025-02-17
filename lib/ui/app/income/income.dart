@@ -28,9 +28,11 @@ class _IncomePageState extends State<IncomePage> {
         income = e.data()?["income"];
       });
     }, onError: (e) {
-      setState(() {
-        error = true;
-      });
+      if (mounted) {
+        setState(() {
+          error = true;
+        });
+      }
     });
   }
 

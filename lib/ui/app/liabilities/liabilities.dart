@@ -32,9 +32,11 @@ class _LiabilitiesPageState extends State<LiabilitiesPage> {
         liabilities = e.data()?["liabilities"];
       });
     }, onError: (e) {
-      setState(() {
-        error = true;
-      });
+       if (mounted) {
+        setState(() {
+          error = true;
+        });
+      }
     });
   }
 

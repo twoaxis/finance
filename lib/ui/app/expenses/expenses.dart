@@ -32,9 +32,11 @@ class _ExpensesPageState extends State<ExpensesPage> {
         oneTimeExpenses = e.data()?["expenses"];
       });
     }, onError: (e) {
-      setState(() {
-        error = true;
-      });
+       if (mounted) {
+        setState(() {
+          error = true;
+        });
+      }
     });
   }
 

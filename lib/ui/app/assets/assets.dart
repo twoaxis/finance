@@ -28,9 +28,11 @@ class _AssetsPageState extends State<AssetsPage> {
         assets = e.data()?["assets"];
       });
     }, onError: (e) {
-      setState(() {
-        error = true;
-      });
+       if (mounted) {
+        setState(() {
+          error = true;
+        });
+      }
     });
   }
 
