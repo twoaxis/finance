@@ -13,7 +13,6 @@ class ExpensesPage extends StatefulWidget {
 }
 
 class _ExpensesPageState extends State<ExpensesPage> {
-
   List<dynamic> oneTimeExpenses = [];
   List<dynamic> fixedExpenses = [];
   bool error = false;
@@ -27,14 +26,18 @@ class _ExpensesPageState extends State<ExpensesPage> {
         .doc(FirebaseAuth.instance.currentUser?.uid)
         .snapshots()
         .listen((e) {
-      setState(() {
-        fixedExpenses = e.data()?["fixedExpenses"];
-        oneTimeExpenses = e.data()?["expenses"];
-      });
+      if (mounted) {
+        setState(() {
+          fixedExpenses = e.data()?["fixedExpenses"];
+          oneTimeExpenses = e.data()?["expenses"];
+        });
+      }
     }, onError: (e) {
-      setState(() {
-        error = true;
-      });
+      if (mounted) {
+        setState(() {
+          error = true;
+        });
+      }
     });
   }
 
@@ -55,10 +58,10 @@ class _ExpensesPageState extends State<ExpensesPage> {
             ),
             Expanded(
                 child: TabBarView(
-                children: [
-                  OneTimeExpensesScreen(expenses: oneTimeExpenses),
-                  FixedExpensesScreen(expenses: fixedExpenses),
-                ],
+              children: [
+                OneTimeExpensesScreen(expenses: oneTimeExpenses),
+                FixedExpensesScreen(expenses: fixedExpenses),
+              ],
             )),
           ],
         ));
