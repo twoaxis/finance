@@ -53,7 +53,6 @@ class _AppState extends State<App> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Container(
-            height: 150,
             padding: EdgeInsets.all(24),
             decoration: BoxDecoration(color: darkTheme.surfaceContainer),
             child: Column(
@@ -71,7 +70,7 @@ class _AppState extends State<App> {
             ),
           ),
           Expanded(
-            child: ListView(
+            child: Column(
               children: [
                 ListTile(
                   title: Text("Income"),
