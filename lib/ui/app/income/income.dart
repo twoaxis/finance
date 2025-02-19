@@ -24,13 +24,17 @@ class _IncomePageState extends State<IncomePage> {
         .doc(FirebaseAuth.instance.currentUser?.uid)
         .snapshots()
         .listen((e) {
-      setState(() {
-        income = e.data()?["income"];
-      });
+      if (mounted) {
+        setState(() {
+          income = e.data()?["income"];
+        });
+      }
     }, onError: (e) {
-      setState(() {
-        error = true;
-      });
+      if (mounted) {
+        setState(() {
+          error = true;
+        });
+      }
     });
   }
 

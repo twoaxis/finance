@@ -24,13 +24,17 @@ class _AssetsPageState extends State<AssetsPage> {
         .doc(FirebaseAuth.instance.currentUser?.uid)
         .snapshots()
         .listen((e) {
-      setState(() {
-        assets = e.data()?["assets"];
-      });
+      if (mounted) {
+        setState(() {
+          assets = e.data()?["assets"];
+        });
+      }
     }, onError: (e) {
-      setState(() {
-        error = true;
-      });
+      if (mounted) {
+        setState(() {
+          error = true;
+        });
+      }
     });
   }
 

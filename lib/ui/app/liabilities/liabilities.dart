@@ -28,13 +28,17 @@ class _LiabilitiesPageState extends State<LiabilitiesPage> {
         .doc(FirebaseAuth.instance.currentUser?.uid)
         .snapshots()
         .listen((e) {
-      setState(() {
-        liabilities = e.data()?["liabilities"];
-      });
+      if (mounted) {
+        setState(() {
+          liabilities = e.data()?["liabilities"];
+        });
+      }
     }, onError: (e) {
-      setState(() {
-        error = true;
-      });
+      if (mounted) {
+        setState(() {
+          error = true;
+        });
+      }
     });
   }
 
