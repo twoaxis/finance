@@ -96,7 +96,7 @@ class _AppState extends State<App> {
                   },
                 ),
                 ListTile(
-                  title: Text("Income"),
+                  title: Text("Assets"),
                   leading: Icon(Icons.house, color: darkTheme.onSurfaceVariant),
                   onTap: () {
                     setState(() {
