@@ -6,7 +6,8 @@ class ExpensesActionButtonAdd extends StatefulWidget {
   const ExpensesActionButtonAdd({super.key});
 
   @override
-  State<ExpensesActionButtonAdd> createState() => _ExpensesActionButtonAddState();
+  State<ExpensesActionButtonAdd> createState() =>
+      _ExpensesActionButtonAddState();
 }
 
 class _ExpensesActionButtonAddState extends State<ExpensesActionButtonAdd> {
@@ -14,7 +15,26 @@ class _ExpensesActionButtonAddState extends State<ExpensesActionButtonAdd> {
   String error = "";
   TextEditingController nameController = TextEditingController();
   TextEditingController valueController = TextEditingController();
+  TextEditingController dateController = TextEditingController();
   bool isFixed = false;
+  DateTime? dateTime;
+
+  void _setDate(BuildContext context) async {
+    DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2100),
+    );
+
+    if (picked != null) {
+      setState(() {
+        dateController.text =
+            "${picked.year}-${picked.month.toString().padLeft(2, '0')}-${picked.day.toString().padLeft(2, '0')}";
+        dateTime = picked;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +86,15 @@ class _ExpensesActionButtonAddState extends State<ExpensesActionButtonAdd> {
                             decoration: const InputDecoration(
                               hintText: "200",
                               labelText: "Value",
-                            ))
+                            )),
+                        if(!isFixed) TextField(
+                          controller: dateController,
+                          readOnly: true,
+                          decoration: const InputDecoration(
+                            labelText: "Date",
+                          ),
+                          onTap: () => _setDate(context),
+                        )
                       ],
                     ),
                     actions: [
@@ -78,6 +106,7 @@ class _ExpensesActionButtonAddState extends State<ExpensesActionButtonAdd> {
 
                                 nameController.clear();
                                 valueController.clear();
+                                dateController.clear();
                               },
                         child: const Text("Cancel"),
                       ),
@@ -96,7 +125,6 @@ class _ExpensesActionButtonAddState extends State<ExpensesActionButtonAdd> {
                                       error = "Please fill all fields";
                                     });
                                   } else {
-                                    final currentContext = context;
 
                                     if (isFixed) {
                                       await FirebaseFirestore.instance
@@ -113,18 +141,18 @@ class _ExpensesActionButtonAddState extends State<ExpensesActionButtonAdd> {
                                           }
                                         ])
                                       });
-                                    }
-                                    else {
+                                    } else {
                                       await FirebaseFirestore.instance
                                           .collection("users")
                                           .doc(FirebaseAuth
-                                          .instance.currentUser?.uid)
+                                              .instance.currentUser?.uid)
                                           .update({
                                         "expenses": FieldValue.arrayUnion([
                                           {
                                             "name": nameController.text,
                                             "value":
-                                            int.parse(valueController.text),
+                                                int.parse(valueController.text),
+                                            "date": dateTime
                                           }
                                         ])
                                       });
@@ -135,10 +163,9 @@ class _ExpensesActionButtonAddState extends State<ExpensesActionButtonAdd> {
                                     setState(() {
                                       isFixed = false;
                                     });
-
-                                    Navigator.of(context).pop();
+                                    if(context.mounted) Navigator.of(context).pop();
                                   }
-                                } on Exception catch (e) {
+                                } on Exception {
                                   setState(() {
                                     error = "An error has occurred";
                                   });
