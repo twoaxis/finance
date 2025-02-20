@@ -31,8 +31,25 @@ class _OneTimeExpensesScreenState extends State<OneTimeExpensesScreen> {
                   children: [
                     Expanded(
                       flex: 2,
-                      child: Text(widget.expenses[index]["name"],
-                          style: const TextStyle(fontSize: 15)),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(widget.expenses[index]["name"],
+                              style: const TextStyle(
+                                fontSize: 15,
+                              )),
+                          Text(
+                              widget.expenses[index]["date"]
+                                  .toDate()
+                                  .toString()
+                                  .split(" ")[0]
+                                  .toString(),
+                              style: TextStyle(
+                                fontSize: 13,
+                                color: darkTheme.primary
+                              )),
+                        ],
+                      ),
                     ),
                     Expanded(
                         flex: 1,
@@ -40,8 +57,7 @@ class _OneTimeExpensesScreenState extends State<OneTimeExpensesScreen> {
                           child: Text(
                               "\$${NumberFormat('#,##0').format(widget.expenses[index]["value"]).toString()}",
                               style: TextStyle(
-                                  color: darkTheme.primary,
-                                  fontSize: 15)),
+                                  color: darkTheme.primary, fontSize: 15)),
                         )),
                     Expanded(
                       flex: 1,
