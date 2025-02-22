@@ -58,14 +58,17 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                     await FirebaseAuth.instance
                         .sendPasswordResetEmail(email: emailController.text);
 
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const EmailVerify(),
-                      ),
-                    );
+                    if (context.mounted) {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const EmailVerify(),
+                        ),
+                      );
+                    }
                   } catch (e) {
-                    showDialog(
+                    if(context.mounted) {
+                      showDialog(
                       context: context,
                       builder: (context) => AlertDialog(
                         title: Text(
@@ -78,6 +81,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                         ),
                       ),
                     );
+                    }
                   }
                 },
                 child: const Text(

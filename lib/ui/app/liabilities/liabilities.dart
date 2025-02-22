@@ -135,8 +135,6 @@ class _LiabilitiesPageState extends State<LiabilitiesPage> {
                                                               "Please fill the field";
                                                         });
                                                       } else {
-                                                        final currentContext =
-                                                            context;
 
                                                         liabilities[index]
                                                                 ["value"] -=
@@ -158,9 +156,7 @@ class _LiabilitiesPageState extends State<LiabilitiesPage> {
 
                                                         valueController.clear();
 
-                                                        Navigator.of(
-                                                                currentContext)
-                                                            .pop();
+                                                        if(context.mounted) Navigator.of(context).pop();
                                                       }
                                                     } on Exception {
                                                       setState(() {

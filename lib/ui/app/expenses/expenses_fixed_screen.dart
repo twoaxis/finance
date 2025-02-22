@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -167,7 +166,7 @@ class _FixedExpensesScreenState extends State<FixedExpensesScreen> {
                   ),
                 ),
                 Text(
-                  "\$${NumberFormat('#,##0').format(widget.expenses.fold(0, (sum, expense) => expense['paid'] ? sum + expense['value'] as int : sum))}",
+                  "\$${NumberFormat('#,##0').format(widget.expenses.fold(0, (int sum, expense) => expense['paid'] ? sum + expense['value'] as int : sum))}",
                   style: TextStyle(
                     color: darkTheme.onPrimary,
                     fontSize: 20,

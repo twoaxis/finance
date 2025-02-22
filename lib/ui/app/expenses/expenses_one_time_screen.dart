@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -132,7 +131,7 @@ class _OneTimeExpensesScreenState extends State<OneTimeExpensesScreen> {
                   ),
                 ),
                 Text(
-                  "\$${NumberFormat('#,##0').format(widget.expenses.fold(0, (sum, expense) => sum + expense['value'] as int))}",
+                  "\$${NumberFormat('#,##0').format(widget.expenses.fold(0, (int sum, expense) => sum + expense['value'] as int))}",
                   style: TextStyle(
                     color: darkTheme.onPrimary,
                     fontSize: 20,
