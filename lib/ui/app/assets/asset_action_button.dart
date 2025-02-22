@@ -14,13 +14,9 @@ class _AssetActionButtonState extends State<AssetActionButton> {
   String error = "";
   TextEditingController nameController = TextEditingController();
   TextEditingController valueController = TextEditingController();
-  late BuildContext currentContext;
 
   @override
   Widget build(BuildContext context) {
-    setState(() {
-      currentContext = context;
-    });
     return IconButton(
         onPressed: () {
           showDialog(
@@ -84,8 +80,6 @@ class _AssetActionButtonState extends State<AssetActionButton> {
                                     error = "Please fill all fields";
                                   });
                                 } else {
-                                  final currentContext = context;
-
                                   await FirebaseFirestore.instance
                                       .collection("users")
                                       .doc(FirebaseAuth
@@ -102,9 +96,9 @@ class _AssetActionButtonState extends State<AssetActionButton> {
                                   nameController.clear();
                                   valueController.clear();
 
-                                  Navigator.of(currentContext).pop();
+                                  if(context.mounted) Navigator.of(context).pop();
                                 }
-                              } on Exception catch (e) {
+                              } on Exception {
                                 setState(() {
                                   error = "An error has occurred";
                                 });
