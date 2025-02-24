@@ -7,6 +7,8 @@ import 'package:financial_planner_mobile/ui/app/info/info.dart';
 import 'package:financial_planner_mobile/ui/app/liabilities/liabilities.dart';
 import 'package:financial_planner_mobile/ui/app/income/income_action_button.dart';
 import 'package:financial_planner_mobile/ui/app/liabilities/liabilities_action_button.dart';
+import 'package:financial_planner_mobile/ui/app/receivables/receivables.dart';
+import 'package:financial_planner_mobile/ui/app/receivables/receivables_action_button.dart';
 import 'package:financial_planner_mobile/ui/app/settings/settings.dart';
 import 'package:financial_planner_mobile/util/theme.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -23,17 +25,20 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   int selected = 0;
 
-  final List<String> nameList = ['Income', 'Expenses', 'Assets', 'Liabilities'];
+  final List<String> nameList = [
+    'Income',
+    'Expenses',
+    'Assets',
+    'Liabilities',
+    'Receivables'
+  ];
 
   final List<List<Widget>?> buttonList = [
     [const IncomeActionButton()],
-    // Income page buttons
     [const ExpensesActionButtonAdd(), const ExpensesActionButtonOptions()],
-    // Expenses page buttons
     [const AssetActionButton()],
-    // Assets page buttons
-    [const LiabilitiesActionButton()]
-    // Liabilities page buttons
+    [const LiabilitiesActionButton()],
+    [const ReceivablesActionButton()]
   ];
 
   @override
@@ -46,6 +51,7 @@ class _AppState extends State<App> {
           ExpensesPage(),
           AssetsPage(),
           LiabilitiesPage(),
+          ReceivablesPage()
         ],
       ),
       drawer: Drawer(
@@ -111,6 +117,17 @@ class _AppState extends State<App> {
                   onTap: () {
                     setState(() {
                       selected = 3;
+                    });
+                    Navigator.pop(context);
+                  },
+                ),
+                ListTile(
+                  title: Text("Receivables"),
+                  leading: Icon(Icons.request_quote,
+                      color: darkTheme.onSurfaceVariant),
+                  onTap: () {
+                    setState(() {
+                      selected = 4;
                     });
                     Navigator.pop(context);
                   },
