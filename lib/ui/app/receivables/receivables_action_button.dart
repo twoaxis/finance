@@ -97,8 +97,9 @@ class _ReceivablesActionButtonState extends State<ReceivablesActionButton> {
                                   nameController.clear();
                                   valueController.clear();
 
-                                  if (context.mounted)
+                                  if (context.mounted) {
                                     Navigator.of(context).pop();
+                                  }
                                 }
                               } on Exception {
                                 setState(() {
