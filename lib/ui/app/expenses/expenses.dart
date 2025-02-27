@@ -2,8 +2,6 @@ import 'package:financial_planner_mobile/ui/app/expenses/expenses_fixed_screen.d
 import 'package:financial_planner_mobile/ui/app/expenses/expenses_one_time_screen.dart';
 import 'package:financial_planner_mobile/util/theme.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ExpensesPage extends StatefulWidget {
   const ExpensesPage({super.key});
