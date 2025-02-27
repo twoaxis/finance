@@ -1,0 +1,2 @@
+/home/ahmed-helmy/Developer/finance/android/app/.cxx/Debug/6a49445v/armeabi-v7a/CMakeFiles/edit_cache.dir
+/home/ahmed-helmy/Developer/finance/android/app/.cxx/Debug/6a49445v/armeabi-v7a/CMakeFiles/rebuild_cache.dir
