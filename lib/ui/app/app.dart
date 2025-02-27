@@ -59,12 +59,12 @@ class _AppState extends State<App> {
           .snapshots()
           .listen((e) {
         if (mounted) {
-          context.read<IncomeCubit>().updateIncome(e.data()?["income"]);
-          context.read<ExpensesCubit>().updateExpenses(e.data()?["expenses"]);
-          context.read<FixedExpensesCubit>().updateFixedExpenses(e.data()?["fixedExpenses"]);
-          context.read<AssetsCubit>().updateAssets(e.data()?["assets"]);
-          context.read<LiabilitiesCubit>().updateLiabilities(e.data()?["liabilities"]);
-          context.read<ReceivablesCubit>().updateReceivables(e.data()?["receivables"]);
+          context.read<IncomeCubit>().updateIncome(e.data()?["income"] ?? []);
+          context.read<ExpensesCubit>().updateExpenses(e.data()?["expenses"] ?? []);
+          context.read<FixedExpensesCubit>().updateFixedExpenses(e.data()?["fixedExpenses"] ?? []);
+          context.read<AssetsCubit>().updateAssets(e.data()?["assets"] ?? []);
+          context.read<LiabilitiesCubit>().updateLiabilities(e.data()?["liabilities"] ?? []);
+          context.read<ReceivablesCubit>().updateReceivables(e.data()?["receivables"] ?? []);
         }
       }, onError: (e) {
         if (mounted) {}
