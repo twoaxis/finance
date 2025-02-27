@@ -1,3 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:financial_planner_mobile/cubit/assets_cubit.dart';
+import 'package:financial_planner_mobile/cubit/expenses_cubit.dart';
+import 'package:financial_planner_mobile/cubit/fixed_expenses_cubit.dart';
+import 'package:financial_planner_mobile/cubit/income_cubit.dart';
+import 'package:financial_planner_mobile/cubit/liabilities_cubit.dart';
+import 'package:financial_planner_mobile/cubit/receivables_cubit.dart';
 import 'package:financial_planner_mobile/ui/app/assets/assets.dart';
 import 'package:financial_planner_mobile/ui/app/expenses/expenses.dart';
 import 'package:financial_planner_mobile/ui/app/expenses/expenses_action_button_add.dart';
@@ -13,6 +20,7 @@ import 'package:financial_planner_mobile/ui/app/settings/settings.dart';
 import 'package:financial_planner_mobile/util/theme.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'assets/asset_action_button.dart';
 
 class App extends StatefulWidget {
@@ -40,6 +48,28 @@ class _AppState extends State<App> {
     [const LiabilitiesActionButton()],
     [const ReceivablesActionButton()]
   ];
+
+  @override
+  void initState() {
+      super.initState();
+
+      FirebaseFirestore.instance
+          .collection("users")
+          .doc(FirebaseAuth.instance.currentUser?.uid)
+          .snapshots()
+          .listen((e) {
+        if (mounted) {
+          context.read<IncomeCubit>().updateIncome(e.data()?["income"]);
+          context.read<ExpensesCubit>().updateExpenses(e.data()?["expenses"]);
+          context.read<FixedExpensesCubit>().updateFixedExpenses(e.data()?["fixedExpenses"]);
+          context.read<AssetsCubit>().updateAssets(e.data()?["assets"]);
+          context.read<LiabilitiesCubit>().updateLiabilities(e.data()?["liabilities"]);
+          context.read<ReceivablesCubit>().updateReceivables(e.data()?["receivables"]);
+        }
+      }, onError: (e) {
+        if (mounted) {}
+      });
+  }
 
   @override
   Widget build(BuildContext context) {

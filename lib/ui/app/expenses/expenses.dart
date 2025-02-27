@@ -13,33 +13,6 @@ class ExpensesPage extends StatefulWidget {
 }
 
 class _ExpensesPageState extends State<ExpensesPage> {
-  List<dynamic> oneTimeExpenses = [];
-  List<dynamic> fixedExpenses = [];
-  bool error = false;
-
-  @override
-  void initState() {
-    super.initState();
-
-    FirebaseFirestore.instance
-        .collection("users")
-        .doc(FirebaseAuth.instance.currentUser?.uid)
-        .snapshots()
-        .listen((e) {
-      if (mounted) {
-        setState(() {
-          fixedExpenses = e.data()?["fixedExpenses"];
-          oneTimeExpenses = e.data()?["expenses"];
-        });
-      }
-    }, onError: (e) {
-      if (mounted) {
-        setState(() {
-          error = true;
-        });
-      }
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,8 +32,8 @@ class _ExpensesPageState extends State<ExpensesPage> {
             Expanded(
                 child: TabBarView(
               children: [
-                OneTimeExpensesScreen(expenses: oneTimeExpenses),
-                FixedExpensesScreen(expenses: fixedExpenses),
+                OneTimeExpensesScreen(),
+                FixedExpensesScreen(),
               ],
             )),
           ],
