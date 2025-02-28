@@ -2,49 +2,27 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class AddExpenses extends StatefulWidget {
-  const AddExpenses({super.key});
+class AddReceivables extends StatefulWidget {
+  const AddReceivables({super.key});
 
   @override
-  State<AddExpenses> createState() => _AddExpensesState();
+  State<AddReceivables> createState() => _AddReceivablesState();
 }
 
-class _AddExpensesState extends State<AddExpenses> {
+class _AddReceivablesState extends State<AddReceivables> {
   bool pending = false;
   String error = "";
   TextEditingController nameController = TextEditingController();
   TextEditingController valueController = TextEditingController();
-  TextEditingController dateController = TextEditingController();
-  bool isFixed = false;
-  DateTime? dateTime;
-
-  void _setDate(BuildContext context) async {
-    DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2100),
-    );
-
-    if (picked != null) {
-      setState(() {
-        dateController.text =
-            "${picked.year}-${picked.month.toString().padLeft(2, '0')}-${picked.day.toString().padLeft(2, '0')}";
-        dateTime = picked;
-      });
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          "Add a new expense",
-        ),
+        title: const Text("Add a new receivable"),
       ),
       body: Padding(
-        padding: const EdgeInsets.only(right: 35.0, left: 35.0, top: 30),
+        padding: const EdgeInsets.only(right: 35.0, left: 35.0, top: 30.0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -62,31 +40,9 @@ class _AddExpensesState extends State<AddExpenses> {
               controller: nameController,
               textInputAction: TextInputAction.next,
               decoration: const InputDecoration(
-                hintText: "Groceries",
+                hintText: "Friend's Loan",
                 labelText: "Name",
               ),
-            ),
-            Row(
-              children: [
-                const Expanded(
-                  child: Text(
-                    "Fixed?",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 18,
-                    ),
-                  ),
-                ),
-                Checkbox(
-                  checkColor: Colors.white,
-                  value: isFixed,
-                  onChanged: (bool? value) {
-                    setState(() {
-                      isFixed = value!;
-                    });
-                  },
-                ),
-              ],
             ),
             TextField(
               enabled: !pending,
@@ -94,19 +50,10 @@ class _AddExpensesState extends State<AddExpenses> {
               textInputAction: TextInputAction.done,
               keyboardType: TextInputType.number,
               decoration: const InputDecoration(
-                hintText: "200",
+                hintText: "1000000",
                 labelText: "Value",
               ),
             ),
-            if (!isFixed)
-              TextField(
-                controller: dateController,
-                readOnly: true,
-                decoration: const InputDecoration(
-                  labelText: "Date",
-                ),
-                onTap: () => _setDate(context),
-              ),
             SizedBox(
               height: 20,
             ),
@@ -121,7 +68,6 @@ class _AddExpensesState extends State<AddExpenses> {
 
                           nameController.clear();
                           valueController.clear();
-                          dateController.clear();
                         },
                   child: const Text(
                     "Cancel",
@@ -143,42 +89,21 @@ class _AddExpensesState extends State<AddExpenses> {
                                 error = "Please fill all fields";
                               });
                             } else {
-                              if (isFixed) {
-                                await FirebaseFirestore.instance
-                                    .collection("users")
-                                    .doc(FirebaseAuth.instance.currentUser?.uid)
-                                    .update({
-                                  "fixedExpenses": FieldValue.arrayUnion([
-                                    {
-                                      "name": nameController.text,
-                                      "value": int.parse(valueController.text),
-                                      "paid": false
-                                    }
-                                  ])
-                                });
-                              } else {
-                                await FirebaseFirestore.instance
-                                    .collection("users")
-                                    .doc(FirebaseAuth.instance.currentUser?.uid)
-                                    .update(
+                              await FirebaseFirestore.instance
+                                  .collection("users")
+                                  .doc(FirebaseAuth.instance.currentUser?.uid)
+                                  .update({
+                                "receivables": FieldValue.arrayUnion([
                                   {
-                                    "expenses": FieldValue.arrayUnion([
-                                      {
-                                        "name": nameController.text,
-                                        "value":
-                                            int.parse(valueController.text),
-                                        "date": dateTime
-                                      }
-                                    ])
-                                  },
-                                );
-                              }
+                                    "name": nameController.text,
+                                    "value": int.parse(valueController.text)
+                                  }
+                                ])
+                              });
 
                               nameController.clear();
                               valueController.clear();
-                              setState(() {
-                                isFixed = false;
-                              });
+
                               if (context.mounted) {
                                 Navigator.of(context).pop();
                               }

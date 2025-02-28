@@ -21,7 +21,6 @@ class _AddAssetsState extends State<AddAssets> {
       appBar: AppBar(
         title: Text(
           "Add a new asset",
-          style: TextStyle(fontWeight: FontWeight.w500),
         ),
       ),
       body: Padding(

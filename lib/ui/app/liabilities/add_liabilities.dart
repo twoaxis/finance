@@ -21,7 +21,6 @@ class _AddLiabilitiesState extends State<AddLiabilities> {
       appBar: AppBar(
         title: Text(
           "Add a new liability",
-          style: TextStyle(fontWeight: FontWeight.w500),
         ),
       ),
       body: Padding(

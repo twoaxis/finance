@@ -21,7 +21,6 @@ class _AddIncomeState extends State<AddIncome> {
       appBar: AppBar(
         title: Text(
           "Add a new income source",
-          style: TextStyle(fontWeight: FontWeight.w500),
         ),
       ),
       body: Padding(
