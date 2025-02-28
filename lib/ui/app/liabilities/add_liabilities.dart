@@ -2,14 +2,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class AddIncome extends StatefulWidget {
-  const AddIncome({super.key});
+class AddLiabilities extends StatefulWidget {
+  const AddLiabilities({super.key});
 
   @override
-  State<AddIncome> createState() => _AddIncomeState();
+  State<AddLiabilities> createState() => _AddLiabilitiesState();
 }
 
-class _AddIncomeState extends State<AddIncome> {
+class _AddLiabilitiesState extends State<AddLiabilities> {
   bool pending = false;
   String error = "";
   TextEditingController nameController = TextEditingController();
@@ -20,7 +20,7 @@ class _AddIncomeState extends State<AddIncome> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Add a new income source",
+          "Add a new liability",
           style: TextStyle(fontWeight: FontWeight.w500),
         ),
       ),
@@ -43,12 +43,9 @@ class _AddIncomeState extends State<AddIncome> {
               controller: nameController,
               textInputAction: TextInputAction.next,
               decoration: const InputDecoration(
-                hintText: "Job",
+                hintText: "House Payment",
                 labelText: "Name",
               ),
-            ),
-            SizedBox(
-              height: 20,
             ),
             TextField(
               enabled: !pending,
@@ -56,7 +53,7 @@ class _AddIncomeState extends State<AddIncome> {
               textInputAction: TextInputAction.done,
               keyboardType: TextInputType.number,
               decoration: const InputDecoration(
-                hintText: "20000",
+                hintText: "1000000",
                 labelText: "Value",
               ),
             ),
@@ -98,22 +95,19 @@ class _AddIncomeState extends State<AddIncome> {
                               await FirebaseFirestore.instance
                                   .collection("users")
                                   .doc(FirebaseAuth.instance.currentUser?.uid)
-                                  .update(
-                                {
-                                  "income": FieldValue.arrayUnion([
-                                    {
-                                      "name": nameController.text,
-                                      "value": int.parse(valueController.text)
-                                    }
-                                  ])
-                                },
-                              );
+                                  .update({
+                                "liabilities": FieldValue.arrayUnion([
+                                  {
+                                    "name": nameController.text,
+                                    "value": int.parse(valueController.text)
+                                  }
+                                ])
+                              });
+
                               nameController.clear();
                               valueController.clear();
 
-                              if (context.mounted) {
-                                Navigator.of(context).pop();
-                              }
+                              if (context.mounted) Navigator.of(context).pop();
                             }
                           } on Exception {
                             setState(() {
