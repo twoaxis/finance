@@ -1,1 +1,0 @@
-/home/ahmed-helmy/Developer/finance/build/app/intermediates/cxx/Debug/6a49445v/obj/armeabi-v7a
