@@ -17,21 +17,18 @@ class _AddIncomeState extends State<AddIncome> {
 
   @override
   Widget build(BuildContext context) {
-    final heightScreen = MediaQuery.of(context).size.height;
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text(
+          "Add a new income source",
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+        ),
+      ),
       body: Padding(
-        padding: EdgeInsets.only(top: heightScreen * 0.25),
+        padding: EdgeInsets.only(top: 50),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(
-              "Add a new income source",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
-            ),
-            SizedBox(
-              height: 40,
-            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 35.0),
               child: Column(
