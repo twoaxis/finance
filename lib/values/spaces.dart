@@ -1,0 +1,1 @@
+const double fullscreenSpacing = 24.0;

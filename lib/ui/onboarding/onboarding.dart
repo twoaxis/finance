@@ -48,7 +48,7 @@ class _OnboardingState extends State<Onboarding> {
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 35),
               ),
               Text(
-                "Manage your income, expenses and assets with ease!",
+                "Manage your income, expense_sheets and assets with ease!",
                 style: TextStyle(fontSize: 20),
               ),
               SizedBox(height: 20),

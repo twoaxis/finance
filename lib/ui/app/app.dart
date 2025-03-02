@@ -6,9 +6,8 @@ import 'package:financial_planner_mobile/cubit/income_cubit.dart';
 import 'package:financial_planner_mobile/cubit/liabilities_cubit.dart';
 import 'package:financial_planner_mobile/cubit/receivables_cubit.dart';
 import 'package:financial_planner_mobile/ui/app/assets/assets.dart';
-import 'package:financial_planner_mobile/ui/app/expenses/expenses.dart';
-import 'package:financial_planner_mobile/ui/app/expenses/expenses_action_button_add.dart';
-import 'package:financial_planner_mobile/ui/app/expenses/expenses_action_button_options.dart';
+import 'package:financial_planner_mobile/ui/app/expense_sheets/expense_sheets.dart';
+import 'package:financial_planner_mobile/ui/app/expense_sheets/expense_sheets_action_button.dart';
 import 'package:financial_planner_mobile/ui/app/income/income.dart';
 import 'package:financial_planner_mobile/ui/app/info/info.dart';
 import 'package:financial_planner_mobile/ui/app/liabilities/liabilities.dart';
@@ -35,7 +34,7 @@ class _AppState extends State<App> {
 
   final List<String> nameList = [
     'Income',
-    'Expenses',
+    'Expense Sheets',
     'Assets',
     'Liabilities',
     'Receivables'
@@ -43,7 +42,7 @@ class _AppState extends State<App> {
 
   final List<List<Widget>?> buttonList = [
     [const IncomeActionButton()],
-    [const ExpensesActionButtonAdd(), const ExpensesActionButtonOptions()],
+    [const ExpenseSheetsActionButtonAdd()],
     [const AssetActionButton()],
     [const LiabilitiesActionButton()],
     [const ReceivablesActionButton()]
@@ -51,24 +50,41 @@ class _AppState extends State<App> {
 
   @override
   void initState() {
-      super.initState();
+    super.initState();
 
-      FirebaseFirestore.instance
-          .collection("users")
-          .doc(FirebaseAuth.instance.currentUser?.uid)
-          .snapshots()
-          .listen((e) {
-        if (mounted) {
-          context.read<IncomeCubit>().updateIncome(e.data()?["income"] ?? []);
-          context.read<ExpensesCubit>().updateExpenses(e.data()?["expenses"] ?? []);
-          context.read<FixedExpensesCubit>().updateFixedExpenses(e.data()?["fixedExpenses"] ?? []);
-          context.read<AssetsCubit>().updateAssets(e.data()?["assets"] ?? []);
-          context.read<LiabilitiesCubit>().updateLiabilities(e.data()?["liabilities"] ?? []);
-          context.read<ReceivablesCubit>().updateReceivables(e.data()?["receivables"] ?? []);
-        }
-      }, onError: (e) {
-        if (mounted) {}
-      });
+    FirebaseFirestore.instance
+        .collection("users")
+        .doc(FirebaseAuth.instance.currentUser?.uid)
+        .snapshots()
+        .listen((e) {
+      if (mounted) {
+        context.read<IncomeCubit>().updateIncome(e.data()?["income"] ?? []);
+
+        context
+            .read<FixedExpensesCubit>()
+            .updateFixedExpenses(e.data()?["fixedExpenses"] ?? []);
+        context.read<AssetsCubit>().updateAssets(e.data()?["assets"] ?? []);
+        context
+            .read<LiabilitiesCubit>()
+            .updateLiabilities(e.data()?["liabilities"] ?? []);
+        context
+            .read<ReceivablesCubit>()
+            .updateReceivables(e.data()?["receivables"] ?? []);
+      }
+    }, onError: (e) {
+      if (mounted) {}
+    });
+
+    FirebaseFirestore.instance
+        .collection("users")
+        .doc(FirebaseAuth.instance.currentUser?.uid)
+        .collection("expenses")
+        .snapshots()
+        .listen((e) {
+      if (mounted) {
+        context.read<ExpensesCubit>().updateExpenses(e.docs);
+      }
+    });
   }
 
   @override
@@ -78,7 +94,7 @@ class _AppState extends State<App> {
         index: selected,
         children: const [
           IncomePage(),
-          ExpensesPage(),
+          ExpenseSheetsPage(),
           AssetsPage(),
           LiabilitiesPage(),
           ReceivablesPage()
@@ -120,8 +136,8 @@ class _AppState extends State<App> {
                   },
                 ),
                 ListTile(
-                  title: Text("Expenses"),
-                  leading: Icon(Icons.shopping_bag,
+                  title: Text("Expense Sheets"),
+                  leading: Icon(Icons.edit_document,
                       color: darkTheme.onSurfaceVariant),
                   onTap: () {
                     setState(() {
