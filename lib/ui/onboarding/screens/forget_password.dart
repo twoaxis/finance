@@ -19,79 +19,131 @@ class _ForgetPasswordState extends State<ForgetPassword> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 40.0,
-            vertical: 120,
-          ),
+        appBar: AppBar(
+          title: Text("Forget password"),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(24.0),
           child: Column(
-            mainAxisSize: MainAxisSize.min,
+            mainAxisSize: MainAxisSize.max,
             children: [
-              Text(
-                "Forget Password",
-                style: TextStyle(
-                  color: darkTheme.onPrimary,
-                  fontSize: 30,
+              Expanded(
+                child: SizedBox(
+                  width: double.infinity,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        TextField(
+                          controller: emailController,
+                          enabled: !pending,
+                          textInputAction: TextInputAction.next,
+                          decoration: InputDecoration(
+                            hintText: "john@hotmail.com",
+                            labelText: "E-mail",
+                            border: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: darkTheme.surfaceBright),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 20),
+                      ],
+                    ),
+                  ),
                 ),
               ),
-              const SizedBox(height: 20),
-              TextField(
-                controller: emailController,
-                enabled: !pending,
-                textInputAction: TextInputAction.next,
-                decoration: const InputDecoration(
-                  icon: Icon(Icons.email),
-                  hintText: "john@hotmail.com",
-                  labelText: "E-mail",
-                ),
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: darkTheme.primary,
-                  foregroundColor: darkTheme.onPrimary,
-                ),
-                onPressed: () async {
-                  try {
-                    await FirebaseAuth.instance
-                        .sendPasswordResetEmail(email: emailController.text);
+              SizedBox(
+                width: double.infinity,
+                height: 50,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: darkTheme.primary,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    shadowColor: Colors.black,
+                    elevation: 3,
+                  ),
+                  onPressed: pending
+                      ? null
+                      : () async {
+                          setState(() {
+                            pending = true;
+                          });
 
-                    if (context.mounted) {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const EmailVerify(),
-                        ),
-                      );
-                    }
-                  } catch (e) {
-                    if(context.mounted) {
-                      showDialog(
-                      context: context,
-                      builder: (context) => AlertDialog(
-                        title: Text(
-                          e.toString(),
-                          style: TextStyle(fontSize: 15),
-                        ),
-                        content: Text(
-                          'An error occurred while sending the password reset email',
-                          style: TextStyle(fontSize: 15),
-                        ),
-                      ),
-                    );
-                    }
-                  }
-                },
-                child: const Text(
-                  "Reset Password",
+                          try {
+                            if (emailController.text.isEmpty) {
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    title: Text("Error"),
+                                    content: Text("Please enter your e-mail"),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: Text("Okay"),
+                                      )
+                                    ],
+                                  );
+                                },
+                              );
+                            } else {
+                              await FirebaseAuth.instance
+                                  .sendPasswordResetEmail(
+                                email: emailController.text,
+                              );
+
+                              if (context.mounted) {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const EmailVerify(),
+                                  ),
+                                );
+                              }
+                            }
+                          } on Exception {
+                            if (context.mounted) {
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    title: Text("Error"),
+                                    content: Text(
+                                        "An unexpected error has occurred"),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: Text("Okay"),
+                                      )
+                                    ],
+                                  );
+                                },
+                              );
+                            }
+                          } finally {
+                            setState(() {
+                              pending = false;
+                            });
+                          }
+                        },
+                  child: Text(
+                    "Reset password",
+                    style: TextStyle(color: darkTheme.onPrimary),
+                  ),
                 ),
               ),
+              SizedBox(
+                height: 20,
+              )
             ],
           ),
-        ),
-      ),
-    );
+        ));
   }
 }

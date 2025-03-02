@@ -12,7 +12,6 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool pending = false;
-  String error = "";
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -91,15 +90,28 @@ class _LoginPageState extends State<LoginPage> {
                     : () async {
                         setState(() {
                           pending = true;
-                          error = "";
                         });
 
                         try {
                           if (emailController.text.isEmpty ||
                               passwordController.text.isEmpty) {
-                            setState(() {
-                              error = "Please fill all fields";
-                            });
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  title: Text("Error"),
+                                  content: Text("Please fill all fields"),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: Text("Okay"),
+                                    )
+                                  ],
+                                );
+                              },
+                            );
                           } else {
                             await FirebaseAuth.instance
                                 .signInWithEmailAndPassword(

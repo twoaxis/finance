@@ -12,7 +12,6 @@ class SignupPage extends StatefulWidget {
 
 class _SignupPageState extends State<SignupPage> {
   bool pending = false;
-  String error = "";
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -100,20 +99,47 @@ class _SignupPageState extends State<SignupPage> {
                     : () async {
                         setState(() {
                           pending = true;
-                          error = "";
                         });
                         try {
                           if (emailController.text.isEmpty ||
                               passwordController.text.isEmpty ||
                               repeatPasswordController.text.isEmpty) {
-                            setState(() {
-                              error = "Please fill all fields";
-                            });
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  title: Text("Error"),
+                                  content: Text("Please fill all fields"),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: Text("Okay"),
+                                    )
+                                  ],
+                                );
+                              },
+                            );
                           } else if (passwordController.text !=
                               repeatPasswordController.text) {
-                            setState(() {
-                              error = "The passwords don't match";
-                            });
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  title: Text("Error"),
+                                  content: Text("Passwords don't match"),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: Text("Okay"),
+                                    )
+                                  ],
+                                );
+                              },
+                            );
                           } else {
                             final credential = await FirebaseAuth.instance
                                 .createUserWithEmailAndPassword(
@@ -141,7 +167,7 @@ class _SignupPageState extends State<SignupPage> {
                           }
                         } on FirebaseAuthException catch (e) {
                           if (e.code == 'weak-password') {
-                            if(context.mounted) {
+                            if (context.mounted) {
                               showDialog(
                                 context: context,
                                 builder: (context) {
@@ -161,7 +187,7 @@ class _SignupPageState extends State<SignupPage> {
                               );
                             }
                           } else if (e.code == 'email-already-in-use') {
-                            if(context.mounted) {
+                            if (context.mounted) {
                               showDialog(
                                 context: context,
                                 builder: (context) {
@@ -180,15 +206,15 @@ class _SignupPageState extends State<SignupPage> {
                                 },
                               );
                             }
-                          }
-                          else {
-                            if(context.mounted) {
+                          } else {
+                            if (context.mounted) {
                               showDialog(
                                 context: context,
                                 builder: (context) {
                                   return AlertDialog(
                                     title: Text("Error"),
-                                    content: Text("An unknown error has occurred"),
+                                    content:
+                                        Text("An unknown error has occurred"),
                                     actions: [
                                       TextButton(
                                         onPressed: () {
@@ -203,7 +229,7 @@ class _SignupPageState extends State<SignupPage> {
                             }
                           }
                         } finally {
-                          if(mounted) {
+                          if (mounted) {
                             setState(() {
                               pending = false;
                             });
