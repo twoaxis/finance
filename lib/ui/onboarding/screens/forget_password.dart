@@ -1,5 +1,7 @@
+import 'package:financial_planner_mobile/ui/common/primary_button.dart';
 import 'package:financial_planner_mobile/ui/onboarding/screens/email_verify.dart';
 import 'package:financial_planner_mobile/util/theme.dart';
+import 'package:financial_planner_mobile/values/spaces.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -23,7 +25,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
           title: Text("Forget password"),
         ),
         body: Padding(
-          padding: const EdgeInsets.all(24.0),
+          padding: const EdgeInsets.all(fullscreenSpacing),
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
@@ -52,93 +54,73 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                   ),
                 ),
               ),
-              SizedBox(
-                width: double.infinity,
-                height: 50,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: darkTheme.primary,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    shadowColor: Colors.black,
-                    elevation: 3,
-                  ),
-                  onPressed: pending
-                      ? null
-                      : () async {
-                          setState(() {
-                            pending = true;
-                          });
+              PrimaryButton(
+                  text: "Reset Password",
+                  enabled: !pending,
+                  onPressed: () async {
+                    setState(() {
+                      pending = true;
+                    });
 
-                          try {
-                            if (emailController.text.isEmpty) {
-                              showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return AlertDialog(
-                                    title: Text("Error"),
-                                    content: Text("Please enter your e-mail"),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
-                                        child: Text("Okay"),
-                                      )
-                                    ],
-                                  );
-                                },
-                              );
-                            } else {
-                              await FirebaseAuth.instance
-                                  .sendPasswordResetEmail(
-                                email: emailController.text,
-                              );
+                    try {
+                      if (emailController.text.isEmpty) {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: Text("Error"),
+                              content: Text("Please enter your e-mail"),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text("Okay"),
+                                )
+                              ],
+                            );
+                          },
+                        );
+                      } else {
+                        await FirebaseAuth.instance.sendPasswordResetEmail(
+                          email: emailController.text,
+                        );
 
-                              if (context.mounted) {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        const EmailVerify(),
-                                  ),
-                                );
-                              }
-                            }
-                          } on Exception {
-                            if (context.mounted) {
-                              showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return AlertDialog(
-                                    title: Text("Error"),
-                                    content: Text(
-                                        "An unexpected error has occurred"),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
-                                        child: Text("Okay"),
-                                      )
-                                    ],
-                                  );
-                                },
-                              );
-                            }
-                          } finally {
-                            setState(() {
-                              pending = false;
-                            });
-                          }
-                        },
-                  child: Text(
-                    "Reset password",
-                    style: TextStyle(color: darkTheme.onPrimary),
-                  ),
-                ),
-              ),
+                        if (context.mounted) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const EmailVerify(),
+                            ),
+                          );
+                        }
+                      }
+                    } on Exception {
+                      if (context.mounted) {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: Text("Error"),
+                              content: Text("An unexpected error has occurred"),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text("Okay"),
+                                )
+                              ],
+                            );
+                          },
+                        );
+                      }
+                    } finally {
+                      setState(() {
+                        pending = false;
+                      });
+                    }
+                  }),
               SizedBox(
                 height: 20,
               )

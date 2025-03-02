@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:financial_planner_mobile/ui/common/primary_button.dart';
 import 'package:financial_planner_mobile/util/theme.dart';
+import 'package:financial_planner_mobile/values/spaces.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -24,7 +26,7 @@ class _SignupPageState extends State<SignupPage> {
         title: Text("Create an account"),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(24.0),
+        padding: const EdgeInsets.all(fullscreenSpacing),
         child: Column(
           mainAxisSize: MainAxisSize.max,
           children: [
@@ -82,166 +84,148 @@ class _SignupPageState extends State<SignupPage> {
                 ),
               ),
             ),
-            SizedBox(
-              width: double.infinity,
-              height: 50,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: darkTheme.primary,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  shadowColor: Colors.black,
-                  elevation: 3,
-                ),
-                onPressed: pending
-                    ? null
-                    : () async {
-                        setState(() {
-                          pending = true;
-                        });
-                        try {
-                          if (emailController.text.isEmpty ||
-                              passwordController.text.isEmpty ||
-                              repeatPasswordController.text.isEmpty) {
-                            showDialog(
-                              context: context,
-                              builder: (context) {
-                                return AlertDialog(
-                                  title: Text("Error"),
-                                  content: Text("Please fill all fields"),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      child: Text("Okay"),
-                                    )
-                                  ],
-                                );
-                              },
-                            );
-                          } else if (passwordController.text !=
-                              repeatPasswordController.text) {
-                            showDialog(
-                              context: context,
-                              builder: (context) {
-                                return AlertDialog(
-                                  title: Text("Error"),
-                                  content: Text("Passwords don't match"),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      child: Text("Okay"),
-                                    )
-                                  ],
-                                );
-                              },
-                            );
-                          } else {
-                            final credential = await FirebaseAuth.instance
-                                .createUserWithEmailAndPassword(
-                              email: emailController.text,
-                              password: passwordController.text,
-                            );
-
-                            await FirebaseFirestore.instance
-                                .collection("users")
-                                .doc(credential.user!.uid)
-                                .set({
-                              "assets": [],
-                              "expenses": [],
-                              "income": [],
-                              "liabilities": [],
-                              "fixedExpenses": [],
-                              "receivables": []
-                            });
-
-                            await credential.user?.sendEmailVerification();
-
-                            if (context.mounted) {
-                              Navigator.pop(context);
-                            }
-                          }
-                        } on FirebaseAuthException catch (e) {
-                          if (e.code == 'weak-password') {
-                            if (context.mounted) {
-                              showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return AlertDialog(
-                                    title: Text("Error"),
-                                    content: Text("Password is too weak"),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
-                                        child: Text("Okay"),
-                                      )
-                                    ],
-                                  );
+            PrimaryButton(
+                text: "Create your account",
+                enabled: !pending,
+                onPressed: () async {
+                  setState(() {
+                    pending = true;
+                  });
+                  try {
+                    if (emailController.text.isEmpty ||
+                        passwordController.text.isEmpty ||
+                        repeatPasswordController.text.isEmpty) {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: Text("Error"),
+                            content: Text("Please fill all fields"),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
                                 },
-                              );
-                            }
-                          } else if (e.code == 'email-already-in-use') {
-                            if (context.mounted) {
-                              showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return AlertDialog(
-                                    title: Text("Error"),
-                                    content: Text("E-mail already exists"),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
-                                        child: Text("Okay"),
-                                      )
-                                    ],
-                                  );
+                                child: Text("Okay"),
+                              )
+                            ],
+                          );
+                        },
+                      );
+                    } else if (passwordController.text !=
+                        repeatPasswordController.text) {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: Text("Error"),
+                            content: Text("Passwords don't match"),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
                                 },
-                              );
-                            }
-                          } else {
-                            if (context.mounted) {
-                              showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return AlertDialog(
-                                    title: Text("Error"),
-                                    content:
-                                        Text("An unknown error has occurred"),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
-                                        child: Text("Okay"),
-                                      )
-                                    ],
-                                  );
-                                },
-                              );
-                            }
-                          }
-                        } finally {
-                          if (mounted) {
-                            setState(() {
-                              pending = false;
-                            });
-                          }
-                        }
-                      },
-                child: Text(
-                  "Create your account",
-                  style: TextStyle(color: darkTheme.onPrimary),
-                ),
-              ),
-            ),
+                                child: Text("Okay"),
+                              )
+                            ],
+                          );
+                        },
+                      );
+                    } else {
+                      final credential = await FirebaseAuth.instance
+                          .createUserWithEmailAndPassword(
+                        email: emailController.text,
+                        password: passwordController.text,
+                      );
+
+                      await FirebaseFirestore.instance
+                          .collection("users")
+                          .doc(credential.user!.uid)
+                          .set({
+                        "assets": [],
+                        "expenses": [],
+                        "income": [],
+                        "liabilities": [],
+                        "fixedExpenses": [],
+                        "receivables": []
+                      });
+
+                      await credential.user?.sendEmailVerification();
+
+                      if (context.mounted) {
+                        Navigator.pop(context);
+                      }
+                    }
+                  } on FirebaseAuthException catch (e) {
+                    if (e.code == 'weak-password') {
+                      if (context.mounted) {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: Text("Error"),
+                              content: Text("Password is too weak"),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text("Okay"),
+                                )
+                              ],
+                            );
+                          },
+                        );
+                      }
+                    } else if (e.code == 'email-already-in-use') {
+                      if (context.mounted) {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: Text("Error"),
+                              content: Text("E-mail already exists"),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text("Okay"),
+                                )
+                              ],
+                            );
+                          },
+                        );
+                      }
+                    } else {
+                      if (context.mounted) {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: Text("Error"),
+                              content: Text("An unknown error has occurred"),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text("Okay"),
+                                )
+                              ],
+                            );
+                          },
+                        );
+                      }
+                    }
+                  } finally {
+                    if (mounted) {
+                      setState(() {
+                        pending = false;
+                      });
+                    }
+                  }
+                }),
             SizedBox(
               height: 20,
             )
