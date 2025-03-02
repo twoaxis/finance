@@ -101,6 +101,8 @@ class _ExpenseSheetItemsState extends State<ExpenseSheetItems> {
                                                       .collection("users")
                                                       .doc(FirebaseAuth.instance
                                                           .currentUser?.uid)
+                                                      .collection("expenses")
+                                                      .doc(sheets[widget.sheetIndex].id)
                                                       .update({
                                                     "expenses":
                                                         FieldValue.arrayRemove([

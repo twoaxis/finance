@@ -24,7 +24,6 @@ class _ExpenseSheetsPageState extends State<ExpenseSheetsPage> {
                 itemBuilder: (BuildContext context, int index) {
                   return ListTile(
                     title: Text(expenses[index].data()["name"]),
-                    trailing: Text("Created ${expenses[index].data()["createdAt"].toDate().toString().split(" ")[0]}"),
                     onTap: () {
                       Navigator.push(
                         context,

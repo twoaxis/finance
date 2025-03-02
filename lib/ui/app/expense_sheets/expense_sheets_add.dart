@@ -81,7 +81,7 @@ class _ExpenseSheetsAddState extends State<ExpenseSheetsAdd> {
                       },
                     );
                   } else {
-                    await FirebaseFirestore.instance.collection("users").doc(FirebaseAuth.instance.currentUser!.uid).collection("expense_sheets").add({
+                    await FirebaseFirestore.instance.collection("users").doc(FirebaseAuth.instance.currentUser!.uid).collection("expenses").add({
                       "name": nameController.text,
                       "createdAt": FieldValue.serverTimestamp(),
                       "expenses": []
