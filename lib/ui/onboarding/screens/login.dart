@@ -12,7 +12,6 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool pending = false;
-  String error = "";
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -20,120 +19,169 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: SizedBox(
-        width: double.maxFinite,
+      appBar: AppBar(
+        title: Text("Login to your account"),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(24.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.max,
           children: [
-            const Text(
-              "Log into your account",
-              style: TextStyle(fontSize: 30),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            error.isNotEmpty
-                ? Text(
-                    error,
-                    style: const TextStyle(color: Colors.red, fontSize: 20),
-                  )
-                : const SizedBox(
-                    height: 20,
+            Expanded(
+              child: SizedBox(
+                width: double.infinity,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      TextField(
+                        controller: emailController,
+                        enabled: !pending,
+                        textInputAction: TextInputAction.next,
+                        decoration: InputDecoration(
+                            hintText: "john@hotmail.com",
+                            labelText: "E-mail",
+                            border: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: darkTheme.surfaceBright))),
+                      ),
+                      SizedBox(height: 20),
+                      TextField(
+                        controller: passwordController,
+                        obscureText: true,
+                        enabled: !pending,
+                        textInputAction: TextInputAction.next,
+                        decoration: InputDecoration(
+                            hintText: "••••••••••••",
+                            labelText: "Password",
+                            border: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: darkTheme.surfaceBright))),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ForgetPassword(),
+                            ),
+                          );
+                        },
+                        child: Text("Forgot password?"),
+                      )
+                    ],
                   ),
-            SizedBox(
-              width: MediaQuery.of(context).size.width *
-                  0.7, // Set width to 90% of screen size
-              child: TextField(
-                controller: emailController,
-                enabled: !pending,
-                textInputAction: TextInputAction.next,
-                decoration: const InputDecoration(
-                  icon: Icon(Icons.email),
-                  hintText: "john@hotmail.com",
-                  labelText: "E-mail",
                 ),
               ),
             ),
-            const SizedBox(
-              height: 20,
+            SizedBox(
+              width: double.infinity,
+              height: 50,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: darkTheme.primary,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  shadowColor: Colors.black,
+                  elevation: 3,
+                ),
+                onPressed: pending
+                    ? null
+                    : () async {
+                        setState(() {
+                          pending = true;
+                        });
+
+                        try {
+                          if (emailController.text.isEmpty ||
+                              passwordController.text.isEmpty) {
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  title: Text("Error"),
+                                  content: Text("Please fill all fields"),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: Text("Okay"),
+                                    )
+                                  ],
+                                );
+                              },
+                            );
+                          } else {
+                            await FirebaseAuth.instance
+                                .signInWithEmailAndPassword(
+                              email: emailController.text,
+                              password: passwordController.text,
+                            );
+                            if (context.mounted) {
+                              Navigator.pop(context);
+                            }
+                          }
+                        } on FirebaseAuthException catch (e) {
+                          if (e.code == 'invalid-email' ||
+                              e.code == 'invalid-credential' ||
+                              e.code == 'user-not-found' ||
+                              e.code == 'wrong-password') {
+                            if (context.mounted) {
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    title: Text("Error"),
+                                    content: Text("Invalid E-mail or Password"),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: Text("Okay"),
+                                      )
+                                    ],
+                                  );
+                                },
+                              );
+                            }
+                          } else if (e.code == "email-already-in-use") {
+                            if (context.mounted) {
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    title: Text("Error"),
+                                    content: Text("Invalid E-mail or Password"),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: Text("Okay"),
+                                      )
+                                    ],
+                                  );
+                                },
+                              );
+                            }
+                          }
+                        } finally {
+                          setState(() {
+                            pending = false;
+                          });
+                        }
+                      },
+                child: Text(
+                  "Login to your account",
+                  style: TextStyle(color: darkTheme.onPrimary),
+                ),
+              ),
             ),
             SizedBox(
-              width: MediaQuery.of(context).size.width *
-                  0.7, // Set width to 90% of screen size
-              child: TextField(
-                  obscureText: true,
-                  controller: passwordController,
-                  enabled: !pending,
-                  textInputAction: TextInputAction.next,
-                  decoration: const InputDecoration(
-                    icon: Icon(Icons.password),
-                    hintText: "⦁⦁⦁⦁⦁⦁⦁⦁⦁⦁⦁",
-                    labelText: "Password",
-                  )),
-            ),
-            const SizedBox(
               height: 20,
-            ),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  backgroundColor: darkTheme.primary,
-                  foregroundColor: darkTheme.onPrimary),
-              onPressed: pending
-                  ? null
-                  : () async {
-                      setState(() {
-                        pending = true;
-                        error = "";
-                      });
-
-                      try {
-                        if (emailController.text.isEmpty ||
-                            passwordController.text.isEmpty) {
-                          setState(() {
-                            error = "Please fill all fields";
-                          });
-                        } else {
-                          await FirebaseAuth.instance
-                              .signInWithEmailAndPassword(
-                            email: emailController.text,
-                            password: passwordController.text,
-                          );
-                          if(context.mounted) {
-                            Navigator.pop(context);
-                          }
-                        }
-                      } on FirebaseAuthException catch (e) {
-                        if (e.code == 'invalid-email' ||
-                            e.code == 'invalid-credential' ||
-                            e.code == 'user-not-found' ||
-                            e.code == 'wrong-password') {
-                          setState(() {
-                            error = "Invalid E-mail or password";
-                          });
-                        }
-                      } finally {
-                        setState(() {
-                          pending = false;
-                        });
-                      }
-                    },
-              child: const Text("Login"),
-            ),
-            TextButton(
-              onPressed: pending
-                  ? null
-                  : () async {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const ForgetPassword(),
-                        ),
-                      );
-                    },
-              child: const Text("Forgot your password"),
-            ),
+            )
           ],
         ),
       ),

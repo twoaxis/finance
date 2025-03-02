@@ -12,7 +12,6 @@ class SignupPage extends StatefulWidget {
 
 class _SignupPageState extends State<SignupPage> {
   bool pending = false;
-  String error = "";
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -21,145 +20,231 @@ class _SignupPageState extends State<SignupPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: SizedBox(
-        width: double.maxFinite,
+      appBar: AppBar(
+        title: Text("Create an account"),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(24.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.max,
           children: [
-            const Text(
-              "Create an account",
-              style: TextStyle(fontSize: 30),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            error.isNotEmpty
-                ? Text(
-                    error,
-                    style: const TextStyle(color: Colors.red, fontSize: 20),
-                  )
-                : const SizedBox(
-                    height: 20,
+            Expanded(
+              child: SizedBox(
+                width: double.infinity,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      TextField(
+                        controller: emailController,
+                        enabled: !pending,
+                        textInputAction: TextInputAction.next,
+                        decoration: InputDecoration(
+                          hintText: "john@hotmail.com",
+                          labelText: "E-mail",
+                          border: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: darkTheme.surfaceBright),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 20),
+                      TextField(
+                        controller: passwordController,
+                        obscureText: true,
+                        enabled: !pending,
+                        textInputAction: TextInputAction.next,
+                        decoration: InputDecoration(
+                          hintText: "••••••••••••",
+                          labelText: "Password",
+                          border: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: darkTheme.surfaceBright),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 20),
+                      TextField(
+                        controller: repeatPasswordController,
+                        obscureText: true,
+                        enabled: !pending,
+                        textInputAction: TextInputAction.next,
+                        decoration: InputDecoration(
+                          hintText: "••••••••••••",
+                          labelText: "Repeat Password",
+                          border: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: darkTheme.surfaceBright),
+                          ),
+                        ),
+                      )
+                    ],
                   ),
-            SizedBox(
-              width: MediaQuery.of(context).size.width *
-                  0.7, // Set width to 90% of screen size
-              child: TextField(
-                controller: emailController,
-                enabled: !pending,
-                textInputAction: TextInputAction.next,
-                decoration: const InputDecoration(
-                  icon: Icon(Icons.email),
-                  hintText: "john@hotmail.com",
-                  labelText: "E-mail",
                 ),
               ),
             ),
-            const SizedBox(
-              height: 20,
-            ),
             SizedBox(
-              width: MediaQuery.of(context).size.width *
-                  0.7, // Set width to 90% of screen size
-              child: TextField(
-                  obscureText: true,
-                  controller: passwordController,
-                  enabled: !pending,
-                  textInputAction: TextInputAction.next,
-                  decoration: const InputDecoration(
-                    icon: Icon(Icons.password),
-                    hintText: "⦁⦁⦁⦁⦁⦁⦁⦁⦁⦁⦁",
-                    labelText: "Password",
-                  )),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            SizedBox(
-              width: MediaQuery.of(context).size.width *
-                  0.7, // Set width to 90% of screen size
-              child: TextField(
-                  controller: repeatPasswordController,
-                  obscureText: true,
-                  textInputAction: TextInputAction.done,
-                  enabled: !pending,
-                  decoration: const InputDecoration(
-                    icon: Icon(Icons.password),
-                    hintText: "⦁⦁⦁⦁⦁⦁⦁⦁⦁⦁⦁",
-                    labelText: "Repeat Password",
-                  )),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
+              width: double.infinity,
+              height: 50,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
                   backgroundColor: darkTheme.primary,
-                  foregroundColor: darkTheme.onPrimary),
-              onPressed: pending
-                  ? null
-                  : () async {
-                      setState(() {
-                        pending = true;
-                        error = "";
-                      });
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  shadowColor: Colors.black,
+                  elevation: 3,
+                ),
+                onPressed: pending
+                    ? null
+                    : () async {
+                        setState(() {
+                          pending = true;
+                        });
+                        try {
+                          if (emailController.text.isEmpty ||
+                              passwordController.text.isEmpty ||
+                              repeatPasswordController.text.isEmpty) {
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  title: Text("Error"),
+                                  content: Text("Please fill all fields"),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: Text("Okay"),
+                                    )
+                                  ],
+                                );
+                              },
+                            );
+                          } else if (passwordController.text !=
+                              repeatPasswordController.text) {
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  title: Text("Error"),
+                                  content: Text("Passwords don't match"),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: Text("Okay"),
+                                    )
+                                  ],
+                                );
+                              },
+                            );
+                          } else {
+                            final credential = await FirebaseAuth.instance
+                                .createUserWithEmailAndPassword(
+                              email: emailController.text,
+                              password: passwordController.text,
+                            );
 
-                      try {
-                        if (emailController.text.isEmpty ||
-                            passwordController.text.isEmpty ||
-                            repeatPasswordController.text.isEmpty) {
-                          setState(() {
-                            error = "Please fill all fields";
-                          });
-                        } else if (passwordController.text !=
-                            repeatPasswordController.text) {
-                          setState(() {
-                            error = "The passwords don't match";
-                          });
-                        } else {
-                          final credential = await FirebaseAuth.instance
-                              .createUserWithEmailAndPassword(
-                            email: emailController.text,
-                            password: passwordController.text,
-                          );
+                            await FirebaseFirestore.instance
+                                .collection("users")
+                                .doc(credential.user!.uid)
+                                .set({
+                              "assets": [],
+                              "expenses": [],
+                              "income": [],
+                              "liabilities": [],
+                              "fixedExpenses": [],
+                              "receivables": []
+                            });
 
-                          await FirebaseFirestore.instance
-                              .collection("users")
-                              .doc(credential.user!.uid)
-                              .set({
-                            "assets": [],
-                            "expenses": [],
-                            "income": [],
-                            "liabilities": [],
-                            "fixedExpenses": [],
-                          });
+                            await credential.user?.sendEmailVerification();
 
-                          await credential.user?.sendEmailVerification();
-
-                          if (context.mounted) {
-                            Navigator.pop(context);
+                            if (context.mounted) {
+                              Navigator.pop(context);
+                            }
+                          }
+                        } on FirebaseAuthException catch (e) {
+                          if (e.code == 'weak-password') {
+                            if (context.mounted) {
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    title: Text("Error"),
+                                    content: Text("Password is too weak"),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: Text("Okay"),
+                                      )
+                                    ],
+                                  );
+                                },
+                              );
+                            }
+                          } else if (e.code == 'email-already-in-use') {
+                            if (context.mounted) {
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    title: Text("Error"),
+                                    content: Text("E-mail already exists"),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: Text("Okay"),
+                                      )
+                                    ],
+                                  );
+                                },
+                              );
+                            }
+                          } else {
+                            if (context.mounted) {
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    title: Text("Error"),
+                                    content:
+                                        Text("An unknown error has occurred"),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: Text("Okay"),
+                                      )
+                                    ],
+                                  );
+                                },
+                              );
+                            }
+                          }
+                        } finally {
+                          if (mounted) {
+                            setState(() {
+                              pending = false;
+                            });
                           }
                         }
-                      } on FirebaseAuthException catch (e) {
-                        if (e.code == 'weak-password') {
-                          setState(() {
-                            error = "Your password is too weak";
-                          });
-                        } else if (e.code == 'email-already-in-use') {
-                          setState(() {
-                            error = "E-mail is already in use";
-                          });
-                        }
-                      } finally {
-                        setState(() {
-                          pending = false;
-                        });
-                      }
-                    },
-              child: const Text("Sign up"),
+                      },
+                child: Text(
+                  "Create your account",
+                  style: TextStyle(color: darkTheme.onPrimary),
+                ),
+              ),
             ),
+            SizedBox(
+              height: 20,
+            )
           ],
         ),
       ),
