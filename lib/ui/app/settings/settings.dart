@@ -1,5 +1,5 @@
+import 'package:financial_planner_mobile/ui/app/settings/theme_button.dart';
 import 'package:financial_planner_mobile/ui/onboarding/onboarding.dart';
-import 'package:financial_planner_mobile/util/theme.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -23,14 +23,16 @@ class _SettingsPageState extends State<SettingsPage> {
             "Settings",
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
           ),
-          backgroundColor: darkTheme.surfaceContainer,
+          backgroundColor: Theme.of(context).colorScheme.surfaceContainer,
         ),
         body: ListView(
           children: [
+            ThemeButton(),
             ListTile(
               title: Text("Delete your account",
-                  style: TextStyle(color: darkTheme.error)),
-              leading: Icon(Icons.delete, color: darkTheme.error),
+                  style: TextStyle(color: Theme.of(context).colorScheme.error)),
+              leading: Icon(Icons.delete,
+                  color: Theme.of(context).colorScheme.error),
               onTap: () {
                 showDialog(
                     context: context,
@@ -134,12 +136,15 @@ class _SettingsPageState extends State<SettingsPage> {
                     });
               },
             ),
-            Divider(color: darkTheme.surfaceContainer, height: 1),
+            Divider(
+                color: Theme.of(context).colorScheme.surfaceContainer,
+                height: 1),
             const SizedBox(height: 30),
             Text(
               "(c) ${DateTime.now().year} TwoAxis. All Rights Reserved.",
               textAlign: TextAlign.center,
-              style: TextStyle(color: darkTheme.onSurfaceVariant),
+              style: TextStyle(
+                  color: Theme.of(context).colorScheme.onSurfaceVariant),
             ),
           ],
         ));

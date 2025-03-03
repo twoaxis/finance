@@ -6,7 +6,6 @@ import 'package:intl/intl.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../../../util/theme.dart';
 
 class ExpenseSheetItems extends StatefulWidget {
   const ExpenseSheetItems({
@@ -59,7 +58,7 @@ class _ExpenseSheetItemsState extends State<ExpenseSheetItems> {
                                       .split(" ")[0]
                                       .toString(),
                                   style: TextStyle(
-                                      fontSize: 13, color: darkTheme.primary)),
+                                      fontSize: 13, color: Theme.of(context).colorScheme.primary)),
                             ],
                           ),
                         ),
@@ -69,7 +68,7 @@ class _ExpenseSheetItemsState extends State<ExpenseSheetItems> {
                               child: Text(
                                   "\$${NumberFormat('#,##0').format(sheets[widget.sheetIndex]["expenses"][index]["value"]).toString()}",
                                   style: TextStyle(
-                                      color: darkTheme.primary, fontSize: 15)),
+                                      color: Theme.of(context).colorScheme.primary, fontSize: 15)),
                             )),
                         Expanded(
                           flex: 1,
@@ -125,14 +124,14 @@ class _ExpenseSheetItemsState extends State<ExpenseSheetItems> {
                   );
                 },
                 separatorBuilder: (BuildContext context, int index) {
-                  return Divider(color: darkTheme.surfaceContainer, height: 1);
+                  return Divider(color: Theme.of(context).colorScheme.surfaceContainer, height: 1);
                 },
               ),
             ),
             Container(
               decoration: BoxDecoration(
-                  color: darkTheme.surfaceContainer,
-                  border: Border(bottom: BorderSide(color: darkTheme.surface))),
+                  color: Theme.of(context).colorScheme.surfaceContainer,
+                  border: Border(bottom: BorderSide(color: Theme.of(context).colorScheme.surface))),
               child: Padding(
                 padding:
                     const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
@@ -142,7 +141,7 @@ class _ExpenseSheetItemsState extends State<ExpenseSheetItems> {
                       child: Text(
                         "Total",
                         style: TextStyle(
-                            color: darkTheme.primary,
+                            color: Theme.of(context).colorScheme.primary,
                             fontSize: 30,
                             fontWeight: FontWeight.bold),
                       ),
@@ -151,7 +150,7 @@ class _ExpenseSheetItemsState extends State<ExpenseSheetItems> {
                       //"test",
                       "\$${NumberFormat('#,##0').format(sheets[widget.sheetIndex].get("expenses").fold(0, (total, expense) => total + expense['value'] as int))}",
                       style: TextStyle(
-                        color: darkTheme.onPrimary,
+                        color: Theme.of(context).colorScheme.onPrimary,
                         fontSize: 20,
                       ),
                     ),

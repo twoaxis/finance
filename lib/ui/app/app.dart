@@ -18,7 +18,6 @@ import 'package:financial_planner_mobile/ui/app/liabilities/liabilities_action_b
 import 'package:financial_planner_mobile/ui/app/receivables/receivables.dart';
 import 'package:financial_planner_mobile/ui/app/receivables/receivables_action_button.dart';
 import 'package:financial_planner_mobile/ui/app/settings/settings.dart';
-import 'package:financial_planner_mobile/util/theme.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -109,7 +108,8 @@ class _AppState extends State<App> {
         children: [
           Container(
             padding: EdgeInsets.all(24),
-            decoration: BoxDecoration(color: darkTheme.surfaceContainer),
+            decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.surfaceContainer),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -130,7 +130,7 @@ class _AppState extends State<App> {
                 ListTile(
                   title: Text("Income"),
                   leading: Icon(Icons.attach_money,
-                      color: darkTheme.onSurfaceVariant),
+                      color: Theme.of(context).colorScheme.onSurfaceVariant),
                   onTap: () {
                     setState(() {
                       selected = 0;
@@ -141,7 +141,7 @@ class _AppState extends State<App> {
                 ListTile(
                   title: Text("Expense Sheets"),
                   leading: Icon(Icons.edit_document,
-                      color: darkTheme.onSurfaceVariant),
+                      color: Theme.of(context).colorScheme.onSurfaceVariant),
                   onTap: () {
                     setState(() {
                       selected = 1;
@@ -151,7 +151,8 @@ class _AppState extends State<App> {
                 ),
                 ListTile(
                   title: Text("Assets"),
-                  leading: Icon(Icons.house, color: darkTheme.onSurfaceVariant),
+                  leading: Icon(Icons.house,
+                      color: Theme.of(context).colorScheme.onSurfaceVariant),
                   onTap: () {
                     setState(() {
                       selected = 2;
@@ -162,7 +163,7 @@ class _AppState extends State<App> {
                 ListTile(
                   title: Text("Balances"),
                   leading: Icon(Icons.account_balance,
-                      color: darkTheme.onSurfaceVariant),
+                      color: Theme.of(context).colorScheme.onSurfaceVariant),
                   onTap: () {
                     setState(() {
                       selected = 3;
@@ -172,8 +173,8 @@ class _AppState extends State<App> {
                 ),
                 ListTile(
                   title: Text("Liabilities"),
-                  leading:
-                      Icon(Icons.payment, color: darkTheme.onSurfaceVariant),
+                  leading: Icon(Icons.payment,
+                      color: Theme.of(context).colorScheme.onSurfaceVariant),
                   onTap: () {
                     setState(() {
                       selected = 4;
@@ -184,7 +185,7 @@ class _AppState extends State<App> {
                 ListTile(
                   title: Text("Receivables"),
                   leading: Icon(Icons.request_quote,
-                      color: darkTheme.onSurfaceVariant),
+                      color: Theme.of(context).colorScheme.onSurfaceVariant),
                   onTap: () {
                     setState(() {
                       selected = 5;
@@ -197,7 +198,8 @@ class _AppState extends State<App> {
           ),
           ListTile(
             title: Text("Settings"),
-            leading: Icon(Icons.settings, color: darkTheme.onSurfaceVariant),
+            leading: Icon(Icons.settings,
+                color: Theme.of(context).colorScheme.onSurfaceVariant),
             onTap: () {
               Navigator.push(
                 context,
@@ -223,9 +225,14 @@ class _AppState extends State<App> {
         ],
       )),
       appBar: AppBar(
-        title: Text(nameList[selected],
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 30)),
-        backgroundColor: darkTheme.surfaceContainer,
+        title: Text(
+          nameList[selected],
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 30,
+          ),
+        ),
+        backgroundColor: Theme.of(context).colorScheme.surfaceContainer,
         actions: [
           if (buttonList[selected] != null) ...buttonList[selected]!,
           PopupMenuButton(
@@ -239,7 +246,7 @@ class _AppState extends State<App> {
                 );
               }
             },
-            color: darkTheme.surfaceBright,
+            color: Theme.of(context).colorScheme.surfaceBright,
             offset: const Offset(0, 50),
             itemBuilder: (BuildContext context) {
               return const [
@@ -251,6 +258,9 @@ class _AppState extends State<App> {
             },
           ),
         ],
+        iconTheme: IconThemeData(
+          color: Theme.of(context).colorScheme.onSurfaceVariant,
+        ),
       ),
     );
   }
