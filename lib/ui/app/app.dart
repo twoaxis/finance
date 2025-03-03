@@ -1,11 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:financial_planner_mobile/cubit/assets_cubit.dart';
+import 'package:financial_planner_mobile/cubit/balances_cubit.dart';
 import 'package:financial_planner_mobile/cubit/expenses_cubit.dart';
-import 'package:financial_planner_mobile/cubit/fixed_expenses_cubit.dart';
 import 'package:financial_planner_mobile/cubit/income_cubit.dart';
 import 'package:financial_planner_mobile/cubit/liabilities_cubit.dart';
 import 'package:financial_planner_mobile/cubit/receivables_cubit.dart';
 import 'package:financial_planner_mobile/ui/app/assets/assets.dart';
+import 'package:financial_planner_mobile/ui/app/balances/balances.dart';
+import 'package:financial_planner_mobile/ui/app/balances/balances_action_button.dart';
 import 'package:financial_planner_mobile/ui/app/expense_sheets/expense_sheets.dart';
 import 'package:financial_planner_mobile/ui/app/expense_sheets/expense_sheets_action_button.dart';
 import 'package:financial_planner_mobile/ui/app/income/income.dart';
@@ -36,6 +38,7 @@ class _AppState extends State<App> {
     'Income',
     'Expense Sheets',
     'Assets',
+    'Balances',
     'Liabilities',
     'Receivables'
   ];
@@ -44,6 +47,7 @@ class _AppState extends State<App> {
     [const IncomeActionButton()],
     [const ExpenseSheetsActionButtonAdd()],
     [const AssetActionButton()],
+    [const BalancesActionButton()],
     [const LiabilitiesActionButton()],
     [const ReceivablesActionButton()]
   ];
@@ -59,14 +63,12 @@ class _AppState extends State<App> {
         .listen((e) {
       if (mounted) {
         context.read<IncomeCubit>().updateIncome(e.data()?["income"] ?? []);
-
-        context
-            .read<FixedExpensesCubit>()
-            .updateFixedExpenses(e.data()?["fixedExpenses"] ?? []);
         context.read<AssetsCubit>().updateAssets(e.data()?["assets"] ?? []);
+        context.read<BalancesCubit>().updateBalances(e.data()?["balances"] ?? []);
         context
             .read<LiabilitiesCubit>()
             .updateLiabilities(e.data()?["liabilities"] ?? []);
+
         context
             .read<ReceivablesCubit>()
             .updateReceivables(e.data()?["receivables"] ?? []);
@@ -96,6 +98,7 @@ class _AppState extends State<App> {
           IncomePage(),
           ExpenseSheetsPage(),
           AssetsPage(),
+          BalancesPage(),
           LiabilitiesPage(),
           ReceivablesPage()
         ],
@@ -157,12 +160,23 @@ class _AppState extends State<App> {
                   },
                 ),
                 ListTile(
+                  title: Text("Balances"),
+                  leading: Icon(Icons.account_balance,
+                      color: darkTheme.onSurfaceVariant),
+                  onTap: () {
+                    setState(() {
+                      selected = 3;
+                    });
+                    Navigator.pop(context);
+                  },
+                ),
+                ListTile(
                   title: Text("Liabilities"),
                   leading:
                       Icon(Icons.payment, color: darkTheme.onSurfaceVariant),
                   onTap: () {
                     setState(() {
-                      selected = 3;
+                      selected = 4;
                     });
                     Navigator.pop(context);
                   },
@@ -173,7 +187,7 @@ class _AppState extends State<App> {
                       color: darkTheme.onSurfaceVariant),
                   onTap: () {
                     setState(() {
-                      selected = 4;
+                      selected = 5;
                     });
                     Navigator.pop(context);
                   },

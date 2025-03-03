@@ -1,6 +1,6 @@
 import 'package:financial_planner_mobile/cubit/assets_cubit.dart';
+import 'package:financial_planner_mobile/cubit/balances_cubit.dart';
 import 'package:financial_planner_mobile/cubit/expenses_cubit.dart';
-import 'package:financial_planner_mobile/cubit/fixed_expenses_cubit.dart';
 import 'package:financial_planner_mobile/cubit/income_cubit.dart';
 import 'package:financial_planner_mobile/cubit/liabilities_cubit.dart';
 import 'package:financial_planner_mobile/cubit/receivables_cubit.dart';
@@ -29,10 +29,10 @@ void main() async {
           create: (context) => ExpensesCubit(),
         ),
         BlocProvider(
-          create: (context) => FixedExpensesCubit(),
+          create: (context) => AssetsCubit(),
         ),
         BlocProvider(
-          create: (context) => AssetsCubit(),
+          create: (context) => BalancesCubit(),
         ),
         BlocProvider(
           create: (context) => LiabilitiesCubit(),
