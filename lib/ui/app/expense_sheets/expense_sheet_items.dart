@@ -1,4 +1,5 @@
 import 'package:financial_planner_mobile/cubit/expenses_cubit.dart';
+import 'package:financial_planner_mobile/ui/app/expense_sheets/expense_sheet_items_action_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -7,23 +8,35 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../../util/theme.dart';
 
-class OneTimeExpensesScreen extends StatefulWidget {
-  const OneTimeExpensesScreen({super.key});
+class ExpenseSheetItems extends StatefulWidget {
+  const ExpenseSheetItems({
+    super.key,
+    required this.sheetIndex,
+  });
+
+  final int sheetIndex;
 
   @override
-  State<OneTimeExpensesScreen> createState() => _OneTimeExpensesScreenState();
+  State<ExpenseSheetItems> createState() => _ExpenseSheetItemsState();
 }
 
-class _OneTimeExpensesScreenState extends State<OneTimeExpensesScreen> {
+class _ExpenseSheetItemsState extends State<ExpenseSheetItems> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ExpensesCubit, List<dynamic>>(
-      builder: (context, expenses) {
-        return Column(
+        builder: (context, sheets) {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text(sheets[widget.sheetIndex]["name"]),
+          actions: [
+            ExpenseSheetItemsActionButton(sheet: sheets[widget.sheetIndex])
+          ],
+        ),
+        body: Column(
           children: [
             Expanded(
               child: ListView.separated(
-                itemCount: expenses.length,
+                itemCount: sheets[widget.sheetIndex]["expenses"].length,
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.symmetric(
@@ -35,12 +48,12 @@ class _OneTimeExpensesScreenState extends State<OneTimeExpensesScreen> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(expenses[index]["name"],
+                              Text(sheets[widget.sheetIndex]["expenses"][index]["name"],
                                   style: const TextStyle(
                                     fontSize: 15,
                                   )),
                               Text(
-                                  expenses[index]["date"]
+                                  sheets[widget.sheetIndex]["expenses"][index]["date"]
                                       .toDate()
                                       .toString()
                                       .split(" ")[0]
@@ -54,7 +67,7 @@ class _OneTimeExpensesScreenState extends State<OneTimeExpensesScreen> {
                             flex: 1,
                             child: Center(
                               child: Text(
-                                  "\$${NumberFormat('#,##0').format(expenses[index]["value"]).toString()}",
+                                  "\$${NumberFormat('#,##0').format(sheets[widget.sheetIndex]["expenses"][index]["value"]).toString()}",
                                   style: TextStyle(
                                       color: darkTheme.primary, fontSize: 15)),
                             )),
@@ -87,10 +100,14 @@ class _OneTimeExpensesScreenState extends State<OneTimeExpensesScreen> {
                                                       .collection("users")
                                                       .doc(FirebaseAuth.instance
                                                           .currentUser?.uid)
+                                                      .collection("expenses")
+                                                      .doc(sheets[widget.sheetIndex].id)
                                                       .update({
                                                     "expenses":
-                                                        FieldValue.arrayRemove(
-                                                            [expenses[index]])
+                                                        FieldValue.arrayRemove([
+                                                      sheets[widget.sheetIndex]["expenses"]
+                                                          [index]
+                                                    ])
                                                   });
                                                 },
                                                 child: const Text("Yes"),
@@ -131,7 +148,8 @@ class _OneTimeExpensesScreenState extends State<OneTimeExpensesScreen> {
                       ),
                     ),
                     Text(
-                      "\$${NumberFormat('#,##0').format(expenses.fold(0, (int sum, expense) => sum + expense['value'] as int))}",
+                      //"test",
+                      "\$${NumberFormat('#,##0').format(sheets[widget.sheetIndex].get("expenses").fold(0, (total, expense) => total + expense['value'] as int))}",
                       style: TextStyle(
                         color: darkTheme.onPrimary,
                         fontSize: 20,
@@ -142,8 +160,8 @@ class _OneTimeExpensesScreenState extends State<OneTimeExpensesScreen> {
               ),
             )
           ],
-        );
-      },
-    );
+        ),
+      );
+    });
   }
 }

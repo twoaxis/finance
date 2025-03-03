@@ -1,5 +1,7 @@
+import 'package:financial_planner_mobile/ui/common/primary_button.dart';
 import 'package:financial_planner_mobile/ui/onboarding/screens/forget_password.dart';
 import 'package:financial_planner_mobile/util/theme.dart';
+import 'package:financial_planner_mobile/values/spaces.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -23,7 +25,7 @@ class _LoginPageState extends State<LoginPage> {
         title: Text("Login to your account"),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(24.0),
+        padding: const EdgeInsets.all(fullscreenSpacing),
         child: Column(
           mainAxisSize: MainAxisSize.max,
           children: [
@@ -73,112 +75,96 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
             ),
-            SizedBox(
-              width: double.infinity,
-              height: 50,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: darkTheme.primary,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  shadowColor: Colors.black,
-                  elevation: 3,
-                ),
-                onPressed: pending
-                    ? null
-                    : () async {
-                        setState(() {
-                          pending = true;
-                        });
+            PrimaryButton(
+                text: "Login to your account",
+                enabled: !pending,
+                onPressed: () async {
+                  {
+                    setState(() {
+                      pending = true;
+                    });
 
-                        try {
-                          if (emailController.text.isEmpty ||
-                              passwordController.text.isEmpty) {
-                            showDialog(
-                              context: context,
-                              builder: (context) {
-                                return AlertDialog(
-                                  title: Text("Error"),
-                                  content: Text("Please fill all fields"),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      child: Text("Okay"),
-                                    )
-                                  ],
-                                );
-                              },
+                    try {
+                      if (emailController.text.isEmpty ||
+                          passwordController.text.isEmpty) {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: Text("Error"),
+                              content: Text("Please fill all fields"),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text("Okay"),
+                                )
+                              ],
                             );
-                          } else {
-                            await FirebaseAuth.instance
-                                .signInWithEmailAndPassword(
-                              email: emailController.text,
-                              password: passwordController.text,
-                            );
-                            if (context.mounted) {
-                              Navigator.pop(context);
-                            }
-                          }
-                        } on FirebaseAuthException catch (e) {
-                          if (e.code == 'invalid-email' ||
-                              e.code == 'invalid-credential' ||
-                              e.code == 'user-not-found' ||
-                              e.code == 'wrong-password') {
-                            if (context.mounted) {
-                              showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return AlertDialog(
-                                    title: Text("Error"),
-                                    content: Text("Invalid E-mail or Password"),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
-                                        child: Text("Okay"),
-                                      )
-                                    ],
-                                  );
-                                },
-                              );
-                            }
-                          } else if (e.code == "email-already-in-use") {
-                            if (context.mounted) {
-                              showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return AlertDialog(
-                                    title: Text("Error"),
-                                    content: Text("Invalid E-mail or Password"),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
-                                        child: Text("Okay"),
-                                      )
-                                    ],
-                                  );
-                                },
-                              );
-                            }
-                          }
-                        } finally {
-                          setState(() {
-                            pending = false;
-                          });
+                          },
+                        );
+                      } else {
+                        await FirebaseAuth.instance.signInWithEmailAndPassword(
+                          email: emailController.text,
+                          password: passwordController.text,
+                        );
+                        if (context.mounted) {
+                          Navigator.pop(context);
                         }
-                      },
-                child: Text(
-                  "Login to your account",
-                  style: TextStyle(color: darkTheme.onPrimary),
-                ),
-              ),
-            ),
+                      }
+                    } on FirebaseAuthException catch (e) {
+                      if (e.code == 'invalid-email' ||
+                          e.code == 'invalid-credential' ||
+                          e.code == 'user-not-found' ||
+                          e.code == 'wrong-password') {
+                        if (context.mounted) {
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                title: Text("Error"),
+                                content: Text("Invalid E-mail or Password"),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: Text("Okay"),
+                                  )
+                                ],
+                              );
+                            },
+                          );
+                        }
+                      } else if (e.code == "email-already-in-use") {
+                        if (context.mounted) {
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                title: Text("Error"),
+                                content: Text("Invalid E-mail or Password"),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: Text("Okay"),
+                                  )
+                                ],
+                              );
+                            },
+                          );
+                        }
+                      }
+                    } finally {
+                      setState(() {
+                        pending = false;
+                      });
+                    }
+                  }
+                }),
             SizedBox(
               height: 20,
             )

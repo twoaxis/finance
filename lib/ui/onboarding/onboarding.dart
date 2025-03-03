@@ -1,3 +1,4 @@
+import 'package:financial_planner_mobile/ui/common/primary_button.dart';
 import 'package:financial_planner_mobile/ui/onboarding/screens/login.dart';
 import 'package:financial_planner_mobile/ui/onboarding/screens/signup.dart';
 import 'package:financial_planner_mobile/util/theme.dart';
@@ -48,31 +49,14 @@ class _OnboardingState extends State<Onboarding> {
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 35),
               ),
               Text(
-                "Manage your income, expenses and assets with ease!",
+                "Manage your income, expense_sheets and assets with ease!",
                 style: TextStyle(fontSize: 20),
               ),
               SizedBox(height: 20),
-              SizedBox(
-                width: double.infinity,
-                height: 50,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: darkTheme.primary,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      shadowColor: Colors.black,
-                      elevation: 3),
-                  onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => LoginPage()));
-                  },
-                  child: Text(
-                    "Login to your account",
-                    style: TextStyle(color: darkTheme.onPrimary),
-                  ),
-                ),
-              ),
+              PrimaryButton(text: "Login to your account", onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => LoginPage()));
+              }),
               SizedBox(
                 height: 10,
               ),

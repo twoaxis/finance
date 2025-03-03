@@ -2,14 +2,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class AddExpenses extends StatefulWidget {
-  const AddExpenses({super.key});
+class ExpenseSheetAddItem extends StatefulWidget {
+  const ExpenseSheetAddItem({super.key, required this.sheet});
+
+  final DocumentSnapshot sheet;
 
   @override
-  State<AddExpenses> createState() => _AddExpensesState();
+  State<ExpenseSheetAddItem> createState() => _ExpenseSheetAddItemState();
 }
 
-class _AddExpensesState extends State<AddExpenses> {
+class _ExpenseSheetAddItemState extends State<ExpenseSheetAddItem> {
   bool pending = false;
   String error = "";
   TextEditingController nameController = TextEditingController();
@@ -66,28 +68,6 @@ class _AddExpensesState extends State<AddExpenses> {
                 labelText: "Name",
               ),
             ),
-            Row(
-              children: [
-                const Expanded(
-                  child: Text(
-                    "Fixed?",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 18,
-                    ),
-                  ),
-                ),
-                Checkbox(
-                  checkColor: Colors.white,
-                  value: isFixed,
-                  onChanged: (bool? value) {
-                    setState(() {
-                      isFixed = value!;
-                    });
-                  },
-                ),
-              ],
-            ),
             TextField(
               enabled: !pending,
               controller: valueController,
@@ -98,15 +78,14 @@ class _AddExpensesState extends State<AddExpenses> {
                 labelText: "Value",
               ),
             ),
-            if (!isFixed)
-              TextField(
-                controller: dateController,
-                readOnly: true,
-                decoration: const InputDecoration(
-                  labelText: "Date",
-                ),
-                onTap: () => _setDate(context),
+            TextField(
+              controller: dateController,
+              readOnly: true,
+              decoration: const InputDecoration(
+                labelText: "Date",
               ),
+              onTap: () => _setDate(context),
+            ),
             SizedBox(
               height: 20,
             ),
@@ -143,36 +122,23 @@ class _AddExpensesState extends State<AddExpenses> {
                                 error = "Please fill all fields";
                               });
                             } else {
-                              if (isFixed) {
-                                await FirebaseFirestore.instance
-                                    .collection("users")
-                                    .doc(FirebaseAuth.instance.currentUser?.uid)
-                                    .update({
-                                  "fixedExpenses": FieldValue.arrayUnion([
+                              await FirebaseFirestore.instance
+                                  .collection("users")
+                                  .doc(FirebaseAuth.instance.currentUser?.uid)
+                                  .collection("expenses")
+                                  .doc(widget.sheet.id)
+                                  .update(
+                                {
+                                  "expenses": FieldValue.arrayUnion([
                                     {
                                       "name": nameController.text,
-                                      "value": int.parse(valueController.text),
-                                      "paid": false
+                                      "value":
+                                          int.parse(valueController.text),
+                                      "date": dateTime
                                     }
                                   ])
-                                });
-                              } else {
-                                await FirebaseFirestore.instance
-                                    .collection("users")
-                                    .doc(FirebaseAuth.instance.currentUser?.uid)
-                                    .update(
-                                  {
-                                    "expenses": FieldValue.arrayUnion([
-                                      {
-                                        "name": nameController.text,
-                                        "value":
-                                            int.parse(valueController.text),
-                                        "date": dateTime
-                                      }
-                                    ])
-                                  },
-                                );
-                              }
+                                },
+                              );
 
                               nameController.clear();
                               valueController.clear();
