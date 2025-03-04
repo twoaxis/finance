@@ -26,132 +26,134 @@ class _AssetsAddState extends State<AssetsAdd> {
           "Add a new asset",
         ),
       ),
-      body: Padding(
-        padding: EdgeInsets.all(fullscreenSpacing),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Expanded(
-              child: SizedBox(
-                width: double.infinity,
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      TextField(
-                        enabled: !pending,
-                        controller: nameController,
-                        textInputAction: TextInputAction.next,
-                        decoration: InputDecoration(
-                          hintText: "Job",
-                          labelText: "Name",
-                          border: OutlineInputBorder(
-                            borderSide:
-                            BorderSide(color: darkTheme.surfaceBright),
+      body: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.all(fullscreenSpacing),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Expanded(
+                child: SizedBox(
+                  width: double.infinity,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        TextField(
+                          enabled: !pending,
+                          controller: nameController,
+                          textInputAction: TextInputAction.next,
+                          decoration: InputDecoration(
+                            hintText: "Job",
+                            labelText: "Name",
+                            border: OutlineInputBorder(
+                              borderSide:
+                              BorderSide(color: darkTheme.surfaceBright),
+                            ),
                           ),
                         ),
-                      ),
-                      SizedBox(height: 20),
-                      TextField(
-                        enabled: !pending,
-                        controller: valueController,
-                        textInputAction: TextInputAction.done,
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                          hintText: "200",
-                          labelText: "Value",
-                          border: OutlineInputBorder(
-                            borderSide:
-                            BorderSide(color: darkTheme.surfaceBright),
+                        SizedBox(height: 20),
+                        TextField(
+                          enabled: !pending,
+                          controller: valueController,
+                          textInputAction: TextInputAction.done,
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            hintText: "200",
+                            labelText: "Value",
+                            border: OutlineInputBorder(
+                              borderSide:
+                              BorderSide(color: darkTheme.surfaceBright),
+                            ),
                           ),
                         ),
-                      ),
-                      SizedBox(height: 20),
-                      SizedBox(
-                        height: 20,
-                      ),
-                    ],
+                        SizedBox(height: 20),
+                        SizedBox(
+                          height: 20,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-            PrimaryButton(
-              text: "Add asset",
-              enabled: !pending,
-              onPressed: () async {
-                setState(() {
-                  pending = true;
-                });
-                try {
-                  if (nameController.text.isEmpty ||
-                      valueController.text.isEmpty) {
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                        return AlertDialog(
-                          title: Text("Error"),
-                          content:
-                          Text("Please fill all fields"),
-                          actions: [
-                            TextButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              child: Text("Okay"),
-                            )
-                          ],
-                        );
-                      },
-                    );
-                  } else {
-                    await FirebaseFirestore.instance
-                        .collection("users")
-                        .doc(FirebaseAuth.instance.currentUser?.uid)
-                        .update(
-                      {
-                        "assets": FieldValue.arrayUnion([
-                          {
-                            "name": nameController.text,
-                            "value": int.parse(valueController.text)
-                          }
-                        ])
-                      },
-                    );
-                    nameController.clear();
-                    valueController.clear();
-
-                    if (context.mounted) {
-                      Navigator.of(context).pop();
-                    }
-                  }
-                } on Exception {
-                  if (context.mounted) {
-                    return showDialog(
-                      context: context,
-                      builder: (context) {
-                        return AlertDialog(
-                          title: Text("Error"),
-                          content:
-                          Text("An unknown error has occurred"),
-                          actions: [
-                            TextButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              child: Text("Okay"),
-                            )
-                          ],
-                        );
-                      },
-                    );
-                  }
-                } finally {
+              PrimaryButton(
+                text: "Add asset",
+                enabled: !pending,
+                onPressed: () async {
                   setState(() {
-                    pending = false;
+                    pending = true;
                   });
-                }
-              },
-            )
-          ],
+                  try {
+                    if (nameController.text.isEmpty ||
+                        valueController.text.isEmpty) {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: Text("Error"),
+                            content:
+                            Text("Please fill all fields"),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Text("Okay"),
+                              )
+                            ],
+                          );
+                        },
+                      );
+                    } else {
+                      await FirebaseFirestore.instance
+                          .collection("users")
+                          .doc(FirebaseAuth.instance.currentUser?.uid)
+                          .update(
+                        {
+                          "assets": FieldValue.arrayUnion([
+                            {
+                              "name": nameController.text,
+                              "value": int.parse(valueController.text)
+                            }
+                          ])
+                        },
+                      );
+                      nameController.clear();
+                      valueController.clear();
+        
+                      if (context.mounted) {
+                        Navigator.of(context).pop();
+                      }
+                    }
+                  } on Exception {
+                    if (context.mounted) {
+                      return showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: Text("Error"),
+                            content:
+                            Text("An unknown error has occurred"),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Text("Okay"),
+                              )
+                            ],
+                          );
+                        },
+                      );
+                    }
+                  } finally {
+                    setState(() {
+                      pending = false;
+                    });
+                  }
+                },
+              )
+            ],
+          ),
         ),
       ),
     );
