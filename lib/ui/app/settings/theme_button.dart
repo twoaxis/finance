@@ -11,7 +11,15 @@ class ThemeButton extends StatefulWidget {
 
 class _ThemeButtonState extends State<ThemeButton> {
   bool isDarkMode = true;
-  
+
+  @override
+  void initState() {
+    super.initState();
+
+    setState(() {
+      isDarkMode = context.read<ThemeCubit>().state;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
