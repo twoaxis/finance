@@ -15,7 +15,6 @@ class IncomeAddItem extends StatefulWidget {
 
 class _IncomeAddItemState extends State<IncomeAddItem> {
   bool pending = false;
-  String error = "";
   TextEditingController nameController = TextEditingController();
   TextEditingController valueController = TextEditingController();
 
@@ -80,15 +79,29 @@ class _IncomeAddItemState extends State<IncomeAddItem> {
               enabled: !pending,
               onPressed: () async {
                 setState(() {
-                  error = "";
                   pending = true;
                 });
                 try {
                   if (nameController.text.isEmpty ||
                       valueController.text.isEmpty) {
-                    setState(() {
-                      error = "Please fill all fields";
-                    });
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: Text("Error"),
+                          content:
+                          Text("Please fill all fields"),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: Text("Okay"),
+                            )
+                          ],
+                        );
+                      },
+                    );
                   } else {
                     await FirebaseFirestore.instance
                         .collection("users")
@@ -111,9 +124,26 @@ class _IncomeAddItemState extends State<IncomeAddItem> {
                     }
                   }
                 } on Exception {
-                  setState(() {
-                    error = "An error has occurred";
-                  });
+                  if (context.mounted) {
+                    return showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: Text("Error"),
+                          content:
+                          Text("An unknown error has occurred"),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: Text("Okay"),
+                            )
+                          ],
+                        );
+                      },
+                    );
+                  }
                 } finally {
                   setState(() {
                     pending = false;
