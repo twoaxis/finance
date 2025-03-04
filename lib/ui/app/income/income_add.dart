@@ -1,18 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:financial_planner_mobile/ui/common/primary_button.dart';
 import 'package:financial_planner_mobile/util/theme.dart';
 import 'package:financial_planner_mobile/values/spaces.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class BalancesAdd extends StatefulWidget {
-  const BalancesAdd({super.key});
+import '../../common/primary_button.dart';
+
+class IncomeAddItem extends StatefulWidget {
+  const IncomeAddItem({super.key});
 
   @override
-  State<BalancesAdd> createState() => _BalancesAddState();
+  State<IncomeAddItem> createState() => _IncomeAddItemState();
 }
 
-class _BalancesAddState extends State<BalancesAdd> {
+class _IncomeAddItemState extends State<IncomeAddItem> {
   bool pending = false;
   TextEditingController nameController = TextEditingController();
   TextEditingController valueController = TextEditingController();
@@ -22,7 +23,7 @@ class _BalancesAddState extends State<BalancesAdd> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Add a new balance",
+          "Add a new income source",
         ),
       ),
       body: SafeArea(
@@ -75,7 +76,7 @@ class _BalancesAddState extends State<BalancesAdd> {
                 ),
               ),
               PrimaryButton(
-                text: "Add balance",
+                text: "Add income source",
                 enabled: !pending,
                 onPressed: () async {
                   setState(() {
@@ -108,7 +109,7 @@ class _BalancesAddState extends State<BalancesAdd> {
                           .doc(FirebaseAuth.instance.currentUser?.uid)
                           .update(
                         {
-                          "balances": FieldValue.arrayUnion([
+                          "income": FieldValue.arrayUnion([
                             {
                               "name": nameController.text,
                               "value": int.parse(valueController.text)

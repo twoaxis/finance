@@ -1,6 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:financial_planner_mobile/ui/common/primary_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
+import '../../../util/theme.dart';
+import '../../../values/spaces.dart';
 
 class ExpenseSheetAddItem extends StatefulWidget {
   const ExpenseSheetAddItem({super.key, required this.sheet});
@@ -13,7 +17,6 @@ class ExpenseSheetAddItem extends StatefulWidget {
 
 class _ExpenseSheetAddItemState extends State<ExpenseSheetAddItem> {
   bool pending = false;
-  String error = "";
   TextEditingController nameController = TextEditingController();
   TextEditingController valueController = TextEditingController();
   TextEditingController dateController = TextEditingController();
@@ -46,126 +49,147 @@ class _ExpenseSheetAddItemState extends State<ExpenseSheetAddItem> {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.only(right: 35.0, left: 35.0, top: 30),
+        padding: EdgeInsets.all(fullscreenSpacing),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            if (error.isNotEmpty)
-              Text(
-                error,
-                style: const TextStyle(
-                  color: Colors.red,
-                  fontSize: 15,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            TextField(
-              enabled: !pending,
-              controller: nameController,
-              textInputAction: TextInputAction.next,
-              decoration: const InputDecoration(
-                hintText: "Groceries",
-                labelText: "Name",
-              ),
-            ),
-            TextField(
-              enabled: !pending,
-              controller: valueController,
-              textInputAction: TextInputAction.done,
-              keyboardType: TextInputType.number,
-              decoration: const InputDecoration(
-                hintText: "200",
-                labelText: "Value",
-              ),
-            ),
-            TextField(
-              controller: dateController,
-              readOnly: true,
-              decoration: const InputDecoration(
-                labelText: "Date",
-              ),
-              onTap: () => _setDate(context),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                TextButton(
-                  onPressed: pending
-                      ? null
-                      : () {
-                          Navigator.of(context).pop();
-
-                          nameController.clear();
-                          valueController.clear();
-                          dateController.clear();
-                        },
-                  child: const Text(
-                    "Cancel",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+            Expanded(
+              child: SizedBox(
+                width: double.infinity,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      TextField(
+                        enabled: !pending,
+                        controller: nameController,
+                        textInputAction: TextInputAction.next,
+                        decoration: InputDecoration(
+                          hintText: "Groceries",
+                          labelText: "Name",
+                          border: OutlineInputBorder(
+                            borderSide:
+                            BorderSide(color: darkTheme.surfaceBright),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 20),
+                      TextField(
+                        enabled: !pending,
+                        controller: valueController,
+                        textInputAction: TextInputAction.done,
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                          hintText: "200",
+                          labelText: "Value",
+                          border: OutlineInputBorder(
+                            borderSide:
+                            BorderSide(color: darkTheme.surfaceBright),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 20),
+                      TextField(
+                        controller: dateController,
+                        readOnly: true,
+                        decoration: InputDecoration(
+                          labelText: "Date",
+                          border: OutlineInputBorder(
+                            borderSide:
+                            BorderSide(color: darkTheme.surfaceBright),
+                          ),
+                        ),
+                        onTap: () => _setDate(context),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                    ],
                   ),
                 ),
-                TextButton(
-                  onPressed: pending
-                      ? null
-                      : () async {
-                          setState(() {
-                            error = "";
-                            pending = true;
-                          });
-                          try {
-                            if (nameController.text.isEmpty ||
-                                valueController.text.isEmpty) {
-                              setState(() {
-                                error = "Please fill all fields";
-                              });
-                            } else {
-                              await FirebaseFirestore.instance
-                                  .collection("users")
-                                  .doc(FirebaseAuth.instance.currentUser?.uid)
-                                  .collection("expenses")
-                                  .doc(widget.sheet.id)
-                                  .update(
-                                {
-                                  "expenses": FieldValue.arrayUnion([
-                                    {
-                                      "name": nameController.text,
-                                      "value":
-                                          int.parse(valueController.text),
-                                      "date": dateTime
-                                    }
-                                  ])
-                                },
-                              );
-
-                              nameController.clear();
-                              valueController.clear();
-                              setState(() {
-                                isFixed = false;
-                              });
-                              if (context.mounted) {
-                                Navigator.of(context).pop();
-                              }
-                            }
-                          } on Exception {
-                            setState(() {
-                              error = "An error has occurred";
-                            });
-                          } finally {
-                            setState(() {
-                              pending = false;
-                            });
+              ),
+            ),
+            PrimaryButton(
+              text: "Add expense",
+              enabled: !pending,
+              onPressed: () async {
+                setState(() {
+                  pending = true;
+                });
+                try {
+                  if (nameController.text.isEmpty ||
+                      valueController.text.isEmpty) {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: Text("Error"),
+                          content: Text("Please fill all fields"),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: Text("Okay"),
+                            )
+                          ],
+                        );
+                      },
+                    );
+                  } else {
+                    await FirebaseFirestore.instance
+                        .collection("users")
+                        .doc(FirebaseAuth.instance.currentUser?.uid)
+                        .collection("expenses")
+                        .doc(widget.sheet.id)
+                        .update(
+                      {
+                        "expenses": FieldValue.arrayUnion([
+                          {
+                            "name": nameController.text,
+                            "value": int.parse(valueController.text),
+                            "date": dateTime
                           }
-                        },
-                  child: const Text(
-                    "Add",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-                  ),
-                ),
-              ],
-            ),
+                        ])
+                      },
+                    );
+
+                    nameController.clear();
+                    valueController.clear();
+                    setState(() {
+                      isFixed = false;
+                    });
+                    if (context.mounted) {
+                      Navigator.of(context).pop();
+                    }
+                  }
+                } on Exception {
+                  if (context.mounted) {
+                    return showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: Text("Error"),
+                          content:
+                          Text("An unknown error has occurred"),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: Text("Okay"),
+                            )
+                          ],
+                        );
+                      },
+                    );
+                  }
+                } finally {
+                  setState(() {
+                    pending = false;
+                  });
+                }
+              },
+            )
           ],
         ),
       ),

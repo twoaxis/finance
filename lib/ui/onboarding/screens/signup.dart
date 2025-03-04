@@ -25,66 +25,67 @@ class _SignupPageState extends State<SignupPage> {
       appBar: AppBar(
         title: Text("Create an account"),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(fullscreenSpacing),
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Expanded(
-              child: SizedBox(
-                width: double.infinity,
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      TextField(
-                        controller: emailController,
-                        enabled: !pending,
-                        textInputAction: TextInputAction.next,
-                        decoration: InputDecoration(
-                          hintText: "john@hotmail.com",
-                          labelText: "E-mail",
-                          border: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: darkTheme.surfaceBright),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(fullscreenSpacing),
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Expanded(
+                child: SizedBox(
+                  width: double.infinity,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        TextField(
+                          controller: emailController,
+                          enabled: !pending,
+                          textInputAction: TextInputAction.next,
+                          decoration: InputDecoration(
+                            hintText: "john@hotmail.com",
+                            labelText: "E-mail",
+                            border: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: darkTheme.surfaceBright),
+                            ),
                           ),
                         ),
-                      ),
-                      SizedBox(height: 20),
-                      TextField(
-                        controller: passwordController,
-                        obscureText: true,
-                        enabled: !pending,
-                        textInputAction: TextInputAction.next,
-                        decoration: InputDecoration(
-                          hintText: "••••••••••••",
-                          labelText: "Password",
-                          border: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: darkTheme.surfaceBright),
+                        SizedBox(height: 20),
+                        TextField(
+                          controller: passwordController,
+                          obscureText: true,
+                          enabled: !pending,
+                          textInputAction: TextInputAction.next,
+                          decoration: InputDecoration(
+                            hintText: "••••••••••••",
+                            labelText: "Password",
+                            border: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: darkTheme.surfaceBright),
+                            ),
                           ),
                         ),
-                      ),
-                      SizedBox(height: 20),
-                      TextField(
-                        controller: repeatPasswordController,
-                        obscureText: true,
-                        enabled: !pending,
-                        textInputAction: TextInputAction.next,
-                        decoration: InputDecoration(
-                          hintText: "••••••••••••",
-                          labelText: "Repeat Password",
-                          border: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: darkTheme.surfaceBright),
+                        SizedBox(height: 20),
+                        TextField(
+                          controller: repeatPasswordController,
+                          obscureText: true,
+                          enabled: !pending,
+                          textInputAction: TextInputAction.next,
+                          decoration: InputDecoration(
+                            hintText: "••••••••••••",
+                            labelText: "Repeat Password",
+                            border: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: darkTheme.surfaceBright),
+                            ),
                           ),
-                        ),
-                      )
-                    ],
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-            PrimaryButton(
+              PrimaryButton(
                 text: "Create your account",
                 enabled: !pending,
                 onPressed: () async {
@@ -225,11 +226,10 @@ class _SignupPageState extends State<SignupPage> {
                       });
                     }
                   }
-                }),
-            SizedBox(
-              height: 20,
-            )
-          ],
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

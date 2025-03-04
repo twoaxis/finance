@@ -1,4 +1,4 @@
-import 'package:financial_planner_mobile/ui/app/receivables/add_receivables.dart';
+import 'package:financial_planner_mobile/ui/app/receivables/receivables_add.dart';
 
 import 'package:flutter/material.dart';
 

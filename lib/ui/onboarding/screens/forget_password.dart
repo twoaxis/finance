@@ -24,37 +24,38 @@ class _ForgetPasswordState extends State<ForgetPassword> {
         appBar: AppBar(
           title: Text("Forget password"),
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(fullscreenSpacing),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Expanded(
-                child: SizedBox(
-                  width: double.infinity,
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        TextField(
-                          controller: emailController,
-                          enabled: !pending,
-                          textInputAction: TextInputAction.next,
-                          decoration: InputDecoration(
-                            hintText: "john@hotmail.com",
-                            labelText: "E-mail",
-                            border: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: darkTheme.surfaceBright),
+        body: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(fullscreenSpacing),
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Expanded(
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          TextField(
+                            controller: emailController,
+                            enabled: !pending,
+                            textInputAction: TextInputAction.next,
+                            decoration: InputDecoration(
+                              hintText: "john@hotmail.com",
+                              labelText: "E-mail",
+                              border: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: darkTheme.surfaceBright),
+                              ),
                             ),
                           ),
-                        ),
-                        SizedBox(height: 20),
-                      ],
+                          SizedBox(height: 20),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-              PrimaryButton(
+                PrimaryButton(
                   text: "Reset Password",
                   enabled: !pending,
                   onPressed: () async {
@@ -120,11 +121,10 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                         pending = false;
                       });
                     }
-                  }),
-              SizedBox(
-                height: 20,
-              )
-            ],
+                  },
+                ),
+              ],
+            ),
           ),
         ));
   }

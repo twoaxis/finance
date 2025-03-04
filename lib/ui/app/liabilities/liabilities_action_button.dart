@@ -1,4 +1,4 @@
-import 'package:financial_planner_mobile/ui/app/liabilities/add_liabilities.dart';
+import 'package:financial_planner_mobile/ui/app/liabilities/liabilities_add.dart';
 
 import 'package:flutter/material.dart';
 
@@ -12,7 +12,7 @@ class LiabilitiesActionButton extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const AddLiabilities(),
+            builder: (context) => const LiabilitiesAdd(),
           ),
         );
       },

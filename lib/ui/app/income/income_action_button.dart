@@ -1,4 +1,4 @@
-import 'package:financial_planner_mobile/ui/app/income/add_income.dart';
+import 'package:financial_planner_mobile/ui/app/income/income_add.dart';
 import 'package:flutter/material.dart';
 
 class IncomeActionButton extends StatelessWidget {
@@ -11,7 +11,7 @@ class IncomeActionButton extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => AddIncome(),
+            builder: (context) => IncomeAddItem(),
           ),
         );
       },

@@ -24,58 +24,59 @@ class _LoginPageState extends State<LoginPage> {
       appBar: AppBar(
         title: Text("Login to your account"),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(fullscreenSpacing),
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Expanded(
-              child: SizedBox(
-                width: double.infinity,
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      TextField(
-                        controller: emailController,
-                        enabled: !pending,
-                        textInputAction: TextInputAction.next,
-                        decoration: InputDecoration(
-                            hintText: "john@hotmail.com",
-                            labelText: "E-mail",
-                            border: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: darkTheme.surfaceBright))),
-                      ),
-                      SizedBox(height: 20),
-                      TextField(
-                        controller: passwordController,
-                        obscureText: true,
-                        enabled: !pending,
-                        textInputAction: TextInputAction.next,
-                        decoration: InputDecoration(
-                            hintText: "••••••••••••",
-                            labelText: "Password",
-                            border: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: darkTheme.surfaceBright))),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const ForgetPassword(),
-                            ),
-                          );
-                        },
-                        child: Text("Forgot password?"),
-                      )
-                    ],
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(fullscreenSpacing),
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Expanded(
+                child: SizedBox(
+                  width: double.infinity,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        TextField(
+                          controller: emailController,
+                          enabled: !pending,
+                          textInputAction: TextInputAction.next,
+                          decoration: InputDecoration(
+                              hintText: "john@hotmail.com",
+                              labelText: "E-mail",
+                              border: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: darkTheme.surfaceBright))),
+                        ),
+                        SizedBox(height: 20),
+                        TextField(
+                          controller: passwordController,
+                          obscureText: true,
+                          enabled: !pending,
+                          textInputAction: TextInputAction.next,
+                          decoration: InputDecoration(
+                              hintText: "••••••••••••",
+                              labelText: "Password",
+                              border: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: darkTheme.surfaceBright))),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const ForgetPassword(),
+                              ),
+                            );
+                          },
+                          child: Text("Forgot password?"),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-            PrimaryButton(
+              PrimaryButton(
                 text: "Login to your account",
                 enabled: !pending,
                 onPressed: () async {
@@ -164,11 +165,10 @@ class _LoginPageState extends State<LoginPage> {
                       });
                     }
                   }
-                }),
-            SizedBox(
-              height: 20,
-            )
-          ],
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

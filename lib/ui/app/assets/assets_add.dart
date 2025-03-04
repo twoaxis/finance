@@ -1,18 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:financial_planner_mobile/ui/common/primary_button.dart';
-import 'package:financial_planner_mobile/util/theme.dart';
 import 'package:financial_planner_mobile/values/spaces.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class BalancesAdd extends StatefulWidget {
-  const BalancesAdd({super.key});
+import '../../../util/theme.dart';
+import '../../common/primary_button.dart';
+
+class AssetsAdd extends StatefulWidget {
+  const AssetsAdd({super.key});
 
   @override
-  State<BalancesAdd> createState() => _BalancesAddState();
+  State<AssetsAdd> createState() => _AssetsAddState();
 }
 
-class _BalancesAddState extends State<BalancesAdd> {
+class _AssetsAddState extends State<AssetsAdd> {
   bool pending = false;
   TextEditingController nameController = TextEditingController();
   TextEditingController valueController = TextEditingController();
@@ -22,7 +23,7 @@ class _BalancesAddState extends State<BalancesAdd> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Add a new balance",
+          "Add a new asset",
         ),
       ),
       body: SafeArea(
@@ -75,7 +76,7 @@ class _BalancesAddState extends State<BalancesAdd> {
                 ),
               ),
               PrimaryButton(
-                text: "Add balance",
+                text: "Add asset",
                 enabled: !pending,
                 onPressed: () async {
                   setState(() {
@@ -108,7 +109,7 @@ class _BalancesAddState extends State<BalancesAdd> {
                           .doc(FirebaseAuth.instance.currentUser?.uid)
                           .update(
                         {
-                          "balances": FieldValue.arrayUnion([
+                          "assets": FieldValue.arrayUnion([
                             {
                               "name": nameController.text,
                               "value": int.parse(valueController.text)
