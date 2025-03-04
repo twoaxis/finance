@@ -1,4 +1,3 @@
-import 'package:financial_planner_mobile/util/theme.dart';
 import 'package:flutter/material.dart';
 
 class EmailVerify extends StatelessWidget {
@@ -22,7 +21,7 @@ class EmailVerify extends StatelessWidget {
               'Email has been sent',
               style: TextStyle(
                 fontSize: 25,
-                color: darkTheme.onPrimary,
+                color: Theme.of(context).colorScheme.onPrimary,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -33,7 +32,7 @@ class EmailVerify extends StatelessWidget {
               textAlign: TextAlign.center,
               'Make sure to check your spam or junk folder',
               style: TextStyle(
-                color: darkTheme.onSurfaceVariant,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
                 fontSize: 18,
               ),
             ),

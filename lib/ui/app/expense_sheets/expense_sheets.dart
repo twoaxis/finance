@@ -35,7 +35,7 @@ class _ExpenseSheetsPageState extends State<ExpenseSheetsPage> {
                   );
                 },
                 separatorBuilder: (BuildContext context, int index) {
-                  return Divider(color: darkTheme.surfaceContainer, height: 1);
+                  return Divider(color: Theme.of(context).colorScheme.surfaceContainer, height: 1);
                 },
               );
             },

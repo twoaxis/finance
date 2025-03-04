@@ -46,11 +46,12 @@ class _OnboardingState extends State<Onboarding> {
             children: [
               Text(
                 "TwoAxis Finance",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 35),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 35,
+                color: darkTheme.colorScheme.onPrimary),
               ),
               Text(
                 "Manage your income, expense_sheets and assets with ease!",
-                style: TextStyle(fontSize: 20),
+                style: TextStyle(fontSize: 20, color: darkTheme.colorScheme.onPrimary),
               ),
               SizedBox(height: 20),
               PrimaryButton(text: "Login to your account", onPressed: () {
@@ -65,7 +66,7 @@ class _OnboardingState extends State<Onboarding> {
                 height: 50,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      backgroundColor: darkTheme.surfaceContainer,
+                      backgroundColor: darkTheme.colorScheme.surfaceContainer,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10)),
                       shadowColor: Colors.black,
@@ -76,7 +77,7 @@ class _OnboardingState extends State<Onboarding> {
                   },
                   child: Text(
                     "Create an account",
-                    style: TextStyle(color: darkTheme.onPrimary),
+                    style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
                   ),
                 ),
               ),
@@ -107,7 +108,7 @@ class _OnboardingState extends State<Onboarding> {
                     ],
                   ),
                   style: TextStyle(color: Color(0x66FFFFFF)),
-                  textAlign: TextAlign.center,
+                  textAlign: TextAlign.left,
                 ),
               ),
               SizedBox(

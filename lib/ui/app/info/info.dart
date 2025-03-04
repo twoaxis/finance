@@ -1,4 +1,3 @@
-import 'package:financial_planner_mobile/util/theme.dart';
 import 'package:flutter/material.dart';
 
 class InfoPage extends StatelessWidget {
@@ -11,33 +10,33 @@ class InfoPage extends StatelessWidget {
           title: const Text("About",
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
           ),
-          backgroundColor: darkTheme.surfaceContainer,
+          backgroundColor: Theme.of(context).colorScheme.surfaceContainer,
         ),
         body: ListView(
           children: [
             ListTile(
               title: Text("Version",
-                  style: TextStyle(color: darkTheme.onSurfaceVariant)),
+                  style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant)),
               subtitle: Text("2.2.0-beta",
-                  style: TextStyle(color: darkTheme.onSurfaceVariant)),
-              leading: Icon(Icons.build, color: darkTheme.onSurfaceVariant),
+                  style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant)),
+              leading: Icon(Icons.build, color: Theme.of(context).colorScheme.onSurfaceVariant),
               onTap: () {},
             ),
-            Divider(color: darkTheme.surfaceContainer, height: 1),
+            Divider(color: Theme.of(context).colorScheme.surfaceContainer, height: 1),
             ListTile(
               title: Text("Build Number",
-                  style: TextStyle(color: darkTheme.onSurfaceVariant)),
+                  style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant)),
               subtitle: Text("17",
-                  style: TextStyle(color: darkTheme.onSurfaceVariant)),
-              leading: Icon(Icons.build, color: darkTheme.onSurfaceVariant),
+                  style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant)),
+              leading: Icon(Icons.build, color: Theme.of(context).colorScheme.onSurfaceVariant),
               onTap: () {},
             ),
-            Divider(color: darkTheme.surfaceContainer, height: 1),
+            Divider(color: Theme.of(context).colorScheme.surfaceContainer, height: 1),
             const SizedBox(height: 30),
             Text(
               "(c) ${DateTime.now().year} TwoAxis. All Rights Reserved.",
               textAlign: TextAlign.center,
-              style: TextStyle(color: darkTheme.onSurfaceVariant),
+              style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),
             ),
           ],
         ));

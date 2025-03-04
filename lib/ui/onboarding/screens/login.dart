@@ -44,7 +44,7 @@ class _LoginPageState extends State<LoginPage> {
                             labelText: "E-mail",
                             border: OutlineInputBorder(
                                 borderSide: BorderSide(
-                                    color: darkTheme.surfaceBright))),
+                                    color: Theme.of(context).colorScheme.surfaceBright))),
                       ),
                       SizedBox(height: 20),
                       TextField(
@@ -57,7 +57,7 @@ class _LoginPageState extends State<LoginPage> {
                             labelText: "Password",
                             border: OutlineInputBorder(
                                 borderSide: BorderSide(
-                                    color: darkTheme.surfaceBright))),
+                                    color: Theme.of(context).colorScheme.surfaceBright))),
                       ),
                       TextButton(
                         onPressed: () {

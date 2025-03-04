@@ -1,5 +1,4 @@
 import 'package:financial_planner_mobile/cubit/assets_cubit.dart';
-import 'package:financial_planner_mobile/util/theme.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -41,7 +40,7 @@ class _AssetsPageState extends State<AssetsPage> {
                             child: Text(
                                 "\$${NumberFormat('#,##0').format(assets[index]["value"]).toString()}",
                                 style: TextStyle(
-                                    color: darkTheme.surfaceTint,
+                                    color: Theme.of(context).colorScheme.surfaceTint,
                                     fontSize: 15)),
                           )),
                       Expanded(
@@ -95,7 +94,7 @@ class _AssetsPageState extends State<AssetsPage> {
                 );
               },
               separatorBuilder: (BuildContext context, int index) {
-                return Divider(color: darkTheme.surfaceContainer, height: 1);
+                return Divider(color: Theme.of(context).colorScheme.surfaceContainer, height: 1);
               },
             );
           }),
