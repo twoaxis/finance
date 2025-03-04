@@ -44,7 +44,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                             labelText: "E-mail",
                             border: OutlineInputBorder(
                               borderSide:
-                                  BorderSide(color: darkTheme.surfaceBright),
+                                  BorderSide(color: Theme.of(context).colorScheme.surfaceBright),
                             ),
                           ),
                         ),

@@ -45,7 +45,7 @@ class _SignupPageState extends State<SignupPage> {
                           labelText: "E-mail",
                           border: OutlineInputBorder(
                             borderSide:
-                                BorderSide(color: darkTheme.surfaceBright),
+                                BorderSide(color: Theme.of(context).colorScheme.surfaceBright),
                           ),
                         ),
                       ),
@@ -60,7 +60,7 @@ class _SignupPageState extends State<SignupPage> {
                           labelText: "Password",
                           border: OutlineInputBorder(
                             borderSide:
-                                BorderSide(color: darkTheme.surfaceBright),
+                                BorderSide(color: Theme.of(context).colorScheme.surfaceBright),
                           ),
                         ),
                       ),
@@ -75,7 +75,7 @@ class _SignupPageState extends State<SignupPage> {
                           labelText: "Repeat Password",
                           border: OutlineInputBorder(
                             borderSide:
-                                BorderSide(color: darkTheme.surfaceBright),
+                                BorderSide(color: Theme.of(context).colorScheme.surfaceBright),
                           ),
                         ),
                       )

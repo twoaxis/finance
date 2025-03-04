@@ -45,7 +45,7 @@ class _BalancesPageState extends State<BalancesPage> {
                             child: Text(
                                 "\$${NumberFormat('#,##0').format(balances[index]["value"]).toString()}",
                                 style: TextStyle(
-                                    color: darkTheme.surfaceTint,
+                                    color: Theme.of(context).colorScheme.surfaceTint,
                                     fontSize: 15)),
                           )),
                       Expanded(
@@ -205,7 +205,7 @@ class _BalancesPageState extends State<BalancesPage> {
                 );
               },
               separatorBuilder: (BuildContext context, int index) {
-                return Divider(color: darkTheme.surfaceContainer, height: 1);
+                return Divider(color: Theme.of(context).colorScheme.surfaceContainer, height: 1);
               },
             );
           }),

@@ -43,7 +43,7 @@ class _ExpenseSheetsAddState extends State<ExpenseSheetsAdd> {
                           labelText: "Sheet name",
                           border: OutlineInputBorder(
                             borderSide:
-                                BorderSide(color: darkTheme.surfaceBright),
+                                BorderSide(color: Theme.of(context).colorScheme.surfaceBright),
                           ),
                         ),
                       ),
