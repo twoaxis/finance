@@ -67,7 +67,7 @@ class _ExpenseSheetItemsState extends State<ExpenseSheetItems> {
                             flex: 1,
                             child: Center(
                               child: Text(
-                                  "\$${NumberFormat('#,##0').format(sheets[widget.sheetIndex]["expenses"][index]["value"]).toString()}",
+                                  "\$${sheets[widget.sheetIndex]["expenses"][index]["value"] is int ? NumberFormat('#,##0').format(sheets[widget.sheetIndex]["expenses"][index]["value"]) : NumberFormat('#,##0.##').format((sheets[widget.sheetIndex]["expenses"][index]["value"] as num).toDouble())}",
                                   style: TextStyle(
                                       color: darkTheme.primary, fontSize: 15)),
                             )),

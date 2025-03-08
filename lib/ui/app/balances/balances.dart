@@ -43,7 +43,7 @@ class _BalancesPageState extends State<BalancesPage> {
                           flex: 1,
                           child: Center(
                             child: Text(
-                                "\$${NumberFormat('#,##0').format(balances[index]["value"]).toString()}",
+                                "\$${balances[index]["value"] is int ? NumberFormat('#,##0').format(balances[index]["value"]) : NumberFormat('#,##0.##').format((balances[index]["value"] as num).toDouble())}",
                                 style: TextStyle(
                                     color: darkTheme.surfaceTint,
                                     fontSize: 15)),
