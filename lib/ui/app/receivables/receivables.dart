@@ -115,7 +115,7 @@ class _ReceivablesPageState extends State<ReceivablesPage> {
                                                         } else {
                                                           receivables[index]
                                                                   ["value"] -=
-                                                              int.parse(
+                                                              double.parse(
                                                                   valueController
                                                                       .text);
 

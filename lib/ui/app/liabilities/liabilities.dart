@@ -114,7 +114,7 @@ class _LiabilitiesPageState extends State<LiabilitiesPage> {
                                                         } else {
                                                           liabilities[index]
                                                                   ["value"] -=
-                                                              int.parse(
+                                                              double.parse(
                                                                   valueController
                                                                       .text);
 

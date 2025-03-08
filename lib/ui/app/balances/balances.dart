@@ -115,7 +115,7 @@ class _BalancesPageState extends State<BalancesPage> {
                                                         } else {
                                                           balances[index]
                                                                   ["value"] =
-                                                              int.parse(
+                                                              double.parse(
                                                                   valueController
                                                                       .text);
 
