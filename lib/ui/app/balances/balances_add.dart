@@ -102,6 +102,25 @@ class _BalancesAddState extends State<BalancesAdd> {
                           );
                         },
                       );
+                    } else if(double.parse(valueController.text) < 0) {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: Text("Error"),
+                            content:
+                            Text("Value cannot be negative."),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Text("Okay"),
+                              )
+                            ],
+                          );
+                        },
+                      );
                     } else {
                       await FirebaseFirestore.instance
                           .collection("users")
@@ -111,7 +130,7 @@ class _BalancesAddState extends State<BalancesAdd> {
                           "balances": FieldValue.arrayUnion([
                             {
                               "name": nameController.text,
-                              "value": int.parse(valueController.text)
+                              "value": double.parse(valueController.text)
                             }
                           ])
                         },
@@ -122,6 +141,27 @@ class _BalancesAddState extends State<BalancesAdd> {
                       if (context.mounted) {
                         Navigator.of(context).pop();
                       }
+                    }
+                  } on FormatException {
+                    if (context.mounted) {
+                      return showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: Text("Error"),
+                            content:
+                            Text("Value must be an number."),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Text("Okay"),
+                              )
+                            ],
+                          );
+                        },
+                      );
                     }
                   } on Exception {
                     if (context.mounted) {

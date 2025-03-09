@@ -40,7 +40,7 @@ class _IncomePageState extends State<IncomePage> {
                             flex: 1,
                             child: Center(
                               child: Text(
-                                  "\$${NumberFormat('#,##0').format(income[index]["value"]).toString()}",
+                                  "\$${income[index]["value"] is int ? NumberFormat('#,##0').format(income[index]["value"]) : NumberFormat('#,##0.##').format((income[index]["value"] as num).toDouble())}",
                                   style: TextStyle(
                                       color: darkTheme.primary, fontSize: 15)),
                             )),
