@@ -43,7 +43,7 @@ class _ReceivablesPageState extends State<ReceivablesPage> {
                           flex: 1,
                           child: Center(
                             child: Text(
-                                "\$${NumberFormat('#,##0').format(receivables[index]["value"]).toString()}",
+                                "\$${receivables[index]["value"] is int ? NumberFormat('#,##0').format(receivables[index]["value"]) : NumberFormat('#,##0.##').format((receivables[index]["value"] as num).toDouble())}",
                                 style: TextStyle(
                                     color: darkTheme.surfaceTint,
                                     fontSize: 15)),
@@ -115,7 +115,7 @@ class _ReceivablesPageState extends State<ReceivablesPage> {
                                                         } else {
                                                           receivables[index]
                                                                   ["value"] -=
-                                                              int.parse(
+                                                              double.parse(
                                                                   valueController
                                                                       .text);
 
