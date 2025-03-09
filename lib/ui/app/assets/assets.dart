@@ -36,17 +36,14 @@ class _AssetsPageState extends State<AssetsPage> {
                             style: const TextStyle(fontSize: 15)),
                       ),
                       Expanded(
-                        flex: 1,
-                        child: Center(
-                          child: Text(
-                            "\$${assets[index]["value"] is int ? NumberFormat('#,##0').format(assets[index]["value"]) : NumberFormat('#,##0.##').format((assets[index]["value"] as num).toDouble())}",
-                            style: TextStyle(
-                              color: darkTheme.surfaceTint,
-                              fontSize: 15,
-                            ),
-                          ),
-                        ),
-                      ),
+                          flex: 1,
+                          child: Center(
+                            child: Text(
+                                "\$${NumberFormat('#,##0').format(assets[index]["value"]).toString()}",
+                                style: TextStyle(
+                                    color: darkTheme.surfaceTint,
+                                    fontSize: 15)),
+                          )),
                       Expanded(
                         flex: 1,
                         child: Row(

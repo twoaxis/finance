@@ -43,7 +43,7 @@ class _LiabilitiesPageState extends State<LiabilitiesPage> {
                           flex: 1,
                           child: Center(
                             child: Text(
-                                "\$${liabilities[index]["value"] is int ? NumberFormat('#,##0').format(liabilities[index]["value"]) : NumberFormat('#,##0.##').format((liabilities[index]["value"] as num).toDouble())}",
+                                "\$${NumberFormat('#,##0').format(liabilities[index]["value"]).toString()}",
                                 style: TextStyle(
                                     color: darkTheme.surfaceTint,
                                     fontSize: 15)),
@@ -114,7 +114,7 @@ class _LiabilitiesPageState extends State<LiabilitiesPage> {
                                                         } else {
                                                           liabilities[index]
                                                                   ["value"] -=
-                                                              double.parse(
+                                                              int.parse(
                                                                   valueController
                                                                       .text);
 

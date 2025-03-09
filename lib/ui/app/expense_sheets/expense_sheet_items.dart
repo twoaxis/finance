@@ -67,7 +67,7 @@ class _ExpenseSheetItemsState extends State<ExpenseSheetItems> {
                             flex: 1,
                             child: Center(
                               child: Text(
-                                  "\$${sheets[widget.sheetIndex]["expenses"][index]["value"] is int ? NumberFormat('#,##0').format(sheets[widget.sheetIndex]["expenses"][index]["value"]) : NumberFormat('#,##0.##').format((sheets[widget.sheetIndex]["expenses"][index]["value"] as num).toDouble())}",
+                                  "\$${NumberFormat('#,##0').format(sheets[widget.sheetIndex]["expenses"][index]["value"]).toString()}",
                                   style: TextStyle(
                                       color: darkTheme.primary, fontSize: 15)),
                             )),
@@ -148,7 +148,8 @@ class _ExpenseSheetItemsState extends State<ExpenseSheetItems> {
                       ),
                     ),
                     Text(
-                      "\$${NumberFormat('#,##0').format(sheets[widget.sheetIndex].get("expenses").fold(0, (total, expense) => total + (expense['value'] as num).toDouble()))}",
+                      //"test",
+                      "\$${NumberFormat('#,##0').format(sheets[widget.sheetIndex].get("expenses").fold(0, (total, expense) => total + expense['value'] as int))}",
                       style: TextStyle(
                         color: darkTheme.onPrimary,
                         fontSize: 20,
