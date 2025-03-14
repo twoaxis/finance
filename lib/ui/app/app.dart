@@ -8,6 +8,7 @@ import 'package:financial_planner_mobile/cubit/receivables_cubit.dart';
 import 'package:financial_planner_mobile/ui/app/assets/assets.dart';
 import 'package:financial_planner_mobile/ui/app/balances/balances.dart';
 import 'package:financial_planner_mobile/ui/app/balances/balances_action_button.dart';
+import 'package:financial_planner_mobile/ui/app/dashboard/dashboard.dart';
 import 'package:financial_planner_mobile/ui/app/expense_sheets/expense_sheets.dart';
 import 'package:financial_planner_mobile/ui/app/expense_sheets/expense_sheets_action_button.dart';
 import 'package:financial_planner_mobile/ui/app/income/income.dart';
@@ -35,6 +36,7 @@ class _AppState extends State<App> {
   int selected = 0;
 
   final List<String> nameList = [
+    'Dashboard',
     'Income',
     'Expense Sheets',
     'Assets',
@@ -44,6 +46,7 @@ class _AppState extends State<App> {
   ];
 
   final List<List<Widget>?> buttonList = [
+    [],
     [const IncomeActionButton()],
     [const ExpenseSheetsActionButtonAdd()],
     [const AssetActionButton()],
@@ -95,6 +98,7 @@ class _AppState extends State<App> {
       body: IndexedStack(
         index: selected,
         children: const [
+          DashboardPage(),
           IncomePage(),
           ExpenseSheetsPage(),
           AssetsPage(),
@@ -125,75 +129,91 @@ class _AppState extends State<App> {
             ),
           ),
           Expanded(
-            child: Column(
-              children: [
-                ListTile(
-                  title: Text("Income"),
-                  leading: Icon(Icons.attach_money,
-                      color: darkTheme.onSurfaceVariant),
-                  onTap: () {
-                    setState(() {
-                      selected = 0;
-                    });
-                    Navigator.pop(context);
-                  },
-                ),
-                ListTile(
-                  title: Text("Expense Sheets"),
-                  leading: Icon(Icons.edit_document,
-                      color: darkTheme.onSurfaceVariant),
-                  onTap: () {
-                    setState(() {
-                      selected = 1;
-                    });
-                    Navigator.pop(context);
-                  },
-                ),
-                ListTile(
-                  title: Text("Assets"),
-                  leading: Icon(Icons.house, color: darkTheme.onSurfaceVariant),
-                  onTap: () {
-                    setState(() {
-                      selected = 2;
-                    });
-                    Navigator.pop(context);
-                  },
-                ),
-                ListTile(
-                  title: Text("Balances"),
-                  leading: Icon(Icons.account_balance,
-                      color: darkTheme.onSurfaceVariant),
-                  onTap: () {
-                    setState(() {
-                      selected = 3;
-                    });
-                    Navigator.pop(context);
-                  },
-                ),
-                ListTile(
-                  title: Text("Liabilities"),
-                  leading:
-                      Icon(Icons.payment, color: darkTheme.onSurfaceVariant),
-                  onTap: () {
-                    setState(() {
-                      selected = 4;
-                    });
-                    Navigator.pop(context);
-                  },
-                ),
-                ListTile(
-                  title: Text("Receivables"),
-                  leading: Icon(Icons.request_quote,
-                      color: darkTheme.onSurfaceVariant),
-                  onTap: () {
-                    setState(() {
-                      selected = 5;
-                    });
-                    Navigator.pop(context);
-                  },
-                )
-              ],
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  ListTile(
+                    title: Text("Dashboard"),
+                    leading: Icon(Icons.dashboard,
+                        color: darkTheme.onSurfaceVariant),
+                    onTap: () {
+                      setState(() {
+                        selected = 0;
+                      });
+                      Navigator.pop(context);
+                    },
+                  ),
+                  ListTile(
+                    title: Text("Income"),
+                    leading: Icon(Icons.attach_money,
+                        color: darkTheme.onSurfaceVariant),
+                    onTap: () {
+                      setState(() {
+                        selected = 1;
+                      });
+                      Navigator.pop(context);
+                    },
+                  ),
+                  ListTile(
+                    title: Text("Expense Sheets"),
+                    leading: Icon(Icons.edit_document,
+                        color: darkTheme.onSurfaceVariant),
+                    onTap: () {
+                      setState(() {
+                        selected = 2;
+                      });
+                      Navigator.pop(context);
+                    },
+                  ),
+                  ListTile(
+                    title: Text("Assets"),
+                    leading: Icon(Icons.house, color: darkTheme.onSurfaceVariant),
+                    onTap: () {
+                      setState(() {
+                        selected = 3;
+                      });
+                      Navigator.pop(context);
+                    },
+                  ),
+                  ListTile(
+                    title: Text("Balances"),
+                    leading: Icon(Icons.account_balance,
+                        color: darkTheme.onSurfaceVariant),
+                    onTap: () {
+                      setState(() {
+                        selected = 4;
+                      });
+                      Navigator.pop(context);
+                    },
+                  ),
+                  ListTile(
+                    title: Text("Liabilities"),
+                    leading:
+                        Icon(Icons.payment, color: darkTheme.onSurfaceVariant),
+                    onTap: () {
+                      setState(() {
+                        selected = 5;
+                      });
+                      Navigator.pop(context);
+                    },
+                  ),
+                  ListTile(
+                    title: Text("Receivables"),
+                    leading: Icon(Icons.request_quote,
+                        color: darkTheme.onSurfaceVariant),
+                    onTap: () {
+                      setState(() {
+                        selected = 6;
+                      });
+                      Navigator.pop(context);
+                    },
+                  )
+                ],
+              ),
             ),
+          ),
+          Divider(
+            color: darkTheme.surfaceContainer,
           ),
           ListTile(
             title: Text("Settings"),
