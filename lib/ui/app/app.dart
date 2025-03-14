@@ -8,6 +8,7 @@ import 'package:financial_planner_mobile/cubit/receivables_cubit.dart';
 import 'package:financial_planner_mobile/ui/app/assets/assets.dart';
 import 'package:financial_planner_mobile/ui/app/balances/balances.dart';
 import 'package:financial_planner_mobile/ui/app/balances/balances_action_button.dart';
+import 'package:financial_planner_mobile/ui/app/dashboard/dashboard.dart';
 import 'package:financial_planner_mobile/ui/app/expense_sheets/expense_sheets.dart';
 import 'package:financial_planner_mobile/ui/app/expense_sheets/expense_sheets_action_button.dart';
 import 'package:financial_planner_mobile/ui/app/income/income.dart';
@@ -35,6 +36,7 @@ class _AppState extends State<App> {
   int selected = 0;
 
   final List<String> nameList = [
+    'Dashboard',
     'Income',
     'Expense Sheets',
     'Assets',
@@ -44,6 +46,7 @@ class _AppState extends State<App> {
   ];
 
   final List<List<Widget>?> buttonList = [
+    [],
     [const IncomeActionButton()],
     [const ExpenseSheetsActionButtonAdd()],
     [const AssetActionButton()],
@@ -95,6 +98,7 @@ class _AppState extends State<App> {
       body: IndexedStack(
         index: selected,
         children: const [
+          DashboardPage(),
           IncomePage(),
           ExpenseSheetsPage(),
           AssetsPage(),
@@ -128,12 +132,23 @@ class _AppState extends State<App> {
             child: Column(
               children: [
                 ListTile(
+                  title: Text("Dashboard"),
+                  leading: Icon(Icons.dashboard,
+                      color: darkTheme.onSurfaceVariant),
+                  onTap: () {
+                    setState(() {
+                      selected = 0;
+                    });
+                    Navigator.pop(context);
+                  },
+                ),
+                ListTile(
                   title: Text("Income"),
                   leading: Icon(Icons.attach_money,
                       color: darkTheme.onSurfaceVariant),
                   onTap: () {
                     setState(() {
-                      selected = 0;
+                      selected = 1;
                     });
                     Navigator.pop(context);
                   },
@@ -144,7 +159,7 @@ class _AppState extends State<App> {
                       color: darkTheme.onSurfaceVariant),
                   onTap: () {
                     setState(() {
-                      selected = 1;
+                      selected = 2;
                     });
                     Navigator.pop(context);
                   },
@@ -154,7 +169,7 @@ class _AppState extends State<App> {
                   leading: Icon(Icons.house, color: darkTheme.onSurfaceVariant),
                   onTap: () {
                     setState(() {
-                      selected = 2;
+                      selected = 3;
                     });
                     Navigator.pop(context);
                   },
@@ -165,7 +180,7 @@ class _AppState extends State<App> {
                       color: darkTheme.onSurfaceVariant),
                   onTap: () {
                     setState(() {
-                      selected = 3;
+                      selected = 4;
                     });
                     Navigator.pop(context);
                   },
@@ -176,7 +191,7 @@ class _AppState extends State<App> {
                       Icon(Icons.payment, color: darkTheme.onSurfaceVariant),
                   onTap: () {
                     setState(() {
-                      selected = 4;
+                      selected = 5;
                     });
                     Navigator.pop(context);
                   },
@@ -187,7 +202,7 @@ class _AppState extends State<App> {
                       color: darkTheme.onSurfaceVariant),
                   onTap: () {
                     setState(() {
-                      selected = 5;
+                      selected = 6;
                     });
                     Navigator.pop(context);
                   },
