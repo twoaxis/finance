@@ -12,3 +12,4 @@ key.properties
 **/*.keystore
 **/*.jks
 app/.cxx/
+app/build/
