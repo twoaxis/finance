@@ -12,7 +12,6 @@ import 'package:financial_planner_mobile/ui/app/dashboard/dashboard.dart';
 import 'package:financial_planner_mobile/ui/app/expense_sheets/expense_sheets.dart';
 import 'package:financial_planner_mobile/ui/app/expense_sheets/expense_sheets_action_button.dart';
 import 'package:financial_planner_mobile/ui/app/income/income.dart';
-import 'package:financial_planner_mobile/ui/app/info/info.dart';
 import 'package:financial_planner_mobile/ui/app/liabilities/liabilities.dart';
 import 'package:financial_planner_mobile/ui/app/income/income_action_button.dart';
 import 'package:financial_planner_mobile/ui/app/liabilities/liabilities_action_button.dart';
