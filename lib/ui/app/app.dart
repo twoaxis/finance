@@ -248,28 +248,6 @@ class _AppState extends State<App> {
         backgroundColor: darkTheme.surfaceContainer,
         actions: [
           if (buttonList[selected] != null) ...buttonList[selected]!,
-          PopupMenuButton(
-            onSelected: (value) async {
-              if (value == "info") {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const InfoPage(),
-                  ),
-                );
-              }
-            },
-            color: darkTheme.surfaceBright,
-            offset: const Offset(0, 50),
-            itemBuilder: (BuildContext context) {
-              return const [
-                PopupMenuItem(
-                  value: 'info',
-                  child: Text('About'),
-                ),
-              ];
-            },
-          ),
         ],
       ),
     );

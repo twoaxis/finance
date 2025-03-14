@@ -3,6 +3,8 @@ import 'package:financial_planner_mobile/util/theme.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../info/info.dart';
+
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
 
@@ -27,6 +29,18 @@ class _SettingsPageState extends State<SettingsPage> {
         ),
         body: ListView(
           children: [
+            ListTile(
+              title: Text("About"),
+              leading: Icon(Icons.info),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const InfoPage(),
+                  ),
+                );
+              },
+            ),
             ListTile(
               title: Text("Delete your account",
                   style: TextStyle(color: darkTheme.error)),
