@@ -13,13 +13,6 @@ class Onboarding extends StatefulWidget {
 }
 
 class _OnboardingState extends State<Onboarding> {
-  int page = 0;
-
-  void changePage(int x) {
-    setState(() {
-      page = x;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
