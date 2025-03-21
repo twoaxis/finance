@@ -4,14 +4,18 @@ import "package:financial_planner_mobile/ui/onboarding/screens/signup.dart";
 import "package:flutter/material.dart";
 import "package:flutter_test/flutter_test.dart";
 
+Future<void> setup(WidgetTester tester) async {
+  final testWidget = MaterialApp(
+      home: Onboarding()
+  );
+
+  await tester.pumpWidget(testWidget);
+}
+
 void main() {
   testWidgets("Renders correct text", (WidgetTester tester) async {
 
-    final testWidget = MaterialApp(
-      home: Onboarding()
-    );
-
-    await tester.pumpWidget(testWidget);
+    await setup(tester);
 
     expect(find.text("TwoAxis Finance"), findsOneWidget);
     expect(find.text("Manage your income, expense_sheets and assets with ease!"), findsOneWidget);
@@ -23,11 +27,8 @@ void main() {
   });
 
   testWidgets("Goes to the login screen when pressed", (WidgetTester tester) async {
-    final testWidget = MaterialApp(
-        home: Onboarding()
-    );
 
-    await tester.pumpWidget(testWidget);
+    await setup(tester);
 
     expect(find.byType(Onboarding), findsOneWidget);
     expect(find.byType(LoginPage), findsNothing);
@@ -39,11 +40,7 @@ void main() {
     expect(find.byType(LoginPage), findsOneWidget);
   });
   testWidgets("Goes to the create account screen when pressed", (WidgetTester tester) async {
-    final testWidget = MaterialApp(
-        home: Onboarding()
-    );
-
-    await tester.pumpWidget(testWidget);
+    await setup(tester);
 
     expect(find.byType(Onboarding), findsOneWidget);
     expect(find.byType(SignupPage), findsNothing);
