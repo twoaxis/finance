@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:financial_planner_mobile/abstract/auth_service.dart';
+import 'package:financial_planner_mobile/abstract/firestore_service.dart';
 import 'package:financial_planner_mobile/ui/common/primary_button.dart';
 import 'package:financial_planner_mobile/util/theme.dart';
 import 'package:financial_planner_mobile/values/spaces.dart';
@@ -40,6 +41,7 @@ class _SignupPageState extends State<SignupPage> {
                     child: Column(
                       children: [
                         TextField(
+                          key: Key("email"),
                           controller: emailController,
                           enabled: !pending,
                           textInputAction: TextInputAction.next,
@@ -54,6 +56,7 @@ class _SignupPageState extends State<SignupPage> {
                         ),
                         SizedBox(height: 20),
                         TextField(
+                          key: Key("password"),
                           controller: passwordController,
                           obscureText: true,
                           enabled: !pending,
@@ -69,6 +72,7 @@ class _SignupPageState extends State<SignupPage> {
                         ),
                         SizedBox(height: 20),
                         TextField(
+                          key: Key("repeat-password"),
                           controller: repeatPasswordController,
                           obscureText: true,
                           enabled: !pending,
@@ -88,6 +92,7 @@ class _SignupPageState extends State<SignupPage> {
                 ),
               ),
               PrimaryButton(
+                key: Key("signup"),
                 text: "Create your account",
                 enabled: !pending,
                 onPressed: () async {
@@ -141,17 +146,7 @@ class _SignupPageState extends State<SignupPage> {
                         passwordController.text,
                       );
 
-                      await FirebaseFirestore.instance
-                          .collection("users")
-                          .doc(credential.user!.uid)
-                          .set({
-                        "assets": [],
-                        "expenses": [],
-                        "income": [],
-                        "liabilities": [],
-                        "fixedExpenses": [],
-                        "receivables": []
-                      });
+                      await GetIt.I<FirestoreService>().writeEmptyUserData(credential.user!.uid);
 
                       await credential.user?.sendEmailVerification();
 

@@ -1,4 +1,5 @@
 import 'package:financial_planner_mobile/abstract/auth_service.dart';
+import 'package:financial_planner_mobile/abstract/firestore_service.dart';
 import 'package:financial_planner_mobile/cubit/assets_cubit.dart';
 import 'package:financial_planner_mobile/cubit/balances_cubit.dart';
 import 'package:financial_planner_mobile/cubit/expenses_cubit.dart';
@@ -6,6 +7,7 @@ import 'package:financial_planner_mobile/cubit/income_cubit.dart';
 import 'package:financial_planner_mobile/cubit/liabilities_cubit.dart';
 import 'package:financial_planner_mobile/cubit/receivables_cubit.dart';
 import 'package:financial_planner_mobile/services/firebase_auth_service.dart';
+import 'package:financial_planner_mobile/services/firebase_firestore_service.dart';
 import 'package:financial_planner_mobile/ui/app/app.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -22,8 +24,9 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  
+
   GetIt.I.registerSingleton<AuthService>(FirebaseAuthService());
+  GetIt.I.registerSingleton<FirestoreService>(FirebaseFirestoreService());
 
   runApp(
     MultiBlocProvider(
