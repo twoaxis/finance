@@ -1,9 +1,11 @@
+import 'package:financial_planner_mobile/abstract/auth_service.dart';
 import 'package:financial_planner_mobile/ui/common/primary_button.dart';
 import 'package:financial_planner_mobile/ui/onboarding/screens/forget_password.dart';
 import 'package:financial_planner_mobile/util/theme.dart';
 import 'package:financial_planner_mobile/values/spaces.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -37,6 +39,7 @@ class _LoginPageState extends State<LoginPage> {
                     child: Column(
                       children: [
                         TextField(
+                          key: Key("email"),
                           controller: emailController,
                           enabled: !pending,
                           textInputAction: TextInputAction.next,
@@ -49,6 +52,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         SizedBox(height: 20),
                         TextField(
+                          key: Key("password"),
                           controller: passwordController,
                           obscureText: true,
                           enabled: !pending,
@@ -77,6 +81,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               PrimaryButton(
+                key: Key("login"),
                 text: "Login to your account",
                 enabled: !pending,
                 onPressed: () async {
@@ -106,9 +111,9 @@ class _LoginPageState extends State<LoginPage> {
                           },
                         );
                       } else {
-                        await FirebaseAuth.instance.signInWithEmailAndPassword(
-                          email: emailController.text,
-                          password: passwordController.text,
+                        await GetIt.I<AuthService>().signInWithEmailAndPassword(
+                          emailController.text,
+                          passwordController.text,
                         );
                         if (context.mounted) {
                           Navigator.pop(context);

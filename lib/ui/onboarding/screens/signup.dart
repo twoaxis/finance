@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:financial_planner_mobile/abstract/auth_service.dart';
 import 'package:financial_planner_mobile/ui/common/primary_button.dart';
 import 'package:financial_planner_mobile/util/theme.dart';
 import 'package:financial_planner_mobile/values/spaces.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -133,10 +135,10 @@ class _SignupPageState extends State<SignupPage> {
                         },
                       );
                     } else {
-                      final credential = await FirebaseAuth.instance
+                      final credential = await GetIt.I<AuthService>()
                           .createUserWithEmailAndPassword(
-                        email: emailController.text,
-                        password: passwordController.text,
+                        emailController.text,
+                        passwordController.text,
                       );
 
                       await FirebaseFirestore.instance

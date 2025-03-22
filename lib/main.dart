@@ -1,9 +1,11 @@
+import 'package:financial_planner_mobile/abstract/auth_service.dart';
 import 'package:financial_planner_mobile/cubit/assets_cubit.dart';
 import 'package:financial_planner_mobile/cubit/balances_cubit.dart';
 import 'package:financial_planner_mobile/cubit/expenses_cubit.dart';
 import 'package:financial_planner_mobile/cubit/income_cubit.dart';
 import 'package:financial_planner_mobile/cubit/liabilities_cubit.dart';
 import 'package:financial_planner_mobile/cubit/receivables_cubit.dart';
+import 'package:financial_planner_mobile/services/firebase_auth_service.dart';
 import 'package:financial_planner_mobile/ui/app/app.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -11,13 +13,17 @@ import 'package:financial_planner_mobile/ui/onboarding/onboarding.dart';
 import 'package:financial_planner_mobile/util/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'firebase_options.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  
+  GetIt.I.registerSingleton<AuthService>(FirebaseAuthService());
 
   runApp(
     MultiBlocProvider(
@@ -60,7 +66,7 @@ class _FinancialPlannerState extends State<FinancialPlanner> {
   void initState() {
     super.initState();
 
-    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+    GetIt.I<AuthService>().authStateChanges().listen((User? user) {
       setState(() {
         loggedIn = (user != null);
       });

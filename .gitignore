@@ -31,6 +31,9 @@ migrate_working_dir/
 .pub/
 /build/
 
+# Don't commit generated mocks
+**/*.mocks.dart
+
 # Symbolication related
 app.*.symbols
 
