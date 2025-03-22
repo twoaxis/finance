@@ -29,6 +29,29 @@ jobs:
       - name: Analyze Code
         run: flutter analyze
 
+  test:
+    name: Run tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 3.27.1
+          channel: stable
+
+      - name: Install Dependencies
+        run: flutter pub get
+
+      - name: Generate mocks
+        run: dart run build_runner build
+
+      - name: Run tests
+        run: flutter test
+
   build-apk:
     name: Build APK
     runs-on: ubuntu-latest
