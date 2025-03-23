@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:financial_planner_mobile/abstract/auth_service.dart';
 import 'package:financial_planner_mobile/abstract/firestore_service.dart';
 import 'package:financial_planner_mobile/cubit/assets_cubit.dart';

@@ -86,7 +86,7 @@ void main() {
     when(mockAuthService.authStateChanges())
         .thenAnswer((_) => Stream<User?>.value(null));
 
-    GetIt.I.registerSingleton<AuthService>(mockAuthService);;
+    GetIt.I.registerSingleton<AuthService>(mockAuthService);
 
     await setup(tester);
     await tester.pumpAndSettle();

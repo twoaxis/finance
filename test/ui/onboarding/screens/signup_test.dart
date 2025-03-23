@@ -1,6 +1,5 @@
 import 'package:financial_planner_mobile/abstract/auth_service.dart';
 import 'package:financial_planner_mobile/abstract/firestore_service.dart';
-import 'package:financial_planner_mobile/ui/onboarding/screens/login.dart';
 import 'package:financial_planner_mobile/ui/onboarding/screens/signup.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
