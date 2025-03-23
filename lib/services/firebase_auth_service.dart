@@ -13,6 +13,9 @@ class FirebaseAuthService implements AuthService {
   @override
   Future<UserCredential> signInWithEmailAndPassword(String email, String password) => _instance.signInWithEmailAndPassword(email: email, password: password);
 
+  @override
+  User? getCurrentUser() => _instance.currentUser;
+
 
 
 }

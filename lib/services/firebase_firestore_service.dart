@@ -17,4 +17,18 @@ class FirebaseFirestoreService implements FirestoreService {
     });
   }
 
+  @override
+  Stream<Map<String, dynamic>?> listenToUserData(String uid) => FirebaseFirestore.instance
+      .collection("users")
+      .doc(uid)
+      .snapshots()
+      .map((snapshot) => snapshot.data());
+
+  @override
+  Stream<QuerySnapshot<Map<String, dynamic>>> listenToUserExpenses(String uid) => FirebaseFirestore.instance
+      .collection("users")
+      .doc(uid)
+      .collection("expenses")
+      .snapshots();
+
 }

@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:financial_planner_mobile/abstract/auth_service.dart';
+import 'package:financial_planner_mobile/abstract/firestore_service.dart';
 import 'package:financial_planner_mobile/cubit/assets_cubit.dart';
 import 'package:financial_planner_mobile/cubit/balances_cubit.dart';
 import 'package:financial_planner_mobile/cubit/expenses_cubit.dart';
@@ -22,6 +24,7 @@ import 'package:financial_planner_mobile/util/theme.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'assets/asset_action_button.dart';
 
 class App extends StatefulWidget {
@@ -58,32 +61,29 @@ class _AppState extends State<App> {
   void initState() {
     super.initState();
 
-    FirebaseFirestore.instance
-        .collection("users")
-        .doc(FirebaseAuth.instance.currentUser?.uid)
-        .snapshots()
-        .listen((e) {
-      if (mounted) {
-        context.read<IncomeCubit>().updateIncome(e.data()?["income"] ?? []);
-        context.read<AssetsCubit>().updateAssets(e.data()?["assets"] ?? []);
-        context.read<BalancesCubit>().updateBalances(e.data()?["balances"] ?? []);
+    GetIt.I<FirestoreService>()
+        .listenToUserData(GetIt.I<AuthService>().getCurrentUser()!.uid)
+        .listen((data) {
+      if (mounted && data != null) {
+        context.read<IncomeCubit>().updateIncome(data["income"] ?? []);
+        context.read<AssetsCubit>().updateAssets(data["assets"] ?? []);
+        context.read<BalancesCubit>().updateBalances(data["balances"] ?? []);
         context
             .read<LiabilitiesCubit>()
-            .updateLiabilities(e.data()?["liabilities"] ?? []);
-
+            .updateLiabilities(data["liabilities"] ?? []);
         context
             .read<ReceivablesCubit>()
-            .updateReceivables(e.data()?["receivables"] ?? []);
+            .updateReceivables(data["receivables"] ?? []);
       }
-    }, onError: (e) {
-      if (mounted) {}
+    }, onError: (error) {
+      if (mounted) {
+        // Optional: handle error
+        debugPrint("Error listening to user data: $error");
+      }
     });
 
-    FirebaseFirestore.instance
-        .collection("users")
-        .doc(FirebaseAuth.instance.currentUser?.uid)
-        .collection("expenses")
-        .snapshots()
+    GetIt.I<FirestoreService>()
+        .listenToUserExpenses(GetIt.I<AuthService>().getCurrentUser()!.uid)
         .listen((e) {
       if (mounted) {
         context.read<ExpensesCubit>().updateExpenses(e.docs);
@@ -123,7 +123,7 @@ class _AppState extends State<App> {
                   "Logged in as:",
                   style: TextStyle(fontSize: 20),
                 ),
-                Text(FirebaseAuth.instance.currentUser!.email!)
+                Text(GetIt.I<AuthService>().getCurrentUser()!.email!)
               ],
             ),
           ),
@@ -166,7 +166,8 @@ class _AppState extends State<App> {
                   ),
                   ListTile(
                     title: Text("Assets"),
-                    leading: Icon(Icons.house, color: darkTheme.onSurfaceVariant),
+                    leading:
+                        Icon(Icons.house, color: darkTheme.onSurfaceVariant),
                     onTap: () {
                       setState(() {
                         selected = 3;
