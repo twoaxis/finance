@@ -66,7 +66,9 @@ class _AppState extends State<App> {
       if (mounted) {
         context.read<IncomeCubit>().updateIncome(e.data()?["income"] ?? []);
         context.read<AssetsCubit>().updateAssets(e.data()?["assets"] ?? []);
-        context.read<BalancesCubit>().updateBalances(e.data()?["balances"] ?? []);
+        context
+            .read<BalancesCubit>()
+            .updateBalances(e.data()?["balances"] ?? []);
         context
             .read<LiabilitiesCubit>()
             .updateLiabilities(e.data()?["liabilities"] ?? []);
@@ -106,148 +108,160 @@ class _AppState extends State<App> {
           ReceivablesPage()
         ],
       ),
-      drawer: Drawer(
-          child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Container(
-            padding: EdgeInsets.all(24),
-            decoration: BoxDecoration(color: darkTheme.surfaceContainer),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: 50,
-                ),
-                Text(
-                  "Logged in as:",
-                  style: TextStyle(fontSize: 20),
-                ),
-                Text(FirebaseAuth.instance.currentUser!.email!)
-              ],
-            ),
+      // drawer: Drawer(
+      //     child: Column(
+      //   crossAxisAlignment: CrossAxisAlignment.stretch,
+      //   children: [
+      //     Container(
+      //       padding: EdgeInsets.all(24),
+      //       decoration: BoxDecoration(color: darkTheme.surfaceContainer),
+      //       child: Column(
+      //         crossAxisAlignment: CrossAxisAlignment.start,
+      //         children: [
+      //           SizedBox(
+      //             height: 50,
+      //           ),
+      //           Text(
+      //             "Logged in as:",
+      //             style: TextStyle(fontSize: 20),
+      //           ),
+      //           Text(FirebaseAuth.instance.currentUser!.email!)
+      //         ],
+      //       ),
+      //     ),
+      //     Expanded(
+      //       child: SingleChildScrollView(
+      //         child: Column(
+      //           children: [
+      //             ListTile(
+      //               title: Text("Dashboard"),
+      //               leading: Icon(Icons.dashboard,
+      //                   color: darkTheme.onSurfaceVariant),
+      //               onTap: () {
+      //                 setState(() {
+      //                   selected = 0;
+      //                 });
+      //                 Navigator.pop(context);
+      //               },
+      //             ),
+      //             ListTile(
+      //               title: Text("Income"),
+      //               leading: Icon(Icons.attach_money,
+      //                   color: darkTheme.onSurfaceVariant),
+      //               onTap: () {
+      //                 setState(() {
+      //                   selected = 1;
+      //                 });
+      //                 Navigator.pop(context);
+      //               },
+      //             ),
+      //             ListTile(
+      //               title: Text("Expense Sheets"),
+      //               leading: Icon(Icons.edit_document,
+      //                   color: darkTheme.onSurfaceVariant),
+      //               onTap: () {
+      //                 setState(() {
+      //                   selected = 2;
+      //                 });
+      //                 Navigator.pop(context);
+      //               },
+      //             ),
+      //             ListTile(
+      //               title: Text("Assets"),
+      //               leading: Icon(Icons.house, color: darkTheme.onSurfaceVariant),
+      //               onTap: () {
+      //                 setState(() {
+      //                   selected = 3;
+      //                 });
+      //                 Navigator.pop(context);
+      //               },
+      //             ),
+      //             ListTile(
+      //               title: Text("Balances"),
+      //               leading: Icon(Icons.account_balance,
+      //                   color: darkTheme.onSurfaceVariant),
+      //               onTap: () {
+      //                 setState(() {
+      //                   selected = 4;
+      //                 });
+      //                 Navigator.pop(context);
+      //               },
+      //             ),
+      //             ListTile(
+      //               title: Text("Liabilities"),
+      //               leading:
+      //                   Icon(Icons.payment, color: darkTheme.onSurfaceVariant),
+      //               onTap: () {
+      //                 setState(() {
+      //                   selected = 5;
+      //                 });
+      //                 Navigator.pop(context);
+      //               },
+      //             ),
+      //             ListTile(
+      //               title: Text("Receivables"),
+      //               leading: Icon(Icons.request_quote,
+      //                   color: darkTheme.onSurfaceVariant),
+      //               onTap: () {
+      //                 setState(() {
+      //                   selected = 6;
+      //                 });
+      //                 Navigator.pop(context);
+      //               },
+      //             )
+      //           ],
+      //         ),
+      //       ),
+      //     ),
+      //     Divider(
+      //       color: darkTheme.surfaceContainer,
+      //     ),
+      //     ListTile(
+      //       title: Text("Settings"),
+      //       leading: Icon(Icons.settings, color: darkTheme.onSurfaceVariant),
+      //       onTap: () {
+      //         Navigator.push(
+      //           context,
+      //           MaterialPageRoute(
+      //             builder: (context) => const SettingsPage(),
+      //           ),
+      //         );
+      //       },
+      //     ),
+      //     ListTile(
+      //       title: Text(
+      //         "Log out",
+      //         style: const TextStyle(color: Colors.red),
+      //       ),
+      //       leading: Icon(Icons.logout, color: Colors.red),
+      //       onTap: () async {
+      //         await FirebaseAuth.instance.signOut();
+      //       },
+      //     ),
+      //     SizedBox(
+      //       height: 50,
+      //     )
+      //   ],
+      // )),
+      bottomNavigationBar:  Container(
+        decoration: BoxDecoration(
+          border: Border(
+            top: BorderSide(color: darkTheme.surfaceBright, width: 1), // Top border
           ),
-          Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  ListTile(
-                    title: Text("Dashboard"),
-                    leading: Icon(Icons.dashboard,
-                        color: darkTheme.onSurfaceVariant),
-                    onTap: () {
-                      setState(() {
-                        selected = 0;
-                      });
-                      Navigator.pop(context);
-                    },
-                  ),
-                  ListTile(
-                    title: Text("Income"),
-                    leading: Icon(Icons.attach_money,
-                        color: darkTheme.onSurfaceVariant),
-                    onTap: () {
-                      setState(() {
-                        selected = 1;
-                      });
-                      Navigator.pop(context);
-                    },
-                  ),
-                  ListTile(
-                    title: Text("Expense Sheets"),
-                    leading: Icon(Icons.edit_document,
-                        color: darkTheme.onSurfaceVariant),
-                    onTap: () {
-                      setState(() {
-                        selected = 2;
-                      });
-                      Navigator.pop(context);
-                    },
-                  ),
-                  ListTile(
-                    title: Text("Assets"),
-                    leading: Icon(Icons.house, color: darkTheme.onSurfaceVariant),
-                    onTap: () {
-                      setState(() {
-                        selected = 3;
-                      });
-                      Navigator.pop(context);
-                    },
-                  ),
-                  ListTile(
-                    title: Text("Balances"),
-                    leading: Icon(Icons.account_balance,
-                        color: darkTheme.onSurfaceVariant),
-                    onTap: () {
-                      setState(() {
-                        selected = 4;
-                      });
-                      Navigator.pop(context);
-                    },
-                  ),
-                  ListTile(
-                    title: Text("Liabilities"),
-                    leading:
-                        Icon(Icons.payment, color: darkTheme.onSurfaceVariant),
-                    onTap: () {
-                      setState(() {
-                        selected = 5;
-                      });
-                      Navigator.pop(context);
-                    },
-                  ),
-                  ListTile(
-                    title: Text("Receivables"),
-                    leading: Icon(Icons.request_quote,
-                        color: darkTheme.onSurfaceVariant),
-                    onTap: () {
-                      setState(() {
-                        selected = 6;
-                      });
-                      Navigator.pop(context);
-                    },
-                  )
-                ],
-              ),
-            ),
-          ),
-          Divider(
-            color: darkTheme.surfaceContainer,
-          ),
-          ListTile(
-            title: Text("Settings"),
-            leading: Icon(Icons.settings, color: darkTheme.onSurfaceVariant),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const SettingsPage(),
-                ),
-              );
-            },
-          ),
-          ListTile(
-            title: Text(
-              "Log out",
-              style: const TextStyle(color: Colors.red),
-            ),
-            leading: Icon(Icons.logout, color: Colors.red),
-            onTap: () async {
-              await FirebaseAuth.instance.signOut();
-            },
-          ),
-          SizedBox(
-            height: 50,
-          )
-        ],
-      )),
-      appBar: AppBar(
-        title: Text(nameList[selected],
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 30)),
-        backgroundColor: darkTheme.surfaceContainer,
-        actions: [
-          if (buttonList[selected] != null) ...buttonList[selected]!,
-        ],
+        ),
+        child: BottomNavigationBar(
+          showSelectedLabels: false,
+          showUnselectedLabels: false,
+          selectedItemColor: darkTheme.primary,
+          type : BottomNavigationBarType.fixed,
+          unselectedItemColor: Color(0x44FFFFFF),
+          items: [
+            BottomNavigationBarItem(icon: Icon(Icons.home, size: 30), label: ""),
+            BottomNavigationBarItem(icon: Icon(Icons.attach_money), label: ""),
+            BottomNavigationBarItem(icon: Icon(Icons.account_balance_wallet), label: ""),
+            BottomNavigationBarItem(icon: Icon(Icons.person), label: ""),
+          ],
+        ),
       ),
     );
   }

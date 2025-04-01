@@ -1,0 +1,41 @@
+import 'package:financial_planner_mobile/util/theme.dart';
+import 'package:flutter/material.dart';
+
+class DashboardButton extends StatelessWidget {
+  const DashboardButton({super.key, required this.icon, required this.name});
+
+  final IconData icon;
+  final String name;
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Column(
+        spacing: 20,
+        children: [
+          ElevatedButton(
+            onPressed: () {},
+            style: ElevatedButton.styleFrom(
+              backgroundColor: darkTheme.surfaceContainer,
+              shape: const CircleBorder(),
+              elevation: 6, // Adjust for shadow depth
+              padding: const EdgeInsets.all(16), // Ensures circular shape
+            ),
+            child: Icon(
+              icon,
+              size: 30,
+            ),
+          ),
+          Text(
+            name,
+            textAlign: TextAlign.center,
+            softWrap: true,
+            style: TextStyle(
+              color: darkTheme.onPrimary
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

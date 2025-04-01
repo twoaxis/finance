@@ -73,6 +73,7 @@ class _FinancialPlannerState extends State<FinancialPlanner> {
         debugShowCheckedModeBanner: false,
         title: 'Financial Planner',
         theme: ThemeData(
+          splashFactory: NoSplash.splashFactory,
           colorScheme: darkTheme,
           useMaterial3: true,
         ),
