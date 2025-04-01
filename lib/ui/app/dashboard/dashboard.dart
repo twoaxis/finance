@@ -88,75 +88,66 @@ class DashboardPage extends StatelessWidget {
               Expanded(
                 child: ListView(
                   children: [
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: fullscreenSpacing),
-                      child: Row(
-                        children: [
-                          Expanded(child: Text("Net worth")),
-                          BlocBuilder<AssetsCubit, List<dynamic>>(
-                            builder: (content, balances) {
-                              var total = balances.fold(0, (sum, asset) {
-                                double value =
-                                    double.tryParse(asset["value"].toString()) ?? 0.0;
-                                return sum + value.toInt();
-                              });
-                              return Text(
-                                formatMoney(total),
-                              );
-                            },
-                          ),
-                        ],
-                      ),
+                    Row(
+                      children: [
+                        Expanded(child: Text("Net worth")),
+                        BlocBuilder<AssetsCubit, List<dynamic>>(
+                          builder: (content, balances) {
+                            var total = balances.fold(0, (sum, asset) {
+                              double value =
+                                  double.tryParse(asset["value"].toString()) ?? 0.0;
+                              return sum + value.toInt();
+                            });
+                            return Text(
+                              formatMoney(total),
+                            );
+                          },
+                        ),
+                      ],
                     ),
                     SizedBox(height: 20),
                     Divider(
                       color: darkTheme.surfaceBright,
                     ),
                     SizedBox(height: 20),
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: fullscreenSpacing),
-                      child: Row(
-                        children: [
-                          Expanded(child: Text("Total receivables")),
-                          BlocBuilder<ReceivablesCubit, List<dynamic>>(
-                            builder: (content, balances) {
-                              var total = balances.fold(0, (sum, asset) {
-                                double value =
-                                    double.tryParse(asset["value"].toString()) ?? 0.0;
-                                return sum + value.toInt();
-                              });
-                              return Text(
-                                formatMoney(total),
-                              );
-                            },
-                          ),
-                        ],
-                      ),
+                    Row(
+                      children: [
+                        Expanded(child: Text("Total receivables")),
+                        BlocBuilder<ReceivablesCubit, List<dynamic>>(
+                          builder: (content, balances) {
+                            var total = balances.fold(0, (sum, asset) {
+                              double value =
+                                  double.tryParse(asset["value"].toString()) ?? 0.0;
+                              return sum + value.toInt();
+                            });
+                            return Text(
+                              formatMoney(total),
+                            );
+                          },
+                        ),
+                      ],
                     ),
                     SizedBox(height: 20),
                     Divider(
                       color: darkTheme.surfaceBright,
                     ),
                     SizedBox(height: 20),
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: fullscreenSpacing),
-                      child: Row(
-                        children: [
-                          Expanded(child: Text("Total liabilities")),
-                          BlocBuilder<LiabilitiesCubit, List<dynamic>>(
-                            builder: (content, balances) {
-                              var total = balances.fold(0, (sum, asset) {
-                                double value =
-                                    double.tryParse(asset["value"].toString()) ?? 0.0;
-                                return sum + value.toInt();
-                              });
-                              return Text(
-                                formatMoney(total),
-                              );
-                            },
-                          ),
-                        ],
-                      ),
+                    Row(
+                      children: [
+                        Expanded(child: Text("Total liabilities")),
+                        BlocBuilder<LiabilitiesCubit, List<dynamic>>(
+                          builder: (content, balances) {
+                            var total = balances.fold(0, (sum, asset) {
+                              double value =
+                                  double.tryParse(asset["value"].toString()) ?? 0.0;
+                              return sum + value.toInt();
+                            });
+                            return Text(
+                              formatMoney(total),
+                            );
+                          },
+                        ),
+                      ],
                     ),
                   ],
                 ),
