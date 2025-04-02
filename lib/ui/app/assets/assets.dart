@@ -1,4 +1,5 @@
 import 'package:financial_planner_mobile/cubit/assets_cubit.dart';
+import 'package:financial_planner_mobile/ui/app/assets/asset_action_button.dart';
 import 'package:financial_planner_mobile/util/theme.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -16,43 +17,49 @@ class AssetsPage extends StatefulWidget {
 class _AssetsPageState extends State<AssetsPage> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Expanded(
-          child: BlocBuilder<AssetsCubit, List<dynamic>>(
-              builder: (context, assets) {
-            return ListView.separated(
-              itemCount: assets.length,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        flex: 2,
-                        child: Text(assets[index]["name"],
-                            style: const TextStyle(fontSize: 15)),
-                      ),
-                      Expanded(
-                        flex: 1,
-                        child: Center(
-                          child: Text(
-                            "\$${assets[index]["value"] is int ? NumberFormat('#,##0').format(assets[index]["value"]) : NumberFormat('#,##0.##').format((assets[index]["value"] as num).toDouble())}",
-                            style: TextStyle(
-                              color: darkTheme.surfaceTint,
-                              fontSize: 15,
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Assets"),
+        backgroundColor: darkTheme.surfaceContainer,
+        actions: [AssetActionButton()],
+      ),
+      body: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Expanded(
+            child: BlocBuilder<AssetsCubit, List<dynamic>>(
+                builder: (context, assets) {
+              return ListView.separated(
+                itemCount: assets.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 12, horizontal: 20),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          flex: 2,
+                          child: Text(assets[index]["name"],
+                              style: const TextStyle(fontSize: 15)),
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: Center(
+                            child: Text(
+                              "\$${assets[index]["value"] is int ? NumberFormat('#,##0').format(assets[index]["value"]) : NumberFormat('#,##0.##').format((assets[index]["value"] as num).toDouble())}",
+                              style: TextStyle(
+                                color: darkTheme.surfaceTint,
+                                fontSize: 15,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      Expanded(
-                        flex: 1,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            IconButton(
+                        Expanded(
+                          flex: 1,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              IconButton(
                                 onPressed: () {
                                   showDialog(
                                       context: context,
@@ -89,21 +96,23 @@ class _AssetsPageState extends State<AssetsPage> {
                                         );
                                       });
                                 },
-                                icon: const Icon(Icons.delete)),
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                );
-              },
-              separatorBuilder: (BuildContext context, int index) {
-                return Divider(color: darkTheme.surfaceContainer, height: 1);
-              },
-            );
-          }),
-        ),
-      ],
+                                icon: const Icon(Icons.delete),
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  );
+                },
+                separatorBuilder: (BuildContext context, int index) {
+                  return Divider(color: darkTheme.surfaceContainer, height: 1);
+                },
+              );
+            }),
+          ),
+        ],
+      ),
     );
   }
 }
