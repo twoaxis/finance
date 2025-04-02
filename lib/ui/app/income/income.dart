@@ -1,5 +1,6 @@
 import 'package:financial_planner_mobile/cubit/income_cubit.dart';
 import 'package:financial_planner_mobile/ui/app/income/income_action_button.dart';
+import 'package:financial_planner_mobile/ui/app/income/income_details.dart';
 import 'package:financial_planner_mobile/util/theme.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -35,70 +36,37 @@ class _IncomePageState extends State<IncomePage> {
                     return Padding(
                       padding: const EdgeInsets.symmetric(
                           vertical: 12, horizontal: 20),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            flex: 2,
-                            child: Text(income[index]["name"],
-                                style: const TextStyle(fontSize: 15)),
-                          ),
-                          Expanded(
-                              flex: 1,
-                              child: Center(
-                                child: Text(
-                                    "\$${income[index]["value"] is int ? NumberFormat('#,##0').format(income[index]["value"]) : NumberFormat('#,##0.##').format((income[index]["value"] as num).toDouble())}",
-                                    style: TextStyle(
-                                        color: darkTheme.primary,
-                                        fontSize: 15)),
-                              )),
-                          Expanded(
-                            flex: 1,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                IconButton(
-                                    onPressed: () {
-                                      showDialog(
-                                          context: context,
-                                          builder: (BuildContext build) {
-                                            return AlertDialog(
-                                              title: const Text(
-                                                  "Are you sure to delete this income source?"),
-                                              icon: const Icon(Icons.delete),
-                                              actions: [
-                                                TextButton(
-                                                  onPressed: () {
-                                                    Navigator.of(context).pop();
-                                                  },
-                                                  child: const Text("Cancel"),
-                                                ),
-                                                TextButton(
-                                                  onPressed: () {
-                                                    Navigator.of(context).pop();
-
-                                                    FirebaseFirestore.instance
-                                                        .collection("users")
-                                                        .doc(FirebaseAuth
-                                                            .instance
-                                                            .currentUser
-                                                            ?.uid)
-                                                        .update({
-                                                      "income": FieldValue
-                                                          .arrayRemove(
-                                                              [income[index]])
-                                                    });
-                                                  },
-                                                  child: const Text("Yes"),
-                                                ),
-                                              ],
-                                            );
-                                          });
-                                    },
-                                    icon: const Icon(Icons.delete)),
-                              ],
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => IncomeDetails(
+                                index: index,
+                                income: income[index],
+                              ),
                             ),
-                          )
-                        ],
+                          );
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                flex: 2,
+                                child: Text(income[index]["name"],
+                                    style: const TextStyle(fontSize: 15)),
+                              ),
+                              Text(
+                                "\$${income[index]["value"] is int ? NumberFormat('#,##0').format(income[index]["value"]) : NumberFormat('#,##0.##').format((income[index]["value"] as num).toDouble())}",
+                                style: TextStyle(
+                                  color: darkTheme.primary,
+                                  fontSize: 15,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                     );
                   },
