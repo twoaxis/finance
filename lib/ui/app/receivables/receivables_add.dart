@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../common/primary_button.dart';
+import '../../common/themed_input_field.dart';
 
 class AddReceivables extends StatefulWidget {
   const AddReceivables({super.key});
@@ -38,37 +39,48 @@ class _AddReceivablesState extends State<AddReceivables> {
                   child: SingleChildScrollView(
                     child: Column(
                       children: [
-                        TextField(
-                          enabled: !pending,
-                          controller: nameController,
-                          textInputAction: TextInputAction.next,
-                          decoration: InputDecoration(
-                            hintText: "Job",
-                            labelText: "Name",
-                            border: OutlineInputBorder(
-                              borderSide:
-                              BorderSide(color: darkTheme.surfaceBright),
+                        Row(
+                          spacing: 20,
+                          children: [
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Add an receivable.",
+                                    style: TextStyle(
+                                        fontSize: 25, fontWeight: FontWeight.bold),
+                                  ),
+                                  Text(
+                                    "Adding a receivable allows you to track money owed to you and automatically add it to one of your balances!",
+                                    style:
+                                    TextStyle(fontSize: 15, color: Colors.grey),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
+                            Image.asset(
+                              'asset/images/receivables.png',
+                              width: 100,
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 40),
+                        ThemedInputField(
+                          label: "Name",
+                          controller: nameController,
+                          placeholder: "Lent Money",
+                          enabled: !pending,
+                          textInputAction: TextInputAction.next,
                         ),
                         SizedBox(height: 20),
-                        TextField(
-                          enabled: !pending,
+                        ThemedInputField(
+                          label: "Value",
                           controller: valueController,
+                          placeholder: "100",
+                          enabled: !pending,
                           textInputAction: TextInputAction.done,
                           keyboardType: TextInputType.number,
-                          decoration: InputDecoration(
-                            hintText: "200",
-                            labelText: "Value",
-                            border: OutlineInputBorder(
-                              borderSide:
-                              BorderSide(color: darkTheme.surfaceBright),
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 20),
-                        SizedBox(
-                          height: 20,
                         ),
                       ],
                     ),
