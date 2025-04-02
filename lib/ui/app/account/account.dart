@@ -71,7 +71,7 @@ class AccountPage extends StatelessWidget {
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            if(name != null)
+                            if(name != null && name.isNotEmpty)
                               Text(
                                 name,
                                 style: TextStyle(
