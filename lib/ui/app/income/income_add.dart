@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:financial_planner_mobile/ui/common/themed_input_field.dart';
 import 'package:financial_planner_mobile/util/theme.dart';
 import 'package:financial_planner_mobile/values/spaces.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -22,9 +23,6 @@ class _IncomeAddItemState extends State<IncomeAddItem> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          "Add a new income source",
-        ),
       ),
       body: SafeArea(
         child: Padding(
@@ -38,37 +36,48 @@ class _IncomeAddItemState extends State<IncomeAddItem> {
                   child: SingleChildScrollView(
                     child: Column(
                       children: [
-                        TextField(
-                          enabled: !pending,
-                          controller: nameController,
-                          textInputAction: TextInputAction.next,
-                          decoration: InputDecoration(
-                            hintText: "Job",
-                            labelText: "Name",
-                            border: OutlineInputBorder(
-                              borderSide:
-                              BorderSide(color: darkTheme.surfaceBright),
+                        Row(
+                          spacing: 20,
+                          children: [
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Add an income source.",
+                                    style: TextStyle(
+                                        fontSize: 25, fontWeight: FontWeight.bold),
+                                  ),
+                                  Text(
+                                    "Adding an income source lets you automatically add to your balance.",
+                                    style:
+                                    TextStyle(fontSize: 15, color: Colors.grey),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
+                            Image.asset(
+                              'asset/images/income.png',
+                              width: 100,
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 40),
+                        ThemedInputField(
+                            label: "Name",
+                            controller: nameController,
+                            placeholder: "Job",
+                          enabled: !pending,
+                            textInputAction: TextInputAction.next,
                         ),
                         SizedBox(height: 20),
-                        TextField(
-                          enabled: !pending,
+                        ThemedInputField(
+                          label: "Value",
                           controller: valueController,
+                          placeholder: "2000",
+                          enabled: !pending,
                           textInputAction: TextInputAction.done,
                           keyboardType: TextInputType.number,
-                          decoration: InputDecoration(
-                            hintText: "200",
-                            labelText: "Value",
-                            border: OutlineInputBorder(
-                              borderSide:
-                              BorderSide(color: darkTheme.surfaceBright),
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 20),
-                        SizedBox(
-                          height: 20,
                         ),
                       ],
                     ),
@@ -90,8 +99,7 @@ class _IncomeAddItemState extends State<IncomeAddItem> {
                         builder: (context) {
                           return AlertDialog(
                             title: Text("Error"),
-                            content:
-                            Text("Please fill all fields"),
+                            content: Text("Please fill all fields"),
                             actions: [
                               TextButton(
                                 onPressed: () {
@@ -103,14 +111,13 @@ class _IncomeAddItemState extends State<IncomeAddItem> {
                           );
                         },
                       );
-                    } else if(double.parse(valueController.text) < 0) {
+                    } else if (double.parse(valueController.text) < 0) {
                       showDialog(
                         context: context,
                         builder: (context) {
                           return AlertDialog(
                             title: Text("Error"),
-                            content:
-                            Text("Value cannot be negative."),
+                            content: Text("Value cannot be negative."),
                             actions: [
                               TextButton(
                                 onPressed: () {
@@ -138,7 +145,7 @@ class _IncomeAddItemState extends State<IncomeAddItem> {
                       );
                       nameController.clear();
                       valueController.clear();
-        
+
                       if (context.mounted) {
                         Navigator.of(context).pop();
                       }
@@ -150,8 +157,7 @@ class _IncomeAddItemState extends State<IncomeAddItem> {
                         builder: (context) {
                           return AlertDialog(
                             title: Text("Error"),
-                            content:
-                            Text("Value must be an number."),
+                            content: Text("Value must be an number."),
                             actions: [
                               TextButton(
                                 onPressed: () {
@@ -171,8 +177,7 @@ class _IncomeAddItemState extends State<IncomeAddItem> {
                         builder: (context) {
                           return AlertDialog(
                             title: Text("Error"),
-                            content:
-                            Text("An unknown error has occurred"),
+                            content: Text("An unknown error has occurred"),
                             actions: [
                               TextButton(
                                 onPressed: () {
