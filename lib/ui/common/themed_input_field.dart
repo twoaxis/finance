@@ -2,16 +2,17 @@ import 'package:financial_planner_mobile/util/theme.dart';
 import 'package:flutter/material.dart';
 
 class ThemedInputField extends StatelessWidget {
-  const ThemedInputField({
-    super.key,
-    required this.label,
-    required this.controller,
-    required this.placeholder,
-    this.obscureText = false,
-    this.enabled = true,
-    this.keyboardType = TextInputType.text,
-    this.textInputAction = TextInputAction.none,
-  });
+  const ThemedInputField(
+      {super.key,
+      required this.label,
+      required this.controller,
+      required this.placeholder,
+      this.obscureText = false,
+      this.enabled = true,
+      this.keyboardType = TextInputType.text,
+      this.textInputAction = TextInputAction.none,
+      this.onTap,
+      this.readOnly = false});
 
   final String label;
   final TextEditingController? controller;
@@ -20,6 +21,8 @@ class ThemedInputField extends StatelessWidget {
   final bool enabled;
   final TextInputType keyboardType;
   final TextInputAction textInputAction;
+  final VoidCallback? onTap;
+  final bool readOnly;
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +40,8 @@ class ThemedInputField extends StatelessWidget {
           enabled: enabled,
           textInputAction: textInputAction,
           keyboardType: keyboardType,
+          readOnly: readOnly,
+          onTap: onTap,
           decoration: InputDecoration(
             filled: true,
             hintText: placeholder,

@@ -8,6 +8,7 @@ import 'package:financial_planner_mobile/cubit/name_cubit.dart';
 import 'package:financial_planner_mobile/cubit/receivables_cubit.dart';
 import 'package:financial_planner_mobile/ui/app/account/account.dart';
 import 'package:financial_planner_mobile/ui/app/dashboard/dashboard.dart';
+import 'package:financial_planner_mobile/ui/app/money_flow/money_flow.dart';
 import 'package:financial_planner_mobile/ui/app/wallet/wallet.dart';
 import 'package:financial_planner_mobile/util/theme.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -74,7 +75,7 @@ class _AppState extends State<App> {
         index: selected,
         children: const [
           DashboardPage(),
-          Text("test"),
+          MoneyFlowPage(),
           Wallet(),
           AccountPage()
         ],

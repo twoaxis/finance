@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../common/primary_button.dart';
+import '../../common/themed_input_field.dart';
 
 class LiabilitiesAdd extends StatefulWidget {
   const LiabilitiesAdd({super.key});
@@ -21,11 +22,7 @@ class _LiabilitiesAddState extends State<LiabilitiesAdd> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Add a new liability",
-        ),
-      ),
+      appBar: AppBar(),
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.all(fullscreenSpacing),
@@ -38,37 +35,50 @@ class _LiabilitiesAddState extends State<LiabilitiesAdd> {
                   child: SingleChildScrollView(
                     child: Column(
                       children: [
-                        TextField(
-                          enabled: !pending,
-                          controller: nameController,
-                          textInputAction: TextInputAction.next,
-                          decoration: InputDecoration(
-                            hintText: "Job",
-                            labelText: "Name",
-                            border: OutlineInputBorder(
-                              borderSide:
-                              BorderSide(color: darkTheme.surfaceBright),
+                        Row(
+                          spacing: 20,
+                          children: [
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Add a liability.",
+                                    style: TextStyle(
+                                        fontSize: 25,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  Text(
+                                    "Adding a liability lets you keep track of money you owe, and pay parts of it.",
+                                    style: TextStyle(
+                                        fontSize: 15, color: Colors.grey),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
+                            Icon(
+                              Icons.card_travel,
+                              size: 100,
+                              color: darkTheme.primary,
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 40),
+                        ThemedInputField(
+                          label: "Name",
+                          controller: nameController,
+                          placeholder: "Mortgage",
+                          enabled: !pending,
+                          textInputAction: TextInputAction.next,
                         ),
                         SizedBox(height: 20),
-                        TextField(
-                          enabled: !pending,
+                        ThemedInputField(
+                          label: "Value",
                           controller: valueController,
+                          placeholder: "30000",
+                          enabled: !pending,
                           textInputAction: TextInputAction.done,
                           keyboardType: TextInputType.number,
-                          decoration: InputDecoration(
-                            hintText: "200",
-                            labelText: "Value",
-                            border: OutlineInputBorder(
-                              borderSide:
-                              BorderSide(color: darkTheme.surfaceBright),
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 20),
-                        SizedBox(
-                          height: 20,
                         ),
                       ],
                     ),
@@ -90,8 +100,7 @@ class _LiabilitiesAddState extends State<LiabilitiesAdd> {
                         builder: (context) {
                           return AlertDialog(
                             title: Text("Error"),
-                            content:
-                            Text("Please fill all fields"),
+                            content: Text("Please fill all fields"),
                             actions: [
                               TextButton(
                                 onPressed: () {
@@ -103,14 +112,13 @@ class _LiabilitiesAddState extends State<LiabilitiesAdd> {
                           );
                         },
                       );
-                    } else if(double.parse(valueController.text) < 0) {
+                    } else if (double.parse(valueController.text) < 0) {
                       showDialog(
                         context: context,
                         builder: (context) {
                           return AlertDialog(
                             title: Text("Error"),
-                            content:
-                            Text("Value cannot be negative."),
+                            content: Text("Value cannot be negative."),
                             actions: [
                               TextButton(
                                 onPressed: () {
@@ -138,7 +146,7 @@ class _LiabilitiesAddState extends State<LiabilitiesAdd> {
                       );
                       nameController.clear();
                       valueController.clear();
-        
+
                       if (context.mounted) {
                         Navigator.of(context).pop();
                       }
@@ -150,8 +158,7 @@ class _LiabilitiesAddState extends State<LiabilitiesAdd> {
                         builder: (context) {
                           return AlertDialog(
                             title: Text("Error"),
-                            content:
-                            Text("Value must be an number."),
+                            content: Text("Value must be an number."),
                             actions: [
                               TextButton(
                                 onPressed: () {
@@ -171,8 +178,7 @@ class _LiabilitiesAddState extends State<LiabilitiesAdd> {
                         builder: (context) {
                           return AlertDialog(
                             title: Text("Error"),
-                            content:
-                            Text("An unknown error has occurred"),
+                            content: Text("An unknown error has occurred"),
                             actions: [
                               TextButton(
                                 onPressed: () {

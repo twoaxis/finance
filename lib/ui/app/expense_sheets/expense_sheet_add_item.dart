@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../util/theme.dart';
 import '../../../values/spaces.dart';
+import '../../common/themed_input_field.dart';
 
 class ExpenseSheetAddItem extends StatefulWidget {
   const ExpenseSheetAddItem({super.key, required this.sheet});
@@ -48,7 +49,7 @@ class _ExpenseSheetAddItemState extends State<ExpenseSheetAddItem> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Add a new expense",
+          widget.sheet.get("name"),
         ),
       ),
       body: SafeArea(
@@ -63,81 +64,122 @@ class _ExpenseSheetAddItemState extends State<ExpenseSheetAddItem> {
                   child: SingleChildScrollView(
                     child: Column(
                       children: [
-                        TextField(
-                          enabled: !pending,
-                          controller: nameController,
-                          textInputAction: TextInputAction.next,
-                          decoration: InputDecoration(
-                            hintText: "Groceries",
-                            labelText: "Name",
-                            border: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: darkTheme.surfaceBright),
+                        Row(
+                          spacing: 20,
+                          children: [
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Add an expense.",
+                                    style: TextStyle(
+                                        fontSize: 25,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  Text(
+                                    "Writing down your expenses is the best way to know how much you spend.",
+                                    style: TextStyle(
+                                        fontSize: 15, color: Colors.grey),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
+                            Icon(
+                              Icons.edit_document,
+                              size: 100,
+                              color: darkTheme.primary,
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 40),
+                        ThemedInputField(
+                          label: "Name",
+                          controller: nameController,
+                          placeholder: "Mortgage",
+                          enabled: !pending,
+                          textInputAction: TextInputAction.next,
                         ),
                         SizedBox(height: 20),
-                        TextField(
-                          enabled: !pending,
+                        ThemedInputField(
+                          label: "Value",
                           controller: valueController,
+                          placeholder: "30000",
+                          enabled: !pending,
                           textInputAction: TextInputAction.done,
                           keyboardType: TextInputType.number,
-                          decoration: InputDecoration(
-                            hintText: "200",
-                            labelText: "Value",
-                            border: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: darkTheme.surfaceBright),
-                            ),
-                          ),
                         ),
                         SizedBox(height: 20),
-                        TextField(
+                        ThemedInputField(
+                          label: "Date",
                           controller: dateController,
+                          placeholder: "2025-05-10",
+                          enabled: !pending,
+                          textInputAction: TextInputAction.done,
+                          keyboardType: TextInputType.number,
                           readOnly: true,
-                          decoration: InputDecoration(
-                            labelText: "Date",
-                            border: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: darkTheme.surfaceBright),
-                            ),
-                          ),
                           onTap: () => _setDate(context),
                         ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        BlocBuilder<BalancesCubit, List<dynamic>>(
-                          builder:
-                              (BuildContext context, List<dynamic> balances) {
-                            var menuEntries = balances.map((balance) {
-                              return DropdownMenuEntry(
-                                  value: balances.indexOf(balance),
-                                  label: balance["name"]);
-                            }).toList();
-                            return Column(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                SizedBox(
-                                  child: DropdownMenu(
-                                    width: double.infinity,
-                                    label: Text("Deduct from balance"),
-                                    initialSelection: -1,
-                                    dropdownMenuEntries: [
-                                      DropdownMenuEntry(
-                                          value: -1, label: "Do not deduct"),
-                                      ...menuEntries
-                                    ],
-                                    onSelected: (value) {
-                                      setState(() {
-                                        balanceIndex = value!;
-                                      });
-                                    },
-                                  ),
-                                )
-                              ],
-                            );
-                          },
+                        SizedBox(height: 20),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Deduct from balance:",
+                              style: TextStyle(color: Colors.grey),
+                            ),
+                            SizedBox(height: 5),
+                            BlocBuilder<BalancesCubit, List<dynamic>>(
+                              builder:
+                                  (BuildContext context, List<dynamic> balances) {
+                                var menuEntries = balances.map((balance) {
+                                  return DropdownMenuEntry(
+                                      value: balances.indexOf(balance),
+                                      label: balance["name"]);
+                                }).toList();
+                                return Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    SizedBox(
+                                      child: DropdownMenu(
+                                        width: double.infinity,
+                                        initialSelection: -1,
+                                        inputDecorationTheme: InputDecorationTheme(
+                                          filled: true,
+                                          fillColor: darkTheme.surfaceContainer,
+                                          border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(10),
+                                            borderSide: BorderSide.none,
+                                            gapPadding: 0,
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(10),
+                                            borderSide: BorderSide.none,
+                                            gapPadding: 0,
+                                          ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(10),
+                                            borderSide: BorderSide.none,
+                                            gapPadding: 0,
+                                          ),
+                                        ),
+                                        dropdownMenuEntries: [
+                                          DropdownMenuEntry(
+                                              value: -1, label: "Do not deduct"),
+                                          ...menuEntries
+                                        ],
+                                        onSelected: (value) {
+                                          setState(() {
+                                            balanceIndex = value!;
+                                          });
+                                        },
+                                      ),
+                                    )
+                                  ],
+                                );
+                              },
+                            )
+                          ],
                         )
                       ],
                     ),

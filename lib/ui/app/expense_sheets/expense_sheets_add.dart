@@ -5,6 +5,8 @@ import 'package:financial_planner_mobile/values/spaces.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../../common/themed_input_field.dart';
+
 class ExpenseSheetsAdd extends StatefulWidget {
   const ExpenseSheetsAdd({super.key});
 
@@ -20,9 +22,7 @@ class _ExpenseSheetsAddState extends State<ExpenseSheetsAdd> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Create a new sheet"),
-      ),
+      appBar: AppBar(),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(fullscreenSpacing),
@@ -35,20 +35,42 @@ class _ExpenseSheetsAddState extends State<ExpenseSheetsAdd> {
                   child: SingleChildScrollView(
                     child: Column(
                       children: [
-                        TextField(
+                        Row(
+                          spacing: 20,
+                          children: [
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Create an expense sheet.",
+                                    style: TextStyle(
+                                        fontSize: 25,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  Text(
+                                    "Creating an expense sheet allows you to group expenses together.",
+                                    style: TextStyle(
+                                        fontSize: 15, color: Colors.grey),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Icon(
+                              Icons.edit_document,
+                              size: 100,
+                              color: darkTheme.primary,
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 40),
+                        ThemedInputField(
+                          label: "Name",
                           controller: nameController,
+                          placeholder: "July 2025 Expenses",
                           enabled: !pending,
                           textInputAction: TextInputAction.next,
-                          decoration: InputDecoration(
-                            hintText: "July 2025 Expenses",
-                            labelText: "Sheet name",
-                            border: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: darkTheme.surfaceBright),
-                            ),
-                          ),
                         ),
-                        SizedBox(height: 20),
                       ],
                     ),
                   ),
@@ -61,7 +83,7 @@ class _ExpenseSheetsAddState extends State<ExpenseSheetsAdd> {
                   setState(() {
                     pending = true;
                   });
-        
+
                   try {
                     if (nameController.text.isEmpty) {
                       showDialog(
@@ -82,7 +104,11 @@ class _ExpenseSheetsAddState extends State<ExpenseSheetsAdd> {
                         },
                       );
                     } else {
-                      await FirebaseFirestore.instance.collection("users").doc(FirebaseAuth.instance.currentUser!.uid).collection("expenses").add({
+                      await FirebaseFirestore.instance
+                          .collection("users")
+                          .doc(FirebaseAuth.instance.currentUser!.uid)
+                          .collection("expenses")
+                          .add({
                         "name": nameController.text,
                         "createdAt": FieldValue.serverTimestamp(),
                         "expenses": []
@@ -92,24 +118,24 @@ class _ExpenseSheetsAddState extends State<ExpenseSheetsAdd> {
                       }
                     }
                   } on Exception {
-                    if(context.mounted) {
+                    if (context.mounted) {
                       showDialog(
-                      context: context,
-                      builder: (context) {
-                        return AlertDialog(
-                          title: Text("Error"),
-                          content: Text("An unknown error has occurred"),
-                          actions: [
-                            TextButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              child: Text("Okay"),
-                            )
-                          ],
-                        );
-                      },
-                    );
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: Text("Error"),
+                            content: Text("An unknown error has occurred"),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Text("Okay"),
+                              )
+                            ],
+                          );
+                        },
+                      );
                     }
                   } finally {
                     setState(() {
