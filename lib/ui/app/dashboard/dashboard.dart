@@ -4,6 +4,7 @@ import 'package:financial_planner_mobile/cubit/assets_cubit.dart';
 import 'package:financial_planner_mobile/cubit/balances_cubit.dart';
 import 'package:financial_planner_mobile/cubit/liabilities_cubit.dart';
 import 'package:financial_planner_mobile/cubit/receivables_cubit.dart';
+import 'package:financial_planner_mobile/cubit/transactions_cubit.dart';
 import 'package:financial_planner_mobile/ui/app/dashboard/dashboard_button.dart';
 import 'package:financial_planner_mobile/util/theme.dart';
 import 'package:financial_planner_mobile/values/spaces.dart';
@@ -74,7 +75,8 @@ class DashboardPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         DashboardButton(icon: Icons.add, name: "Quick add"),
-                        DashboardButton(icon: Icons.insights, name: "Insights"),
+                        DashboardButton(
+                            icon: Icons.analytics, name: "Analytics"),
                         DashboardButton(
                             icon: Icons.money_off_csred, name: "Set a budget"),
                       ],
@@ -83,75 +85,164 @@ class DashboardPage extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: 20,
+                height: 40,
               ),
-              Expanded(
-                child: ListView(
+              GestureDetector(
+                child: Row(
                   children: [
-                    Row(
-                      children: [
-                        Expanded(child: Text("Net worth")),
-                        BlocBuilder<AssetsCubit, List<dynamic>>(
-                          builder: (content, balances) {
-                            var total = balances.fold(0, (sum, asset) {
-                              double value =
-                                  double.tryParse(asset["value"].toString()) ?? 0.0;
-                              return sum + value.toInt();
-                            });
-                            return Text(
-                              formatMoney(total),
-                            );
-                          },
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 20),
-                    Divider(
-                      color: darkTheme.surfaceBright,
-                    ),
-                    SizedBox(height: 20),
-                    Row(
-                      children: [
-                        Expanded(child: Text("Total receivables")),
-                        BlocBuilder<ReceivablesCubit, List<dynamic>>(
-                          builder: (content, balances) {
-                            var total = balances.fold(0, (sum, asset) {
-                              double value =
-                                  double.tryParse(asset["value"].toString()) ?? 0.0;
-                              return sum + value.toInt();
-                            });
-                            return Text(
-                              formatMoney(total),
-                            );
-                          },
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 20),
-                    Divider(
-                      color: darkTheme.surfaceBright,
-                    ),
-                    SizedBox(height: 20),
-                    Row(
-                      children: [
-                        Expanded(child: Text("Total liabilities")),
-                        BlocBuilder<LiabilitiesCubit, List<dynamic>>(
-                          builder: (content, balances) {
-                            var total = balances.fold(0, (sum, asset) {
-                              double value =
-                                  double.tryParse(asset["value"].toString()) ?? 0.0;
-                              return sum + value.toInt();
-                            });
-                            return Text(
-                              formatMoney(total),
-                            );
-                          },
-                        ),
-                      ],
-                    ),
+                    Expanded(
+                        child: Text(
+                      "Recent Transactions",
+                      style: TextStyle(fontSize: 15),
+                    )),
+                    Icon(Icons.arrow_forward_ios)
                   ],
                 ),
-              )
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Expanded(
+                child: BlocBuilder<TransactionsCubit, List<dynamic>>(
+                  builder: (BuildContext context, transactions) {
+                    return ListView.separated(
+                      padding: EdgeInsets.zero,
+                      itemCount: transactions.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Row(
+                          spacing: 20,
+                          children: [
+                            Container(
+                              padding: EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                  color: darkTheme.surfaceBright,
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Column(
+                                children: [
+                                  if (transactions[index]["type"] == "expense")
+                                    Icon(
+                                      Icons.payments_rounded,
+                                      size: 25,
+                                    )
+                                  else if (transactions[index]["type"] ==
+                                      "income")
+                                    Icon(
+                                      Icons.file_download_rounded,
+                                      size: 25,
+                                    )
+                                ],
+                              ),
+                            ),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(transactions[index]["name"]),
+                                  Text(
+                                      transactions[index]["date"]
+                                          .toDate()
+                                          .toString()
+                                          .split(" ")[0]
+                                          .toString(),
+                                      style: TextStyle(
+                                          fontSize: 12, color: Colors.grey))
+                                ],
+                              ),
+                            ),
+                            if (transactions[index]["type"] == "expense")
+                              Text(
+                                "-${formatMoney(transactions[index]["value"])}",
+                                style: TextStyle(
+                                    color: darkTheme.primary,
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.bold),
+                              )
+                            else if (transactions[index]["type"] == "income")
+                              Text(
+                                "+${formatMoney(transactions[index]["value"])}",
+                                style: TextStyle(
+                                    color: Colors.green,
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.bold),
+                              )
+                          ],
+                        );
+                      },
+                      separatorBuilder: (BuildContext context, int index) {
+                        return Divider(
+                            color: darkTheme.surfaceBright, height: 20);
+                      },
+                    );
+                  },
+                ),
+              ),
+              // Expanded(
+              //   child: ListView(
+              //     children: [
+              //       Row(
+              //         children: [
+              //           Expanded(child: Text("Net worth")),
+              //           BlocBuilder<AssetsCubit, List<dynamic>>(
+              //             builder: (content, balances) {
+              //               var total = balances.fold(0, (sum, asset) {
+              //                 double value =
+              //                     double.tryParse(asset["value"].toString()) ?? 0.0;
+              //                 return sum + value.toInt();
+              //               });
+              //               return Text(
+              //                 formatMoney(total),
+              //               );
+              //             },
+              //           ),
+              //         ],
+              //       ),
+              //       SizedBox(height: 20),
+              //       Divider(
+              //         color: darkTheme.surfaceBright,
+              //       ),
+              //       SizedBox(height: 20),
+              //       Row(
+              //         children: [
+              //           Expanded(child: Text("Total receivables")),
+              //           BlocBuilder<ReceivablesCubit, List<dynamic>>(
+              //             builder: (content, balances) {
+              //               var total = balances.fold(0, (sum, asset) {
+              //                 double value =
+              //                     double.tryParse(asset["value"].toString()) ?? 0.0;
+              //                 return sum + value.toInt();
+              //               });
+              //               return Text(
+              //                 formatMoney(total),
+              //               );
+              //             },
+              //           ),
+              //         ],
+              //       ),
+              //       SizedBox(height: 20),
+              //       Divider(
+              //         color: darkTheme.surfaceBright,
+              //       ),
+              //       SizedBox(height: 20),
+              //       Row(
+              //         children: [
+              //           Expanded(child: Text("Total liabilities")),
+              //           BlocBuilder<LiabilitiesCubit, List<dynamic>>(
+              //             builder: (content, balances) {
+              //               var total = balances.fold(0, (sum, asset) {
+              //                 double value =
+              //                     double.tryParse(asset["value"].toString()) ?? 0.0;
+              //                 return sum + value.toInt();
+              //               });
+              //               return Text(
+              //                 formatMoney(total),
+              //               );
+              //             },
+              //           ),
+              //         ],
+              //       ),
+              //     ],
+              //   ),
+              // )
             ],
           ),
         )

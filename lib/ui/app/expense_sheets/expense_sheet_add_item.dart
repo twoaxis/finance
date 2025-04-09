@@ -130,8 +130,8 @@ class _ExpenseSheetAddItemState extends State<ExpenseSheetAddItem> {
                             ),
                             SizedBox(height: 5),
                             BlocBuilder<BalancesCubit, List<dynamic>>(
-                              builder:
-                                  (BuildContext context, List<dynamic> balances) {
+                              builder: (BuildContext context,
+                                  List<dynamic> balances) {
                                 var menuEntries = balances.map((balance) {
                                   return DropdownMenuEntry(
                                       value: balances.indexOf(balance),
@@ -144,28 +144,33 @@ class _ExpenseSheetAddItemState extends State<ExpenseSheetAddItem> {
                                       child: DropdownMenu(
                                         width: double.infinity,
                                         initialSelection: -1,
-                                        inputDecorationTheme: InputDecorationTheme(
+                                        inputDecorationTheme:
+                                            InputDecorationTheme(
                                           filled: true,
                                           fillColor: darkTheme.surfaceContainer,
                                           border: OutlineInputBorder(
-                                            borderRadius: BorderRadius.circular(10),
+                                            borderRadius:
+                                                BorderRadius.circular(10),
                                             borderSide: BorderSide.none,
                                             gapPadding: 0,
                                           ),
                                           focusedBorder: OutlineInputBorder(
-                                            borderRadius: BorderRadius.circular(10),
+                                            borderRadius:
+                                                BorderRadius.circular(10),
                                             borderSide: BorderSide.none,
                                             gapPadding: 0,
                                           ),
                                           enabledBorder: OutlineInputBorder(
-                                            borderRadius: BorderRadius.circular(10),
+                                            borderRadius:
+                                                BorderRadius.circular(10),
                                             borderSide: BorderSide.none,
                                             gapPadding: 0,
                                           ),
                                         ),
                                         dropdownMenuEntries: [
                                           DropdownMenuEntry(
-                                              value: -1, label: "Do not deduct"),
+                                              value: -1,
+                                              label: "Do not deduct"),
                                           ...menuEntries
                                         ],
                                         onSelected: (value) {
@@ -232,6 +237,8 @@ class _ExpenseSheetAddItemState extends State<ExpenseSheetAddItem> {
                         },
                       );
                     } else {
+
+
                       await FirebaseFirestore.instance
                           .collection("users")
                           .doc(FirebaseAuth.instance.currentUser?.uid)
@@ -249,9 +256,26 @@ class _ExpenseSheetAddItemState extends State<ExpenseSheetAddItem> {
                         },
                       );
 
+
+                      await FirebaseFirestore.instance
+                          .collection("users")
+                          .doc(FirebaseAuth.instance.currentUser?.uid)
+                          .collection("transactions")
+                          .add(
+                        {
+                          "type": "expense",
+                          "name": nameController.text,
+                          "value": double.parse(valueController.text),
+                          "date": dateTime,
+                          "source": balanceIndex != -1 && context.mounted ? context.read<BalancesCubit>().state[balanceIndex]["name"] : null
+                        },
+                      );
+
                       if (balanceIndex != -1 && context.mounted) {
+
                         context.read<BalancesCubit>().state[balanceIndex]
                             ["value"] -= double.parse(valueController.text);
+
 
                         await FirebaseFirestore.instance
                             .collection("users")

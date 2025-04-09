@@ -6,6 +6,7 @@ import 'package:financial_planner_mobile/cubit/income_cubit.dart';
 import 'package:financial_planner_mobile/cubit/liabilities_cubit.dart';
 import 'package:financial_planner_mobile/cubit/name_cubit.dart';
 import 'package:financial_planner_mobile/cubit/receivables_cubit.dart';
+import 'package:financial_planner_mobile/cubit/transactions_cubit.dart';
 import 'package:financial_planner_mobile/ui/app/app.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -50,6 +51,9 @@ void main() async {
         ),
         BlocProvider(
           create: (context) => NameCubit(),
+        ),
+        BlocProvider(
+          create: (context) => TransactionsCubit(),
         ),
       ],
       child: const FinancialPlanner(),

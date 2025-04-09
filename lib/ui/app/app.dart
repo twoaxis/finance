@@ -6,6 +6,7 @@ import 'package:financial_planner_mobile/cubit/income_cubit.dart';
 import 'package:financial_planner_mobile/cubit/liabilities_cubit.dart';
 import 'package:financial_planner_mobile/cubit/name_cubit.dart';
 import 'package:financial_planner_mobile/cubit/receivables_cubit.dart';
+import 'package:financial_planner_mobile/cubit/transactions_cubit.dart';
 import 'package:financial_planner_mobile/ui/app/account/account.dart';
 import 'package:financial_planner_mobile/ui/app/dashboard/dashboard.dart';
 import 'package:financial_planner_mobile/ui/app/money_flow/money_flow.dart';
@@ -64,6 +65,17 @@ class _AppState extends State<App> {
         .listen((e) {
       if (mounted) {
         context.read<ExpensesCubit>().updateExpenses(e.docs);
+      }
+    });
+    FirebaseFirestore.instance
+        .collection("users")
+        .doc(FirebaseAuth.instance.currentUser?.uid)
+        .collection("transactions")
+        .orderBy("date", descending: false)
+        .snapshots()
+        .listen((e) {
+      if (mounted) {
+        context.read<TransactionsCubit>().updateTransactions(e.docs);
       }
     });
   }
