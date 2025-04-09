@@ -78,7 +78,7 @@ class DashboardPage extends StatelessWidget {
                         DashboardButton(
                             icon: Icons.analytics, name: "Analytics"),
                         DashboardButton(
-                            icon: Icons.money_off_csred, name: "Set a budget"),
+                            icon: Icons.money_off_csred, name: "Budget"),
                       ],
                     )
                   ],
@@ -107,7 +107,7 @@ class DashboardPage extends StatelessWidget {
                   builder: (BuildContext context, transactions) {
                     return ListView.separated(
                       padding: EdgeInsets.zero,
-                      itemCount: transactions.length,
+                      itemCount: transactions.length <= 30 ? transactions.length : 30,
                       itemBuilder: (BuildContext context, int index) {
                         return Row(
                           spacing: 20,

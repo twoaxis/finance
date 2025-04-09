@@ -71,7 +71,7 @@ class _AppState extends State<App> {
         .collection("users")
         .doc(FirebaseAuth.instance.currentUser?.uid)
         .collection("transactions")
-        .orderBy("date", descending: false)
+        .orderBy("date", descending: true)
         .snapshots()
         .listen((e) {
       if (mounted) {

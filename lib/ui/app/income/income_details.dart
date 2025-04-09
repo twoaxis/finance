@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:financial_planner_mobile/ui/app/income/income_edit.dart';
+import 'package:financial_planner_mobile/ui/app/income/income_payout.dart';
+import 'package:financial_planner_mobile/ui/common/primary_button.dart';
 import 'package:financial_planner_mobile/values/spaces.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -63,57 +65,79 @@ class _IncomeDetailsState extends State<IncomeDetails> {
                     ),
                   ],
                 ),
-                SizedBox(height: 30,),
-                GestureDetector(
-                  onTap: pending ? null : () {
-                    showDialog(
-                        context: context,
-                        builder: (BuildContext build) {
-                      return AlertDialog(
-                        title: const Text(
-                            "Are you sure to delete this income source?"),
-                        icon: const Icon(Icons.delete),
-                        actions: [
-                          TextButton(
-                            onPressed: pending ? null : () {
-                              Navigator.of(context).pop();
-                            },
-                            child: const Text("Cancel"),
-                          ),
-                          TextButton(
-                            onPressed: pending ? null : () async {
-
-                              setState(() {
-                                pending = true;
-                              });
-
-                              await FirebaseFirestore.instance
-                                  .collection("users")
-                                  .doc(FirebaseAuth
-                                  .instance
-                                  .currentUser
-                                  ?.uid)
-                                  .update({
-                                "income": FieldValue
-                                    .arrayRemove(
-                                    [widget.income])
-                              });
-
-                              if(context.mounted) {
-                                Navigator.of(context).pop();
-                                Navigator.of(context).pop();
-                              }
-                            },
-                            child: const Text("Yes"),
-                          ),
-                        ],
-                      );
-                    });
+                SizedBox(
+                  height: 30,
+                ),
+                PrimaryButton(
+                  text: "Payout",
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            IncomePayout(income: widget.income),
+                      ),
+                    );
                   },
+                  enabled: !pending,
+                ),
+                SizedBox(
+                  height: 30,
+                ),
+                GestureDetector(
+                  onTap: pending
+                      ? null
+                      : () {
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext build) {
+                                return AlertDialog(
+                                  title: const Text(
+                                      "Are you sure to delete this income source?"),
+                                  icon: const Icon(Icons.delete),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: pending
+                                          ? null
+                                          : () {
+                                              Navigator.of(context).pop();
+                                            },
+                                      child: const Text("Cancel"),
+                                    ),
+                                    TextButton(
+                                      onPressed: pending
+                                          ? null
+                                          : () async {
+                                              setState(() {
+                                                pending = true;
+                                              });
+
+                                              await FirebaseFirestore.instance
+                                                  .collection("users")
+                                                  .doc(FirebaseAuth.instance
+                                                      .currentUser?.uid)
+                                                  .update({
+                                                "income":
+                                                    FieldValue.arrayRemove(
+                                                        [widget.income])
+                                              });
+
+                                              if (context.mounted) {
+                                                Navigator.of(context).pop();
+                                                Navigator.of(context).pop();
+                                              }
+                                            },
+                                      child: const Text("Yes"),
+                                    ),
+                                  ],
+                                );
+                              });
+                        },
                   child: Center(
-                    child: Text("Delete income source", style: TextStyle(
-                        color: Colors.red
-                    ),),
+                    child: Text(
+                      "Delete income source",
+                      style: TextStyle(color: Colors.red),
+                    ),
                   ),
                 )
               ],
