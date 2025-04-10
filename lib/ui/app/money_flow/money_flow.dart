@@ -1,5 +1,6 @@
 import 'package:financial_planner_mobile/ui/app/assets/assets.dart';
 import 'package:financial_planner_mobile/ui/app/balances/balances.dart';
+import 'package:financial_planner_mobile/ui/app/bills/bills.dart';
 import 'package:financial_planner_mobile/ui/app/income/income.dart';
 import 'package:financial_planner_mobile/ui/app/liabilities/liabilities.dart';
 import 'package:financial_planner_mobile/util/theme.dart';
@@ -39,7 +40,7 @@ class MoneyFlowPage extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => LiabilitiesPage(),
+                            builder: (context) => BillsPage(),
                           ),
                         );
                       },
