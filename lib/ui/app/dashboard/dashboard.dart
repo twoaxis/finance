@@ -11,6 +11,7 @@ import 'package:financial_planner_mobile/values/spaces.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 
 import '../../../util/money_format.dart';
 
@@ -139,11 +140,7 @@ class DashboardPage extends StatelessWidget {
                                 children: [
                                   Text(transactions[index]["name"]),
                                   Text(
-                                      transactions[index]["date"]
-                                          .toDate()
-                                          .toString()
-                                          .split(" ")[0]
-                                          .toString(),
+                                      DateFormat('MMM d, y. hh:mm a').format(transactions[index]["date"].toDate()),
                                       style: TextStyle(
                                           fontSize: 12, color: Colors.grey))
                                 ],

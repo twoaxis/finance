@@ -1,9 +1,7 @@
 import 'package:financial_planner_mobile/ui/app/assets/assets.dart';
 import 'package:financial_planner_mobile/ui/app/balances/balances.dart';
-import 'package:financial_planner_mobile/ui/app/expense_sheets/expense_sheets.dart';
 import 'package:financial_planner_mobile/ui/app/income/income.dart';
 import 'package:financial_planner_mobile/ui/app/liabilities/liabilities.dart';
-import 'package:financial_planner_mobile/ui/app/receivables/receivables.dart';
 import 'package:financial_planner_mobile/util/theme.dart';
 import 'package:financial_planner_mobile/values/spaces.dart';
 import 'package:flutter/material.dart';
@@ -41,7 +39,7 @@ class MoneyFlowPage extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => ExpenseSheetsPage(),
+                            builder: (context) => LiabilitiesPage(),
                           ),
                         );
                       },
@@ -58,7 +56,7 @@ class MoneyFlowPage extends StatelessWidget {
                           spacing: 10,
                           children: [
                             Icon(Icons.edit_document, size: 50, color: darkTheme.primary,),
-                            Text("Expenses", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),)
+                            Text("Bills", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),)
                           ],
                         ),
                       ),
@@ -86,33 +84,6 @@ class MoneyFlowPage extends StatelessWidget {
                           children: [
                             Icon(Icons.card_travel, size: 50, color: darkTheme.primary,),
                             Text("Liabilities", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),)
-                          ],
-                        ),
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ExpenseSheetsPage(),
-                          ),
-                        );
-                      },
-                      child: Container(
-                        height: 150,
-                        width: 150,
-                        decoration: BoxDecoration(
-                            color: darkTheme.surfaceContainer,
-                            borderRadius: BorderRadius.circular(10)
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          spacing: 10,
-                          children: [
-                            Icon(Icons.money_off_csred, size: 50, color: darkTheme.primary,),
-                            Text("Budget", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),)
                           ],
                         ),
                       ),

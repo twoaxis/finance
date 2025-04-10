@@ -53,7 +53,6 @@ class _IncomePageState extends State<IncomePage> {
                           child: Row(
                             children: [
                               Expanded(
-                                flex: 2,
                                 child: Text(income[index]["name"],
                                     style: const TextStyle(fontSize: 15)),
                               ),
@@ -64,6 +63,8 @@ class _IncomePageState extends State<IncomePage> {
                                   fontSize: 15,
                                 ),
                               ),
+                              SizedBox(width: 10),
+                              Icon(Icons.arrow_forward_ios, size: 15)
                             ],
                           ),
                         ),
