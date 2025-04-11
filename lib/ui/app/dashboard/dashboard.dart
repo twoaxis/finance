@@ -6,6 +6,7 @@ import 'package:financial_planner_mobile/cubit/liabilities_cubit.dart';
 import 'package:financial_planner_mobile/cubit/receivables_cubit.dart';
 import 'package:financial_planner_mobile/cubit/transactions_cubit.dart';
 import 'package:financial_planner_mobile/ui/app/dashboard/dashboard_button.dart';
+import 'package:financial_planner_mobile/ui/app/transactions/transactions.dart';
 import 'package:financial_planner_mobile/util/theme.dart';
 import 'package:financial_planner_mobile/values/spaces.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -89,6 +90,14 @@ class DashboardPage extends StatelessWidget {
                 height: 40,
               ),
               GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => TransactionsPage(),
+                    ),
+                  );
+                },
                 child: Row(
                   children: [
                     Expanded(
@@ -108,7 +117,8 @@ class DashboardPage extends StatelessWidget {
                   builder: (BuildContext context, transactions) {
                     return ListView.separated(
                       padding: EdgeInsets.zero,
-                      itemCount: transactions.length <= 30 ? transactions.length : 30,
+                      itemCount:
+                          transactions.length <= 30 ? transactions.length : 30,
                       itemBuilder: (BuildContext context, int index) {
                         return Row(
                           spacing: 20,
@@ -140,7 +150,8 @@ class DashboardPage extends StatelessWidget {
                                 children: [
                                   Text(transactions[index]["name"]),
                                   Text(
-                                      DateFormat('MMM d, y. hh:mm a').format(transactions[index]["date"].toDate()),
+                                      DateFormat('MMM d, y. hh:mm a').format(
+                                          transactions[index]["date"].toDate()),
                                       style: TextStyle(
                                           fontSize: 12, color: Colors.grey))
                                 ],
