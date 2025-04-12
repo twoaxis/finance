@@ -39,6 +39,29 @@ class TransactionsPage extends StatelessWidget {
           padding: const EdgeInsets.all(fullscreenSpacing),
           child: BlocBuilder<TransactionsCubit, List<dynamic>>(
             builder: (BuildContext context, List<dynamic> transactions) {
+
+              if (transactions.isEmpty) {
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Opacity(
+                        opacity: 0.3,
+                        child: Image.asset(
+                          "assets/images/empty_data.png",
+                          width: 200,
+                        ),
+                      ),
+                      SizedBox(height: 20,),
+                      Opacity(
+                        opacity: 0.3,
+                        child: Text("No transactions", style: TextStyle(fontSize: 25),),
+                      )
+                    ],
+                  ),
+                );
+              }
+
               final grouped = groupTransactionsByDate(transactions);
 
               final sortedKeys = grouped.keys.toList()

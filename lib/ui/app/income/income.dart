@@ -30,6 +30,27 @@ class _IncomePageState extends State<IncomePage> {
           Expanded(
             child: BlocBuilder<IncomeCubit, List<dynamic>>(
               builder: (context, income) {
+                if (income.isEmpty) {
+                  return Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Opacity(
+                          opacity: 0.3,
+                          child: Image.asset(
+                            "assets/images/empty_data.png",
+                            width: 200,
+                          ),
+                        ),
+                        SizedBox(height: 20,),
+                        Opacity(
+                          opacity: 0.3,
+                          child: Text("No income added", style: TextStyle(fontSize: 25),),
+                        )
+                      ],
+                    ),
+                  );
+                }
                 return ListView.separated(
                   itemCount: income.length,
                   itemBuilder: (context, index) {

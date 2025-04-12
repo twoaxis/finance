@@ -33,12 +33,38 @@ class _BalancesPageState extends State<BalancesPage> {
           Expanded(
             child: BlocBuilder<BalancesCubit, List<dynamic>>(
                 builder: (context, balances) {
+              if (balances.isEmpty) {
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Opacity(
+                        opacity: 0.3,
+                        child: Image.asset(
+                          "assets/images/empty_data.png",
+                          width: 200,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Opacity(
+                        opacity: 0.3,
+                        child: Text(
+                          "No balances added",
+                          style: TextStyle(fontSize: 25),
+                        ),
+                      )
+                    ],
+                  ),
+                );
+              }
               return ListView.separated(
                 itemCount: balances.length,
                 itemBuilder: (context, index) {
                   return Padding(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 12, horizontal: 20),
                     child: Row(
                       children: [
                         Expanded(
@@ -62,7 +88,8 @@ class _BalancesPageState extends State<BalancesPage> {
                             children: [
                               IconButton(
                                   onPressed: () {
-                                    valueController.text = balances[index]["value"].toString();
+                                    valueController.text =
+                                        balances[index]["value"].toString();
                                     showDialog(
                                         context: context,
                                         builder: (BuildContext build) {
@@ -88,7 +115,8 @@ class _BalancesPageState extends State<BalancesPage> {
                                                     decoration:
                                                         const InputDecoration(
                                                       hintText: "50000",
-                                                      labelText: "Payment Value",
+                                                      labelText:
+                                                          "Payment Value",
                                                     ))
                                               ],
                                             ),
@@ -99,7 +127,7 @@ class _BalancesPageState extends State<BalancesPage> {
                                                     : () {
                                                         Navigator.of(context)
                                                             .pop();
-      
+
                                                         valueController.clear();
                                                       },
                                                 child: const Text("Cancel"),
@@ -125,7 +153,7 @@ class _BalancesPageState extends State<BalancesPage> {
                                                                 double.parse(
                                                                     valueController
                                                                         .text);
-      
+
                                                             await FirebaseFirestore
                                                                 .instance
                                                                 .collection(
@@ -135,13 +163,15 @@ class _BalancesPageState extends State<BalancesPage> {
                                                                     .currentUser
                                                                     ?.uid)
                                                                 .update({
-                                                              "balances": balances
+                                                              "balances":
+                                                                  balances
                                                             });
-      
+
                                                             valueController
                                                                 .clear();
-      
-                                                            if (context.mounted) {
+
+                                                            if (context
+                                                                .mounted) {
                                                               Navigator.of(
                                                                       context)
                                                                   .pop();
@@ -184,7 +214,7 @@ class _BalancesPageState extends State<BalancesPage> {
                                             TextButton(
                                               onPressed: () {
                                                 Navigator.of(context).pop();
-      
+
                                                 // TODO: Error handling.
                                                 FirebaseFirestore.instance
                                                     .collection("users")

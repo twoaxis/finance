@@ -33,12 +33,38 @@ class _ReceivablesPageState extends State<ReceivablesPage> {
           Expanded(
             child: BlocBuilder<ReceivablesCubit, List<dynamic>>(
                 builder: (context, receivables) {
+              if (receivables.isEmpty) {
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Opacity(
+                        opacity: 0.3,
+                        child: Image.asset(
+                          "assets/images/empty_data.png",
+                          width: 200,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Opacity(
+                        opacity: 0.3,
+                        child: Text(
+                          "No receivables added",
+                          style: TextStyle(fontSize: 25),
+                        ),
+                      )
+                    ],
+                  ),
+                );
+              }
               return ListView.separated(
                 itemCount: receivables.length,
                 itemBuilder: (context, index) {
                   return Padding(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 12, horizontal: 20),
                     child: Row(
                       children: [
                         Expanded(
@@ -66,8 +92,8 @@ class _ReceivablesPageState extends State<ReceivablesPage> {
                                         context: context,
                                         builder: (BuildContext build) {
                                           return AlertDialog(
-                                            title:
-                                                const Text("How much was paid?"),
+                                            title: const Text(
+                                                "How much was paid?"),
                                             content: Column(
                                               mainAxisSize: MainAxisSize.min,
                                               children: [
@@ -88,7 +114,8 @@ class _ReceivablesPageState extends State<ReceivablesPage> {
                                                     decoration:
                                                         const InputDecoration(
                                                       hintText: "50000",
-                                                      labelText: "Payment Value",
+                                                      labelText:
+                                                          "Payment Value",
                                                     ))
                                               ],
                                             ),
@@ -142,7 +169,8 @@ class _ReceivablesPageState extends State<ReceivablesPage> {
                                                             valueController
                                                                 .clear();
 
-                                                            if (context.mounted) {
+                                                            if (context
+                                                                .mounted) {
                                                               Navigator.of(
                                                                       context)
                                                                   .pop();
@@ -193,8 +221,9 @@ class _ReceivablesPageState extends State<ReceivablesPage> {
                                                           .currentUser?.uid)
                                                       .update({
                                                     "receivables":
-                                                        FieldValue.arrayRemove(
-                                                            [receivables[index]])
+                                                        FieldValue.arrayRemove([
+                                                      receivables[index]
+                                                    ])
                                                   });
                                                 },
                                                 child: const Text("Yes"),

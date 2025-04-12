@@ -34,6 +34,27 @@ class _LiabilitiesPageState extends State<LiabilitiesPage> {
           Expanded(
             child: BlocBuilder<LiabilitiesCubit, List<dynamic>>(
                 builder: (context, liabilities) {
+                  if (liabilities.isEmpty) {
+                    return Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Opacity(
+                            opacity: 0.3,
+                            child: Image.asset(
+                              "assets/images/empty_data.png",
+                              width: 200,
+                            ),
+                          ),
+                          SizedBox(height: 20,),
+                          Opacity(
+                            opacity: 0.3,
+                            child: Text("No liabilities added", style: TextStyle(fontSize: 25),),
+                          )
+                        ],
+                      ),
+                    );
+                  }
               return ListView.separated(
                 itemCount: liabilities.length,
                 itemBuilder: (context, index) {

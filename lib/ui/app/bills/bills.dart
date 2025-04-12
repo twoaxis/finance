@@ -33,6 +33,32 @@ class _BillsPageState extends State<BillsPage> {
           Expanded(
             child: BlocBuilder<BillsCubit, List<dynamic>>(
               builder: (context, bills) {
+                if (bills.isEmpty) {
+                  return Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Opacity(
+                          opacity: 0.3,
+                          child: Image.asset(
+                            "assets/images/empty_data.png",
+                            width: 200,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Opacity(
+                          opacity: 0.3,
+                          child: Text(
+                            "No bills added",
+                            style: TextStyle(fontSize: 25),
+                          ),
+                        )
+                      ],
+                    ),
+                  );
+                }
                 return ListView.separated(
                   itemCount: bills.length,
                   itemBuilder: (context, index) {

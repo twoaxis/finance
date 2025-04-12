@@ -115,6 +115,27 @@ class DashboardPage extends StatelessWidget {
               Expanded(
                 child: BlocBuilder<TransactionsCubit, List<dynamic>>(
                   builder: (BuildContext context, transactions) {
+                    if (transactions.isEmpty) {
+                      return Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Opacity(
+                              opacity: 0.3,
+                              child: Image.asset(
+                                "assets/images/empty_data.png",
+                                width: 200,
+                              ),
+                            ),
+                            SizedBox(height: 20,),
+                            Opacity(
+                              opacity: 0.3,
+                              child: Text("No transactions", style: TextStyle(fontSize: 25),),
+                            )
+                          ],
+                        ),
+                      );
+                    }
                     return ListView.separated(
                       padding: EdgeInsets.zero,
                       itemCount:
