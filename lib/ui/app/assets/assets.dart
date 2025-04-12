@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
+import '../../../util/money_format.dart';
+
 class AssetsPage extends StatefulWidget {
   const AssetsPage({super.key});
 
@@ -72,7 +74,7 @@ class _AssetsPageState extends State<AssetsPage> {
                           flex: 1,
                           child: Center(
                             child: Text(
-                              "\$${assets[index]["value"] is int ? NumberFormat('#,##0').format(assets[index]["value"]) : NumberFormat('#,##0.##').format((assets[index]["value"] as num).toDouble())}",
+                              formatMoneyWithContext(context, assets[index]["value"]),
                               style: TextStyle(
                                 color: darkTheme.surfaceTint,
                                 fontSize: 15,

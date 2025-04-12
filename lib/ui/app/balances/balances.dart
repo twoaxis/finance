@@ -5,7 +5,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
+
+import '../../../util/money_format.dart';
 
 class BalancesPage extends StatefulWidget {
   const BalancesPage({super.key});
@@ -76,7 +77,7 @@ class _BalancesPageState extends State<BalancesPage> {
                             flex: 1,
                             child: Center(
                               child: Text(
-                                  "\$${balances[index]["value"] is int ? NumberFormat('#,##0').format(balances[index]["value"]) : NumberFormat('#,##0.##').format((balances[index]["value"] as num).toDouble())}",
+                                  formatMoneyWithContext(context, balances[index]["value"]),
                                   style: TextStyle(
                                       color: darkTheme.surfaceTint,
                                       fontSize: 15)),

@@ -56,7 +56,7 @@ class _LiabilityDetailsState extends State<LiabilityDetails> {
                       ),
                     ),
                     Text(
-                      formatMoney(widget.liability["value"]),
+                      formatMoneyWithContext(context, widget.liability["value"]),
                       style: TextStyle(
                         color: darkTheme.primary,
                         fontSize: 20,

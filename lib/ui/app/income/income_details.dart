@@ -56,7 +56,7 @@ class _IncomeDetailsState extends State<IncomeDetails> {
                       ),
                     ),
                     Text(
-                      formatMoney(widget.income["value"]),
+                      formatMoneyWithContext(context, widget.income["value"]),
                       style: TextStyle(
                         color: darkTheme.primary,
                         fontSize: 20,

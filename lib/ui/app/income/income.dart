@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
+import '../../../util/money_format.dart';
+
 class IncomePage extends StatefulWidget {
   const IncomePage({super.key});
 
@@ -76,7 +78,8 @@ class _IncomePageState extends State<IncomePage> {
                                     style: const TextStyle(fontSize: 15)),
                               ),
                               Text(
-                                "\$${income[index]["value"] is int ? NumberFormat('#,##0').format(income[index]["value"]) : NumberFormat('#,##0.##').format((income[index]["value"] as num).toDouble())}",
+                                formatMoneyWithContext(
+                                    context, income[index]["value"]),
                                 style: TextStyle(
                                   color: darkTheme.primary,
                                   fontSize: 15,

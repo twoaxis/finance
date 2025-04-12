@@ -77,7 +77,7 @@ class AnalyticsPage extends StatelessWidget {
                               return sum + value.toInt();
                             });
                             return Text(
-                              formatMoney(total),
+                              formatMoneyWithContext(context, total),
                             );
                           },
                         ),
@@ -101,7 +101,7 @@ class AnalyticsPage extends StatelessWidget {
                               return sum + value.toInt();
                             });
                             return Text(
-                              formatMoney(total),
+                              formatMoneyWithContext(context, total),
                             );
                           },
                         ),
@@ -124,7 +124,7 @@ class AnalyticsPage extends StatelessWidget {
                               return sum + value.toInt();
                             });
                             return Text(
-                              formatMoney(total),
+                              formatMoneyWithContext(context, total),
                             );
                           },
                         ),
@@ -156,7 +156,7 @@ class AnalyticsPage extends StatelessWidget {
                                   return sum + value.toInt();
                                 });
                                 return Text(
-                                  formatMoney(receivables + balance),
+                                  formatMoneyWithContext(context, receivables + balance),
                                 );
                               },
                             );

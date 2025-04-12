@@ -121,7 +121,7 @@ class TransactionsPage extends StatelessWidget {
                               ),
                               if (tx["type"] == "expense")
                                 Text(
-                                  "-${formatMoney(tx["value"])}",
+                                  "-${formatMoneyWithContext(context, tx["value"])}",
                                   style: TextStyle(
                                       color: darkTheme.primary,
                                       fontSize: 17,
@@ -129,7 +129,7 @@ class TransactionsPage extends StatelessWidget {
                                 )
                               else if (tx["type"] == "income")
                                 Text(
-                                  "+${formatMoney(tx["value"])}",
+                                  "+${formatMoneyWithContext(context, tx["value"])}",
                                   style: TextStyle(
                                       color: Colors.green,
                                       fontSize: 17,

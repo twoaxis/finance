@@ -56,7 +56,7 @@ class _BillDetailsState extends State<BillDetails> {
                       ),
                     ),
                     Text(
-                      formatMoney(widget.bill["value"]),
+                      formatMoneyWithContext(context, widget.bill["value"]),
                       style: TextStyle(
                         color: darkTheme.primary,
                         fontSize: 20,

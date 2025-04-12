@@ -104,7 +104,7 @@ class MoneyFlowPage extends StatelessWidget {
               SizedBox(height: 20),
               BlocBuilder<BudgetCubit, dynamic>(
                 builder: (context, budget) {
-                  if (budget == null) {
+                  if (budget == null || budget.isEmpty) {
                     return Center(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -167,13 +167,13 @@ class MoneyFlowPage extends StatelessWidget {
                         children: [
                           BudgetInfo(
                               label: "Limit",
-                              value: formatMoney(limit)),
+                              value: formatMoneyWithContext(context, limit)),
                           BudgetInfo(
                               label: "Spent",
-                              value: formatMoney(spent)),
+                              value: formatMoneyWithContext(context, spent)),
                           BudgetInfo(
                             label: "Remaining",
-                            value: formatMoney(limit > spent ? limit - spent : 0),
+                            value: formatMoneyWithContext(context, limit > spent ? limit - spent : 0),
                           ),
                         ],
                       ),

@@ -3,6 +3,7 @@ import 'package:financial_planner_mobile/cubit/assets_cubit.dart';
 import 'package:financial_planner_mobile/cubit/balances_cubit.dart';
 import 'package:financial_planner_mobile/cubit/bills_cubit.dart';
 import 'package:financial_planner_mobile/cubit/budget_cubit.dart';
+import 'package:financial_planner_mobile/cubit/currency_cubit.dart';
 import 'package:financial_planner_mobile/cubit/expenses_cubit.dart';
 import 'package:financial_planner_mobile/cubit/income_cubit.dart';
 import 'package:financial_planner_mobile/cubit/liabilities_cubit.dart';
@@ -46,6 +47,7 @@ class _AppState extends State<App> {
         context.read<AssetsCubit>().updateAssets(e.data()?["assets"] ?? []);
         context.read<BillsCubit>().updateBills(e.data()?["bills"] ?? []);
         context.read<BudgetCubit>().updateBudget(e.data()?["budget"]);
+        context.read<CurrencyCubit>().updateCurrency(e.data()?["currency"] ?? "USD");
         context
             .read<BalancesCubit>()
             .updateBalances(e.data()?["balances"] ?? []);

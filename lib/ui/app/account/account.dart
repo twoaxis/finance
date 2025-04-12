@@ -1,4 +1,5 @@
 import 'package:financial_planner_mobile/cubit/name_cubit.dart';
+import 'package:financial_planner_mobile/ui/app/account/account_currency.dart';
 import 'package:financial_planner_mobile/ui/app/account/account_settings.dart';
 import 'package:financial_planner_mobile/ui/app/info/info.dart';
 import 'package:financial_planner_mobile/util/theme.dart';
@@ -127,6 +128,22 @@ class AccountPage extends StatelessWidget {
                       width: double.infinity,
                       padding: EdgeInsets.all(15),
                       child: Text("Info"),
+                    ),
+                  ),
+                  Divider(color: darkTheme.surface, height: 1, thickness: 3,),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const AccountCurrency(),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      width: double.infinity,
+                      padding: EdgeInsets.all(15),
+                      child: Text("Currency"),
                     ),
                   ),
                 ],

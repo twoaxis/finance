@@ -1,4 +1,5 @@
 import 'package:financial_planner_mobile/cubit/balances_cubit.dart';
+import 'package:financial_planner_mobile/cubit/currency_cubit.dart';
 import 'package:financial_planner_mobile/cubit/transactions_cubit.dart';
 import 'package:financial_planner_mobile/ui/app/analytics/analytics.dart';
 import 'package:financial_planner_mobile/ui/app/budget/budget.dart';
@@ -49,7 +50,7 @@ class DashboardPage extends StatelessWidget {
                           return sum + value.toInt();
                         });
                         return Text(
-                          formatMoney(total),
+                          formatMoneyWithContext(context, total),
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 40),
                         );
@@ -87,16 +88,26 @@ class DashboardPage extends StatelessWidget {
                                               BorderRadius.circular(2),
                                         ),
                                       ),
-                                      SizedBox(height: 20,),
+                                      SizedBox(
+                                        height: 20,
+                                      ),
                                       ListTile(
                                         onTap: () {
-                                          Navigator.push(context, MaterialPageRoute(builder: (context) => QuickAddIncome()));
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      QuickAddIncome()));
                                         },
                                         title: Text("Income"),
                                       ),
                                       ListTile(
                                         onTap: () {
-                                          Navigator.push(context, MaterialPageRoute(builder: (context) => QuickAddExpense()));
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      QuickAddExpense()));
                                         },
                                         title: Text("Expense"),
                                       ),
@@ -111,14 +122,20 @@ class DashboardPage extends StatelessWidget {
                           icon: Icons.analytics,
                           name: "Analytics",
                           onPressed: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => AnalyticsPage()));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => AnalyticsPage()));
                           },
                         ),
                         DashboardButton(
                           icon: Icons.money_off_csred,
                           name: "Budget",
                           onPressed: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => BudgetPage()));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => BudgetPage()));
                           },
                         ),
                       ],
@@ -153,98 +170,102 @@ class DashboardPage extends StatelessWidget {
                 height: 10,
               ),
               Expanded(
-                child: BlocBuilder<TransactionsCubit, List<dynamic>>(
-                  builder: (BuildContext context, transactions) {
-                    if (transactions.isEmpty) {
-                      return Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Opacity(
-                              opacity: 0.3,
-                              child: Image.asset(
-                                "assets/images/empty_data.png",
-                                width: 200,
-                              ),
+                child: BlocBuilder<CurrencyCubit, String>(
+                  builder: (BuildContext context, String currency) {
+                    return BlocBuilder<TransactionsCubit, List<dynamic>>(
+                      builder: (BuildContext context, transactions) {
+                        if (transactions.isEmpty) {
+                          return Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Opacity(
+                                  opacity: 0.3,
+                                  child: Image.asset(
+                                    "assets/images/empty_data.png",
+                                    width: 200,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                Opacity(
+                                  opacity: 0.3,
+                                  child: Text(
+                                    "No transactions",
+                                    style: TextStyle(fontSize: 25),
+                                  ),
+                                )
+                              ],
                             ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Opacity(
-                              opacity: 0.3,
-                              child: Text(
-                                "No transactions",
-                                style: TextStyle(fontSize: 25),
-                              ),
-                            )
-                          ],
-                        ),
-                      );
-                    }
-                    return ListView.separated(
-                      padding: EdgeInsets.zero,
-                      itemCount:
+                          );
+                        }
+                        return ListView.separated(
+                          padding: EdgeInsets.zero,
+                          itemCount:
                           transactions.length <= 30 ? transactions.length : 30,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Row(
-                          spacing: 20,
-                          children: [
-                            Container(
-                              padding: EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                  color: darkTheme.surfaceBright,
-                                  borderRadius: BorderRadius.circular(10)),
-                              child: Column(
-                                children: [
-                                  if (transactions[index]["type"] == "expense")
-                                    Icon(
-                                      Icons.payments_rounded,
-                                      size: 25,
-                                    )
-                                  else if (transactions[index]["type"] ==
-                                      "income")
-                                    Icon(
-                                      Icons.file_download_rounded,
-                                      size: 25,
-                                    )
-                                ],
-                              ),
-                            ),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(transactions[index]["name"]),
+                          itemBuilder: (BuildContext context, int index) {
+                            return Row(
+                              spacing: 20,
+                              children: [
+                                Container(
+                                  padding: EdgeInsets.all(10),
+                                  decoration: BoxDecoration(
+                                      color: darkTheme.surfaceBright,
+                                      borderRadius: BorderRadius.circular(10)),
+                                  child: Column(
+                                    children: [
+                                      if (transactions[index]["type"] == "expense")
+                                        Icon(
+                                          Icons.payments_rounded,
+                                          size: 25,
+                                        )
+                                      else if (transactions[index]["type"] ==
+                                          "income")
+                                        Icon(
+                                          Icons.file_download_rounded,
+                                          size: 25,
+                                        )
+                                    ],
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(transactions[index]["name"]),
+                                      Text(
+                                          DateFormat('MMM d, y. hh:mm a').format(
+                                              transactions[index]["date"].toDate()),
+                                          style: TextStyle(
+                                              fontSize: 12, color: Colors.grey))
+                                    ],
+                                  ),
+                                ),
+                                if (transactions[index]["type"] == "expense")
                                   Text(
-                                      DateFormat('MMM d, y. hh:mm a').format(
-                                          transactions[index]["date"].toDate()),
-                                      style: TextStyle(
-                                          fontSize: 12, color: Colors.grey))
-                                ],
-                              ),
-                            ),
-                            if (transactions[index]["type"] == "expense")
-                              Text(
-                                "-${formatMoney(transactions[index]["value"])}",
-                                style: TextStyle(
-                                    color: darkTheme.primary,
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.bold),
-                              )
-                            else if (transactions[index]["type"] == "income")
-                              Text(
-                                "+${formatMoney(transactions[index]["value"])}",
-                                style: TextStyle(
-                                    color: Colors.green,
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.bold),
-                              )
-                          ],
+                                    "-${formatMoneyWithContext(context, transactions[index]["value"])}",
+                                    style: TextStyle(
+                                        color: darkTheme.primary,
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.bold),
+                                  )
+                                else if (transactions[index]["type"] == "income")
+                                  Text(
+                                    "+${formatMoneyWithContext(context, transactions[index]["value"])}",
+                                    style: TextStyle(
+                                        color: Colors.green,
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.bold),
+                                  )
+                              ],
+                            );
+                          },
+                          separatorBuilder: (BuildContext context, int index) {
+                            return Divider(
+                                color: darkTheme.surfaceBright, height: 20);
+                          },
                         );
-                      },
-                      separatorBuilder: (BuildContext context, int index) {
-                        return Divider(
-                            color: darkTheme.surfaceBright, height: 20);
                       },
                     );
                   },
@@ -264,7 +285,7 @@ class DashboardPage extends StatelessWidget {
               //                 return sum + value.toInt();
               //               });
               //               return Text(
-              //                 formatMoney(total),
+              //                 formatMoneyWithContext(context, total),
               //               );
               //             },
               //           ),
@@ -286,7 +307,7 @@ class DashboardPage extends StatelessWidget {
               //                 return sum + value.toInt();
               //               });
               //               return Text(
-              //                 formatMoney(total),
+              //                 formatMoneyWithContext(context, total),
               //               );
               //             },
               //           ),
@@ -308,7 +329,7 @@ class DashboardPage extends StatelessWidget {
               //                 return sum + value.toInt();
               //               });
               //               return Text(
-              //                 formatMoney(total),
+              //                 formatMoneyWithContext(context, total),
               //               );
               //             },
               //           ),

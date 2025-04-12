@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
+import '../../../util/money_format.dart';
+
 class LiabilitiesPage extends StatefulWidget {
   const LiabilitiesPage({super.key});
 
@@ -80,7 +82,7 @@ class _LiabilitiesPageState extends State<LiabilitiesPage> {
                                   style: const TextStyle(fontSize: 15)),
                             ),
                             Text(
-                              "\$${liabilities[index]["value"] is int ? NumberFormat('#,##0').format(liabilities[index]["value"]) : NumberFormat('#,##0.##').format((liabilities[index]["value"] as num).toDouble())}",
+                              formatMoneyWithContext(context, liabilities[index]["value"]),
                               style: TextStyle(
                                   color: darkTheme.surfaceTint, fontSize: 15),
                             ),
