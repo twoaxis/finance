@@ -61,7 +61,7 @@ class _SignupPageState extends State<SignupPage> {
                       child: SingleChildScrollView(
                         child: Column(
                           children: [
-                            Image.asset("asset/images/logo.png"),
+                            Image.asset("assets/images/logo.png"),
                             Text(
                               "The next step to riches!",
                               style: TextStyle(

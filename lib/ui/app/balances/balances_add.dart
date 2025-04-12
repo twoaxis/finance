@@ -57,7 +57,7 @@ class _BalancesAddState extends State<BalancesAdd> {
                               ),
                             ),
                             Image.asset(
-                              'asset/images/balances.png',
+                              'assets/images/balances.png',
                               width: 100,
                             ),
                           ],

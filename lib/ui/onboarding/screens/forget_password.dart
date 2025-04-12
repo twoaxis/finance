@@ -1,9 +1,11 @@
 import 'package:financial_planner_mobile/ui/common/primary_button.dart';
-import 'package:financial_planner_mobile/ui/onboarding/screens/email_verify.dart';
+import 'package:financial_planner_mobile/ui/common/themed_input_field.dart';
+import 'package:financial_planner_mobile/ui/onboarding/screens/email_sent.dart';
 import 'package:financial_planner_mobile/util/theme.dart';
 import 'package:financial_planner_mobile/values/spaces.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 class ForgetPassword extends StatefulWidget {
   const ForgetPassword({
@@ -21,37 +23,37 @@ class _ForgetPasswordState extends State<ForgetPassword> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text("Forget password"),
-        ),
+        appBar: AppBar(),
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(fullscreenSpacing),
             child: Column(
-              mainAxisSize: MainAxisSize.max,
               children: [
                 Expanded(
-                  child: SizedBox(
-                    width: double.infinity,
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          TextField(
-                            controller: emailController,
-                            enabled: !pending,
-                            textInputAction: TextInputAction.next,
-                            decoration: InputDecoration(
-                              hintText: "john@hotmail.com",
-                              labelText: "E-mail",
-                              border: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: darkTheme.surfaceBright),
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 20),
-                        ],
-                      ),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Lottie.asset("assets/animations/forgot_password.json", width: 200),
+                        Text(
+                          "Everybody forgets!",
+                          style: TextStyle(
+                              fontSize: 30, fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          "We'll help you get right back.",
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.normal),
+                        ),
+                        SizedBox(height: 40,),
+                        ThemedInputField(
+                          label: "E-mail",
+                          controller: emailController,
+                          placeholder: "john@hotmail.com",
+                          enabled: !pending,
+                          textInputAction: TextInputAction.done,
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -88,13 +90,41 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                         );
 
                         if (context.mounted) {
-                          Navigator.push(
+                          Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const EmailVerify(),
+                              builder: (context) => const EmailSent(),
                             ),
                           );
                         }
+                      }
+                    } on FirebaseAuthException catch(e) {
+                      if (context.mounted && e.code == "user-not-found") {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const EmailSent(),
+                          ),
+                        );
+                      }
+                      else if (context.mounted) {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: Text("Error"),
+                              content: Text("An unexpected error has occurred"),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text("Okay"),
+                                )
+                              ],
+                            );
+                          },
+                        );
                       }
                     } on Exception {
                       if (context.mounted) {

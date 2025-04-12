@@ -57,7 +57,7 @@ class _IncomeAddItemState extends State<IncomeAddItem> {
                               ),
                             ),
                             Image.asset(
-                              'asset/images/income.png',
+                              'assets/images/income.png',
                               width: 100,
                             ),
                           ],

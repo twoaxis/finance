@@ -62,7 +62,7 @@ class Wallet extends StatelessWidget {
                         ),
                       ),
                       Image.asset(
-                        'asset/images/income.png',
+                        'assets/images/income.png',
                         width: 100,
                       ),
                     ],
@@ -105,7 +105,7 @@ class Wallet extends StatelessWidget {
                         ),
                       ),
                       Image.asset(
-                        'asset/images/balances.png',
+                        'assets/images/balances.png',
                         width: 100,
                       ),
                     ],
@@ -148,7 +148,7 @@ class Wallet extends StatelessWidget {
                         ),
                       ),
                       Image.asset(
-                        'asset/images/receivables.png',
+                        'assets/images/receivables.png',
                         width: 100,
                       ),
                     ],
@@ -191,7 +191,7 @@ class Wallet extends StatelessWidget {
                         ),
                       ),
                       Image.asset(
-                        'asset/images/assets.png',
+                        'assets/images/assets.png',
                         width: 100,
                       ),
                     ],

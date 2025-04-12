@@ -69,7 +69,7 @@ class _IncomePayoutState extends State<IncomePayout> {
                                 ),
                               ),
                               Image.asset(
-                                'asset/images/income.png',
+                                'assets/images/income.png',
                                 width: 100,
                               ),
                             ],

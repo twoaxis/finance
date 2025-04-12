@@ -57,7 +57,7 @@ class _LoginPageState extends State<LoginPage> {
                     child: SingleChildScrollView(
                       child: Column(
                         children: [
-                          Image.asset("asset/images/logo.png"),
+                          Image.asset("assets/images/logo.png"),
                           Text(
                             "Get back to your money!",
                             style: TextStyle(

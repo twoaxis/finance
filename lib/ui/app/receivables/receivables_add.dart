@@ -60,7 +60,7 @@ class _AddReceivablesState extends State<AddReceivables> {
                               ),
                             ),
                             Image.asset(
-                              'asset/images/receivables.png',
+                              'assets/images/receivables.png',
                               width: 100,
                             ),
                           ],
