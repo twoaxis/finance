@@ -6,6 +6,7 @@ import 'package:financial_planner_mobile/cubit/liabilities_cubit.dart';
 import 'package:financial_planner_mobile/cubit/receivables_cubit.dart';
 import 'package:financial_planner_mobile/cubit/transactions_cubit.dart';
 import 'package:financial_planner_mobile/ui/app/dashboard/dashboard_button.dart';
+import 'package:financial_planner_mobile/ui/app/quick_add/quick_add_expense.dart';
 import 'package:financial_planner_mobile/ui/app/quick_add/quick_add_income.dart';
 import 'package:financial_planner_mobile/ui/app/transactions/transactions.dart';
 import 'package:financial_planner_mobile/util/theme.dart';
@@ -112,7 +113,7 @@ class DashboardPage extends StatelessWidget {
                                       ),
                                       ListTile(
                                         onTap: () {
-
+                                          Navigator.push(context, MaterialPageRoute(builder: (context) => QuickAddExpense()));
                                         },
                                         title: Text("Expense"),
                                       ),

@@ -9,14 +9,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../cubit/balances_cubit.dart';
 import '../../common/primary_button.dart';
 
-class QuickAddIncome extends StatefulWidget {
-  const QuickAddIncome({super.key});
+class QuickAddExpense extends StatefulWidget {
+  const QuickAddExpense({super.key});
 
   @override
-  State<QuickAddIncome> createState() => _QuickAddIncomeState();
+  State<QuickAddExpense> createState() => _QuickAddExpenseState();
 }
 
-class _QuickAddIncomeState extends State<QuickAddIncome> {
+class _QuickAddExpenseState extends State<QuickAddExpense> {
   bool pending = false;
   TextEditingController nameController = TextEditingController();
   TextEditingController valueController = TextEditingController();
@@ -111,22 +111,23 @@ class _QuickAddIncomeState extends State<QuickAddIncome> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      "Add a one-time income.",
+                                      "Add a one-time expense.",
                                       style: TextStyle(
                                           fontSize: 25,
                                           fontWeight: FontWeight.bold),
                                     ),
                                     Text(
-                                      "Automatically record the transaction & optionally add to your balance.",
+                                      "Automatically record the transaction & optionally deduct to your balance.",
                                       style: TextStyle(
                                           fontSize: 15, color: Colors.grey),
                                     ),
                                   ],
                                 ),
                               ),
-                              Image.asset(
-                                'assets/images/income.png',
-                                width: 100,
+                              Icon(
+                                Icons.edit_document,
+                                size: 100,
+                                color: darkTheme.primary,
                               ),
                             ],
                           ),
@@ -134,7 +135,7 @@ class _QuickAddIncomeState extends State<QuickAddIncome> {
                           ThemedInputField(
                             label: "Name",
                             controller: nameController,
-                            placeholder: "Birthday Gift",
+                            placeholder: "New TV",
                             enabled: !pending,
                             textInputAction: TextInputAction.next,
                           ),
@@ -142,7 +143,7 @@ class _QuickAddIncomeState extends State<QuickAddIncome> {
                           ThemedInputField(
                             label: "Value",
                             controller: valueController,
-                            placeholder: "200",
+                            placeholder: "500",
                             enabled: !pending,
                             textInputAction: TextInputAction.done,
                             keyboardType: TextInputType.number,
@@ -153,7 +154,7 @@ class _QuickAddIncomeState extends State<QuickAddIncome> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Add to balance:",
+                                "Deduct from balance:",
                                 style: TextStyle(color: Colors.grey),
                               ),
                               SizedBox(height: 5),
@@ -182,7 +183,7 @@ class _QuickAddIncomeState extends State<QuickAddIncome> {
                                   ),
                                   dropdownMenuEntries: [
                                     DropdownMenuEntry(
-                                        value: -1, label: "Do not add"),
+                                        value: -1, label: "Do not deduct"),
                                     ...menuEntries
                                   ],
                                   onSelected: (value) {
@@ -211,7 +212,7 @@ class _QuickAddIncomeState extends State<QuickAddIncome> {
                   ),
                 ),
                 PrimaryButton(
-                  text: "Add income",
+                  text: "Add expense",
                   enabled: !pending,
                   onPressed: () async {
                     setState(() {
@@ -257,7 +258,7 @@ class _QuickAddIncomeState extends State<QuickAddIncome> {
                         );
                       } else {
                         if (balanceIndex != -1) {
-                          balances[balanceIndex]["value"] +=
+                          balances[balanceIndex]["value"] -=
                               double.parse(valueController.text);
 
                           await FirebaseFirestore.instance
@@ -272,7 +273,7 @@ class _QuickAddIncomeState extends State<QuickAddIncome> {
                             .collection("transactions")
                             .add(
                           {
-                            "type": "income",
+                            "type": "expense",
                             "name": nameController.text,
                             "value": double.parse(valueController.text),
                             "date": dateTime,
