@@ -15,7 +15,6 @@ class TransactionsPage extends StatelessWidget {
 
     for (var tx in transactions) {
       String dateKey = DateFormat('MMM d, y').format(tx["date"].toDate());
-      //String dateKey = "${tx["date"].toDate().year}-${tx["date"].toDate().month.toString().padLeft(2, '0')}-${tx["date"].toDate().day.toString().padLeft(2, '0')}";
 
       if (grouped[dateKey] == null) {
         grouped[dateKey] = [];

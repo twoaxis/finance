@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../cubit/balances_cubit.dart';
+import '../../../cubit/budget_cubit.dart';
 import '../../common/primary_button.dart';
 
 class QuickAddExpense extends StatefulWidget {
@@ -265,6 +266,20 @@ class _QuickAddExpenseState extends State<QuickAddExpense> {
                               .collection("users")
                               .doc(FirebaseAuth.instance.currentUser?.uid)
                               .update({"balances": balances});
+                        }
+
+                        if(context.mounted && context.read<BudgetCubit>().state != null) {
+                          await FirebaseFirestore.instance
+                              .collection("users")
+                              .doc(FirebaseAuth.instance.currentUser?.uid)
+                              .update(
+                            {
+                              "budget": {
+                                "spent": context.read<BudgetCubit>().state["spent"] + double.parse(valueController.text),
+                                "value": context.read<BudgetCubit>().state["value"]
+                              }
+                            },
+                          );
                         }
 
                         await FirebaseFirestore.instance

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:financial_planner_mobile/cubit/budget_cubit.dart';
 import 'package:financial_planner_mobile/util/theme.dart';
 import 'package:financial_planner_mobile/values/spaces.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -142,6 +143,19 @@ class _BillPaymentState extends State<BillPayment> {
                               .doc(FirebaseAuth.instance.currentUser?.uid)
                               .update({"balances": balances});
                         }
+                        if(context.mounted && context.read<BudgetCubit>().state != null) {
+                          await FirebaseFirestore.instance
+                              .collection("users")
+                              .doc(FirebaseAuth.instance.currentUser?.uid)
+                              .update(
+                            {
+                              "budget": {
+                                "spent": context.read<BudgetCubit>().state["spent"] + widget.bill["value"],
+                                "value": context.read<BudgetCubit>().state["value"]
+                              }
+                            },
+                          );
+                        }
 
                         await FirebaseFirestore.instance
                             .collection("users")
@@ -156,6 +170,7 @@ class _BillPaymentState extends State<BillPayment> {
                             "source": balanceIndex != -1 ? balances[balanceIndex]["name"] : null
                           },
                         );
+
                         if (context.mounted) {
                           Navigator.of(context).pop();
                           Navigator.of(context).pop();
