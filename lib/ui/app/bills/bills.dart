@@ -4,7 +4,6 @@ import 'package:financial_planner_mobile/ui/app/bills/bills_action_button.dart';
 import 'package:financial_planner_mobile/util/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 
 import '../../../util/money_format.dart';
 
