@@ -5,6 +5,7 @@ import 'package:financial_planner_mobile/cubit/balances_cubit.dart';
 import 'package:financial_planner_mobile/cubit/liabilities_cubit.dart';
 import 'package:financial_planner_mobile/cubit/receivables_cubit.dart';
 import 'package:financial_planner_mobile/cubit/transactions_cubit.dart';
+import 'package:financial_planner_mobile/ui/app/analytics/analytics.dart';
 import 'package:financial_planner_mobile/ui/app/dashboard/dashboard_button.dart';
 import 'package:financial_planner_mobile/ui/app/quick_add/quick_add_expense.dart';
 import 'package:financial_planner_mobile/ui/app/quick_add/quick_add_income.dart';
@@ -127,7 +128,9 @@ class DashboardPage extends StatelessWidget {
                         DashboardButton(
                           icon: Icons.analytics,
                           name: "Analytics",
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => AnalyticsPage()));
+                          },
                         ),
                         DashboardButton(
                           icon: Icons.money_off_csred,
