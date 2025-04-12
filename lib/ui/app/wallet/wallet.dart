@@ -5,12 +5,6 @@ import 'package:financial_planner_mobile/ui/app/receivables/receivables.dart';
 import 'package:financial_planner_mobile/util/theme.dart';
 import 'package:financial_planner_mobile/values/spaces.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../cubit/assets_cubit.dart';
-import '../../../cubit/balances_cubit.dart';
-import '../../../cubit/receivables_cubit.dart';
-import '../../../util/money_format.dart';
 
 class Wallet extends StatelessWidget {
   const Wallet({super.key});
@@ -198,113 +192,6 @@ class Wallet extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 30),
-              Text(
-                "Overview",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
-              ),
-              SizedBox(height: 30),
-              Column(
-                children: [
-                  Row(
-                    children: [
-                      Expanded(child: Text("Net worth")),
-                      BlocBuilder<AssetsCubit, List<dynamic>>(
-                        builder: (content, balances) {
-                          var total = balances.fold(0, (sum, asset) {
-                            double value =
-                                double.tryParse(asset["value"].toString()) ??
-                                    0.0;
-                            return sum + value.toInt();
-                          });
-                          return Text(
-                            formatMoney(total),
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 20),
-                  Divider(
-                    color: darkTheme.surfaceBright,
-                  ),
-                  SizedBox(height: 20),
-                  Row(
-                    children: [
-                      Expanded(child: Text("Total balance before receivables")),
-                      BlocBuilder<BalancesCubit, List<dynamic>>(
-                        builder: (content, balances) {
-                          var total = balances.fold(0, (sum, asset) {
-                            double value =
-                                double.tryParse(asset["value"].toString()) ??
-                                    0.0;
-                            return sum + value.toInt();
-                          });
-                          return Text(
-                            formatMoney(total),
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 20),
-                  Divider(
-                    color: darkTheme.surfaceBright,
-                  ),
-                  SizedBox(height: 20),
-                  Row(
-                    children: [
-                      Expanded(child: Text("Total receivables")),
-                      BlocBuilder<ReceivablesCubit, List<dynamic>>(
-                        builder: (content, balances) {
-                          var total = balances.fold(0, (sum, asset) {
-                            double value =
-                                double.tryParse(asset["value"].toString()) ??
-                                    0.0;
-                            return sum + value.toInt();
-                          });
-                          return Text(
-                            formatMoney(total),
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 20),
-                  Divider(
-                    color: darkTheme.surfaceBright,
-                  ),
-                  SizedBox(height: 20),
-                  Row(
-                    children: [
-                      Expanded(child: Text("Total balance after receivables")),
-                      BlocBuilder<ReceivablesCubit, List<dynamic>>(
-                        builder: (content, balances) {
-                          var receivables = balances.fold(0, (sum, asset) {
-                            double value =
-                                double.tryParse(asset["value"].toString()) ??
-                                    0.0;
-                            return sum + value.toInt();
-                          });
-                          return BlocBuilder<BalancesCubit, List<dynamic>>(
-                            builder: (content, balances) {
-                              var balance = balances.fold(0, (sum, asset) {
-                                double value = double.tryParse(
-                                        asset["value"].toString()) ??
-                                    0.0;
-                                return sum + value.toInt();
-                              });
-                              return Text(
-                                formatMoney(receivables + balance),
-                              );
-                            },
-                          );
-                        },
-                      ),
-                    ],
-                  )
-                ],
-              )
             ],
           ),
         ),
