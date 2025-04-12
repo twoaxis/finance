@@ -6,6 +6,7 @@ import 'package:financial_planner_mobile/cubit/liabilities_cubit.dart';
 import 'package:financial_planner_mobile/cubit/receivables_cubit.dart';
 import 'package:financial_planner_mobile/cubit/transactions_cubit.dart';
 import 'package:financial_planner_mobile/ui/app/dashboard/dashboard_button.dart';
+import 'package:financial_planner_mobile/ui/app/quick_add/quick_add_income.dart';
 import 'package:financial_planner_mobile/ui/app/transactions/transactions.dart';
 import 'package:financial_planner_mobile/util/theme.dart';
 import 'package:financial_planner_mobile/values/spaces.dart';
@@ -76,11 +77,62 @@ class DashboardPage extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        DashboardButton(icon: Icons.add, name: "Quick add"),
                         DashboardButton(
-                            icon: Icons.analytics, name: "Analytics"),
+                          icon: Icons.add,
+                          name: "Quick Add",
+                          onPressed: () {
+                            showModalBottomSheet(
+                              context: context,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.vertical(
+                                    top: Radius.circular(16)),
+                              ),
+                              builder: (BuildContext context) {
+                                return Container(
+                                  height: 300,
+                                  padding: EdgeInsets.all(20),
+                                  width: MediaQuery.of(context).size.width,
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        width: 40,
+                                        height: 4,
+                                        decoration: BoxDecoration(
+                                          color: Colors.grey[300],
+                                          borderRadius:
+                                              BorderRadius.circular(2),
+                                        ),
+                                      ),
+                                      SizedBox(height: 20,),
+                                      ListTile(
+                                        onTap: () {
+                                          Navigator.push(context, MaterialPageRoute(builder: (context) => QuickAddIncome()));
+                                        },
+                                        title: Text("Income"),
+                                      ),
+                                      ListTile(
+                                        onTap: () {
+
+                                        },
+                                        title: Text("Expense"),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                        ),
                         DashboardButton(
-                            icon: Icons.money_off_csred, name: "Budget"),
+                          icon: Icons.analytics,
+                          name: "Analytics",
+                          onPressed: () {},
+                        ),
+                        DashboardButton(
+                          icon: Icons.money_off_csred,
+                          name: "Budget",
+                          onPressed: () {},
+                        ),
                       ],
                     )
                   ],
@@ -127,10 +179,15 @@ class DashboardPage extends StatelessWidget {
                                 width: 200,
                               ),
                             ),
-                            SizedBox(height: 20,),
+                            SizedBox(
+                              height: 20,
+                            ),
                             Opacity(
                               opacity: 0.3,
-                              child: Text("No transactions", style: TextStyle(fontSize: 25),),
+                              child: Text(
+                                "No transactions",
+                                style: TextStyle(fontSize: 25),
+                              ),
                             )
                           ],
                         ),

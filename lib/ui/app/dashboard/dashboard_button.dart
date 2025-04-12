@@ -2,10 +2,11 @@ import 'package:financial_planner_mobile/util/theme.dart';
 import 'package:flutter/material.dart';
 
 class DashboardButton extends StatelessWidget {
-  const DashboardButton({super.key, required this.icon, required this.name});
+  const DashboardButton({super.key, required this.icon, required this.name, required this.onPressed});
 
   final IconData icon;
   final String name;
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +15,7 @@ class DashboardButton extends StatelessWidget {
         spacing: 20,
         children: [
           ElevatedButton(
-            onPressed: () {},
+            onPressed: onPressed,
             style: ElevatedButton.styleFrom(
               backgroundColor: darkTheme.surfaceContainer,
               shape: const CircleBorder(),

@@ -64,13 +64,13 @@ class TransactionsPage extends StatelessWidget {
 
               final grouped = groupTransactionsByDate(transactions);
 
-              final sortedKeys = grouped.keys.toList()
+              var sortedKeys = grouped.keys.toList()
                 ..sort((a, b) => b.compareTo(a));
 
               return ListView.separated(
                 itemCount: sortedKeys.length,
                 itemBuilder: (BuildContext context, int index) {
-                  final dateKey = sortedKeys[index];
+                  final dateKey = sortedKeys.reversed.elementAt(index);
                   final txList = grouped[dateKey]!;
 
                   return Column(
