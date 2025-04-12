@@ -1,17 +1,8 @@
-import 'package:financial_planner_mobile/ui/app/assets/assets.dart';
-import 'package:financial_planner_mobile/ui/app/balances/balances.dart';
 import 'package:financial_planner_mobile/ui/app/bills/bills.dart';
-import 'package:financial_planner_mobile/ui/app/income/income.dart';
 import 'package:financial_planner_mobile/ui/app/liabilities/liabilities.dart';
 import 'package:financial_planner_mobile/util/theme.dart';
 import 'package:financial_planner_mobile/values/spaces.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../cubit/assets_cubit.dart';
-import '../../../cubit/balances_cubit.dart';
-import '../../../cubit/receivables_cubit.dart';
-import '../../../util/money_format.dart';
 
 class MoneyFlowPage extends StatelessWidget {
   const MoneyFlowPage({super.key});

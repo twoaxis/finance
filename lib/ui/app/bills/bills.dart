@@ -1,12 +1,7 @@
 import 'package:financial_planner_mobile/cubit/bills_cubit.dart';
-import 'package:financial_planner_mobile/cubit/income_cubit.dart';
 import 'package:financial_planner_mobile/ui/app/bills/bill_details.dart';
 import 'package:financial_planner_mobile/ui/app/bills/bills_action_button.dart';
-import 'package:financial_planner_mobile/ui/app/income/income_action_button.dart';
-import 'package:financial_planner_mobile/ui/app/income/income_details.dart';
 import 'package:financial_planner_mobile/util/theme.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';

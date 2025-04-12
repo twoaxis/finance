@@ -2,8 +2,6 @@ import 'package:financial_planner_mobile/cubit/liabilities_cubit.dart';
 import 'package:financial_planner_mobile/ui/app/liabilities/liabilities_action_button.dart';
 import 'package:financial_planner_mobile/ui/app/liabilities/liability_details.dart';
 import 'package:financial_planner_mobile/util/theme.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';

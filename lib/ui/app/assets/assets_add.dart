@@ -3,7 +3,6 @@ import 'package:financial_planner_mobile/values/spaces.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../../../util/theme.dart';
 import '../../common/primary_button.dart';
 import '../../common/themed_input_field.dart';
 

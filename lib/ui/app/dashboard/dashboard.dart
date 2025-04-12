@@ -1,9 +1,4 @@
-import 'dart:math';
-
-import 'package:financial_planner_mobile/cubit/assets_cubit.dart';
 import 'package:financial_planner_mobile/cubit/balances_cubit.dart';
-import 'package:financial_planner_mobile/cubit/liabilities_cubit.dart';
-import 'package:financial_planner_mobile/cubit/receivables_cubit.dart';
 import 'package:financial_planner_mobile/cubit/transactions_cubit.dart';
 import 'package:financial_planner_mobile/ui/app/analytics/analytics.dart';
 import 'package:financial_planner_mobile/ui/app/dashboard/dashboard_button.dart';
@@ -11,8 +6,6 @@ import 'package:financial_planner_mobile/ui/app/quick_add/quick_add_expense.dart
 import 'package:financial_planner_mobile/ui/app/quick_add/quick_add_income.dart';
 import 'package:financial_planner_mobile/ui/app/transactions/transactions.dart';
 import 'package:financial_planner_mobile/util/theme.dart';
-import 'package:financial_planner_mobile/values/spaces.dart';
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -21,18 +14,6 @@ import '../../../util/money_format.dart';
 
 class DashboardPage extends StatelessWidget {
   const DashboardPage({super.key});
-
-  Color _generateColorFromName(String name) {
-    final int hash = name.codeUnits.fold(0, (prev, elem) => prev + elem);
-    final Random random = Random(hash);
-
-    return Color.fromRGBO(
-      100 + random.nextInt(255),
-      100 + random.nextInt(255),
-      100 + random.nextInt(255),
-      1,
-    );
-  }
 
   @override
   Widget build(BuildContext context) {

@@ -225,12 +225,13 @@ class AnalyticsPage extends StatelessWidget {
                                 show: true,
                                 gradient: LinearGradient(
                                   colors: [darkTheme.primary, darkTheme.secondary]
-                                      .map((color) => color.withOpacity(0.3))
+                                      .map((color) => color.withAlpha(77))
                                       .toList(),
                                 ),
                               ),
                             ),
                           ],
+                          backgroundColor: darkTheme.surfaceContainer
                         ),
                       ),
                     );

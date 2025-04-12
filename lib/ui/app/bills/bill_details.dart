@@ -1,8 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:financial_planner_mobile/ui/app/bills/bill_payment.dart';
-import 'package:financial_planner_mobile/ui/app/income/income_edit.dart';
-import 'package:financial_planner_mobile/ui/app/income/income_payout.dart';
-import 'package:financial_planner_mobile/ui/app/liabilities/liability_payment.dart';
 import 'package:financial_planner_mobile/ui/common/primary_button.dart';
 import 'package:financial_planner_mobile/values/spaces.dart';
 import 'package:firebase_auth/firebase_auth.dart';
