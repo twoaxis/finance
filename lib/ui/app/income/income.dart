@@ -1,10 +1,11 @@
 import 'package:financial_planner_mobile/cubit/income_cubit.dart';
+import 'package:financial_planner_mobile/ui/app/income/income_action_button.dart';
+import 'package:financial_planner_mobile/ui/app/income/income_details.dart';
 import 'package:financial_planner_mobile/util/theme.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
+
+import '../../../util/money_format.dart';
 
 class IncomePage extends StatefulWidget {
   const IncomePage({super.key});
@@ -14,93 +15,93 @@ class IncomePage extends StatefulWidget {
 }
 
 class _IncomePageState extends State<IncomePage> {
-
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Expanded(
-          child: BlocBuilder<IncomeCubit, List<dynamic>>(
-            builder: (context, income) {
-              return ListView.separated(
-                itemCount: income.length,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 12, horizontal: 20),
-                    child: Row(
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Income"),
+        backgroundColor: darkTheme.surfaceContainer,
+        actions: [IncomeActionButton()],
+      ),
+      body: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Expanded(
+            child: BlocBuilder<IncomeCubit, List<dynamic>>(
+              builder: (context, income) {
+                if (income.isEmpty) {
+                  return Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Expanded(
-                          flex: 2,
-                          child: Text(income[index]["name"],
-                              style: const TextStyle(fontSize: 15)),
-                        ),
-                        Expanded(
-                            flex: 1,
-                            child: Center(
-                              child: Text(
-                                  "\$${income[index]["value"] is int ? NumberFormat('#,##0').format(income[index]["value"]) : NumberFormat('#,##0.##').format((income[index]["value"] as num).toDouble())}",
-                                  style: TextStyle(
-                                      color: darkTheme.primary, fontSize: 15)),
-                            )),
-                        Expanded(
-                          flex: 1,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              IconButton(
-                                  onPressed: () {
-                                    showDialog(
-                                        context: context,
-                                        builder: (BuildContext build) {
-                                          return AlertDialog(
-                                            title: const Text(
-                                                "Are you sure to delete this income source?"),
-                                            icon: const Icon(Icons.delete),
-                                            actions: [
-                                              TextButton(
-                                                onPressed: () {
-                                                  Navigator.of(context).pop();
-                                                },
-                                                child: const Text("Cancel"),
-                                              ),
-                                              TextButton(
-                                                onPressed: () {
-                                                  Navigator.of(context).pop();
-
-                                                  FirebaseFirestore.instance
-                                                      .collection("users")
-                                                      .doc(FirebaseAuth.instance
-                                                          .currentUser?.uid)
-                                                      .update({
-                                                    "income":
-                                                        FieldValue.arrayRemove(
-                                                            [income[index]])
-                                                  });
-                                                },
-                                                child: const Text("Yes"),
-                                              ),
-                                            ],
-                                          );
-                                        });
-                                  },
-                                  icon: const Icon(Icons.delete)),
-                            ],
+                        Opacity(
+                          opacity: 0.3,
+                          child: Image.asset(
+                            "assets/images/empty_data.png",
+                            width: 200,
                           ),
+                        ),
+                        SizedBox(height: 20,),
+                        Opacity(
+                          opacity: 0.3,
+                          child: Text("No income added", style: TextStyle(fontSize: 25),),
                         )
                       ],
                     ),
                   );
-                },
-                separatorBuilder: (BuildContext context, int index) {
-                  return Divider(color: darkTheme.surfaceContainer, height: 1);
-                },
-              );
-            },
+                }
+                return ListView.separated(
+                  itemCount: income.length,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 12, horizontal: 20),
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => IncomeDetails(
+                                index: index,
+                                income: income[index],
+                              ),
+                            ),
+                          );
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Text(income[index]["name"],
+                                    style: const TextStyle(fontSize: 15)),
+                              ),
+                              Text(
+                                formatMoneyWithContext(
+                                    context, income[index]["value"]),
+                                style: TextStyle(
+                                  color: darkTheme.primary,
+                                  fontSize: 15,
+                                ),
+                              ),
+                              SizedBox(width: 10),
+                              Icon(Icons.arrow_forward_ios, size: 15)
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                  separatorBuilder: (BuildContext context, int index) {
+                    return Divider(
+                        color: darkTheme.surfaceContainer, height: 1);
+                  },
+                );
+              },
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

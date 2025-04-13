@@ -3,8 +3,8 @@ import 'package:financial_planner_mobile/values/spaces.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../../../util/theme.dart';
 import '../../common/primary_button.dart';
+import '../../common/themed_input_field.dart';
 
 class AssetsAdd extends StatefulWidget {
   const AssetsAdd({super.key});
@@ -21,11 +21,7 @@ class _AssetsAddState extends State<AssetsAdd> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Add a new asset",
-        ),
-      ),
+      appBar: AppBar(),
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.all(fullscreenSpacing),
@@ -38,37 +34,49 @@ class _AssetsAddState extends State<AssetsAdd> {
                   child: SingleChildScrollView(
                     child: Column(
                       children: [
-                        TextField(
-                          enabled: !pending,
-                          controller: nameController,
-                          textInputAction: TextInputAction.next,
-                          decoration: InputDecoration(
-                            hintText: "Job",
-                            labelText: "Name",
-                            border: OutlineInputBorder(
-                              borderSide:
-                              BorderSide(color: darkTheme.surfaceBright),
+                        Row(
+                          spacing: 20,
+                          children: [
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Add an asset.",
+                                    style: TextStyle(
+                                        fontSize: 25,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  Text(
+                                    "Adding an asset allows you to track what you have (net worth). This can be your house, car, phone, even socks!",
+                                    style: TextStyle(
+                                        fontSize: 15, color: Colors.grey),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
+                            Image.asset(
+                              'assets/images/assets.png',
+                              width: 100,
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 40),
+                        ThemedInputField(
+                          label: "Name",
+                          controller: nameController,
+                          placeholder: "House",
+                          enabled: !pending,
+                          textInputAction: TextInputAction.next,
                         ),
                         SizedBox(height: 20),
-                        TextField(
-                          enabled: !pending,
+                        ThemedInputField(
+                          label: "Value",
                           controller: valueController,
+                          placeholder: "500000",
+                          enabled: !pending,
                           textInputAction: TextInputAction.done,
                           keyboardType: TextInputType.number,
-                          decoration: InputDecoration(
-                            hintText: "200",
-                            labelText: "Value",
-                            border: OutlineInputBorder(
-                              borderSide:
-                              BorderSide(color: darkTheme.surfaceBright),
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 20),
-                        SizedBox(
-                          height: 20,
                         ),
                       ],
                     ),
@@ -90,8 +98,7 @@ class _AssetsAddState extends State<AssetsAdd> {
                         builder: (context) {
                           return AlertDialog(
                             title: Text("Error"),
-                            content:
-                            Text("Please fill all fields"),
+                            content: Text("Please fill all fields"),
                             actions: [
                               TextButton(
                                 onPressed: () {
@@ -103,14 +110,13 @@ class _AssetsAddState extends State<AssetsAdd> {
                           );
                         },
                       );
-                    } else if(double.parse(valueController.text) < 0) {
+                    } else if (double.parse(valueController.text) < 0) {
                       showDialog(
                         context: context,
                         builder: (context) {
                           return AlertDialog(
                             title: Text("Error"),
-                            content:
-                            Text("Value cannot be negative."),
+                            content: Text("Value cannot be negative."),
                             actions: [
                               TextButton(
                                 onPressed: () {
@@ -138,7 +144,7 @@ class _AssetsAddState extends State<AssetsAdd> {
                       );
                       nameController.clear();
                       valueController.clear();
-        
+
                       if (context.mounted) {
                         Navigator.of(context).pop();
                       }
@@ -150,8 +156,7 @@ class _AssetsAddState extends State<AssetsAdd> {
                         builder: (context) {
                           return AlertDialog(
                             title: Text("Error"),
-                            content:
-                            Text("Value must be an number."),
+                            content: Text("Value must be an number."),
                             actions: [
                               TextButton(
                                 onPressed: () {
@@ -171,8 +176,7 @@ class _AssetsAddState extends State<AssetsAdd> {
                         builder: (context) {
                           return AlertDialog(
                             title: Text("Error"),
-                            content:
-                            Text("An unknown error has occurred"),
+                            content: Text("An unknown error has occurred"),
                             actions: [
                               TextButton(
                                 onPressed: () {

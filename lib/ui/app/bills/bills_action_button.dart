@@ -1,9 +1,8 @@
-import 'package:financial_planner_mobile/ui/app/expense_sheets/expense_sheets_add.dart';
-
+import 'package:financial_planner_mobile/ui/app/bills/bills_add.dart';
 import 'package:flutter/material.dart';
 
-class ExpenseSheetsActionButtonAdd extends StatelessWidget {
-  const ExpenseSheetsActionButtonAdd({super.key});
+class BillsActionButton extends StatelessWidget {
+  const BillsActionButton({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +11,7 @@ class ExpenseSheetsActionButtonAdd extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const ExpenseSheetsAdd(),
+            builder: (context) => BillsAddItem(),
           ),
         );
       },

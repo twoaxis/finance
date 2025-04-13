@@ -1,14 +1,21 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:financial_planner_mobile/cubit/assets_cubit.dart';
 import 'package:financial_planner_mobile/cubit/balances_cubit.dart';
+import 'package:financial_planner_mobile/cubit/bills_cubit.dart';
+import 'package:financial_planner_mobile/cubit/budget_cubit.dart';
+import 'package:financial_planner_mobile/cubit/currency_cubit.dart';
 import 'package:financial_planner_mobile/cubit/expenses_cubit.dart';
 import 'package:financial_planner_mobile/cubit/income_cubit.dart';
 import 'package:financial_planner_mobile/cubit/liabilities_cubit.dart';
+import 'package:financial_planner_mobile/cubit/name_cubit.dart';
 import 'package:financial_planner_mobile/cubit/receivables_cubit.dart';
+import 'package:financial_planner_mobile/cubit/transactions_cubit.dart';
 import 'package:financial_planner_mobile/ui/app/app.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:financial_planner_mobile/ui/onboarding/onboarding.dart';
 import 'package:financial_planner_mobile/util/theme.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'firebase_options.dart';
@@ -18,6 +25,11 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  if(kDebugMode) {
+    await FirebaseAuth.instance.useAuthEmulator("10.0.2.2", 9099);
+    FirebaseFirestore.instance.useFirestoreEmulator("10.0.2.2", 8080);
+  }
 
   runApp(
     MultiBlocProvider(
@@ -39,6 +51,21 @@ void main() async {
         ),
         BlocProvider(
           create: (context) => ReceivablesCubit(),
+        ),
+        BlocProvider(
+          create: (context) => NameCubit(),
+        ),
+        BlocProvider(
+          create: (context) => TransactionsCubit(),
+        ),
+        BlocProvider(
+          create: (context) => BillsCubit(),
+        ),
+        BlocProvider(
+          create: (context) => BudgetCubit(),
+        ),
+        BlocProvider(
+          create: (context) => CurrencyCubit(),
         ),
       ],
       child: const FinancialPlanner(),
@@ -73,6 +100,7 @@ class _FinancialPlannerState extends State<FinancialPlanner> {
         debugShowCheckedModeBanner: false,
         title: 'Financial Planner',
         theme: ThemeData(
+          splashFactory: NoSplash.splashFactory,
           colorScheme: darkTheme,
           useMaterial3: true,
         ),

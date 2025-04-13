@@ -1,55 +1,28 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:financial_planner_mobile/cubit/balances_cubit.dart';
-import 'package:financial_planner_mobile/ui/common/primary_button.dart';
+import 'package:financial_planner_mobile/ui/common/themed_input_field.dart';
+import 'package:financial_planner_mobile/util/theme.dart';
+import 'package:financial_planner_mobile/values/spaces.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../util/theme.dart';
-import '../../../values/spaces.dart';
+import '../../common/primary_button.dart';
 
-class ExpenseSheetAddItem extends StatefulWidget {
-  const ExpenseSheetAddItem({super.key, required this.sheet});
-
-  final DocumentSnapshot sheet;
+class BillsAddItem extends StatefulWidget {
+  const BillsAddItem({super.key});
 
   @override
-  State<ExpenseSheetAddItem> createState() => _ExpenseSheetAddItemState();
+  State<BillsAddItem> createState() => _BillsAddItemState();
 }
 
-class _ExpenseSheetAddItemState extends State<ExpenseSheetAddItem> {
+class _BillsAddItemState extends State<BillsAddItem> {
   bool pending = false;
   TextEditingController nameController = TextEditingController();
   TextEditingController valueController = TextEditingController();
-  TextEditingController dateController = TextEditingController();
-  int balanceIndex = -1;
-  bool isFixed = false;
-  DateTime? dateTime;
-
-  void _setDate(BuildContext context) async {
-    DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2100),
-    );
-
-    if (picked != null) {
-      setState(() {
-        dateController.text =
-            "${picked.year}-${picked.month.toString().padLeft(2, '0')}-${picked.day.toString().padLeft(2, '0')}";
-        dateTime = picked;
-      });
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          "Add a new expense",
-        ),
       ),
       body: SafeArea(
         child: Padding(
@@ -63,89 +36,57 @@ class _ExpenseSheetAddItemState extends State<ExpenseSheetAddItem> {
                   child: SingleChildScrollView(
                     child: Column(
                       children: [
-                        TextField(
-                          enabled: !pending,
-                          controller: nameController,
-                          textInputAction: TextInputAction.next,
-                          decoration: InputDecoration(
-                            hintText: "Groceries",
-                            labelText: "Name",
-                            border: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: darkTheme.surfaceBright),
+                        Row(
+                          spacing: 20,
+                          children: [
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Add a recurring bill.",
+                                    style: TextStyle(
+                                        fontSize: 25, fontWeight: FontWeight.bold),
+                                  ),
+                                  Text(
+                                    "Adding a bill lets you pay it from one of your balances without manually adding an expense.",
+                                    style:
+                                    TextStyle(fontSize: 15, color: Colors.grey),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
+                            Icon(
+                              Icons.edit_document,
+                              size: 100,
+                              color: darkTheme.primary,
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 40),
+                        ThemedInputField(
+                            label: "Name",
+                            controller: nameController,
+                            placeholder: "Groceries",
+                          enabled: !pending,
+                            textInputAction: TextInputAction.next,
                         ),
                         SizedBox(height: 20),
-                        TextField(
-                          enabled: !pending,
+                        ThemedInputField(
+                          label: "Value",
                           controller: valueController,
+                          placeholder: "200",
+                          enabled: !pending,
                           textInputAction: TextInputAction.done,
                           keyboardType: TextInputType.number,
-                          decoration: InputDecoration(
-                            hintText: "200",
-                            labelText: "Value",
-                            border: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: darkTheme.surfaceBright),
-                            ),
-                          ),
                         ),
-                        SizedBox(height: 20),
-                        TextField(
-                          controller: dateController,
-                          readOnly: true,
-                          decoration: InputDecoration(
-                            labelText: "Date",
-                            border: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: darkTheme.surfaceBright),
-                            ),
-                          ),
-                          onTap: () => _setDate(context),
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        BlocBuilder<BalancesCubit, List<dynamic>>(
-                          builder:
-                              (BuildContext context, List<dynamic> balances) {
-                            var menuEntries = balances.map((balance) {
-                              return DropdownMenuEntry(
-                                  value: balances.indexOf(balance),
-                                  label: balance["name"]);
-                            }).toList();
-                            return Column(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                SizedBox(
-                                  child: DropdownMenu(
-                                    width: double.infinity,
-                                    label: Text("Deduct from balance"),
-                                    initialSelection: -1,
-                                    dropdownMenuEntries: [
-                                      DropdownMenuEntry(
-                                          value: -1, label: "Do not deduct"),
-                                      ...menuEntries
-                                    ],
-                                    onSelected: (value) {
-                                      setState(() {
-                                        balanceIndex = value!;
-                                      });
-                                    },
-                                  ),
-                                )
-                              ],
-                            );
-                          },
-                        )
                       ],
                     ),
                   ),
                 ),
               ),
               PrimaryButton(
-                text: "Add expense",
+                text: "Add bill",
                 enabled: !pending,
                 onPressed: () async {
                   setState(() {
@@ -193,37 +134,19 @@ class _ExpenseSheetAddItemState extends State<ExpenseSheetAddItem> {
                       await FirebaseFirestore.instance
                           .collection("users")
                           .doc(FirebaseAuth.instance.currentUser?.uid)
-                          .collection("expenses")
-                          .doc(widget.sheet.id)
                           .update(
                         {
-                          "expenses": FieldValue.arrayUnion([
+                          "bills": FieldValue.arrayUnion([
                             {
                               "name": nameController.text,
-                              "value": double.parse(valueController.text),
-                              "date": dateTime
+                              "value": double.parse(valueController.text)
                             }
                           ])
                         },
                       );
-
-                      if (balanceIndex != -1 && context.mounted) {
-                        context.read<BalancesCubit>().state[balanceIndex]
-                            ["value"] -= double.parse(valueController.text);
-
-                        await FirebaseFirestore.instance
-                            .collection("users")
-                            .doc(FirebaseAuth.instance.currentUser?.uid)
-                            .update({
-                          "balances": context.read<BalancesCubit>().state
-                        });
-                      }
-
                       nameController.clear();
                       valueController.clear();
-                      setState(() {
-                        isFixed = false;
-                      });
+
                       if (context.mounted) {
                         Navigator.of(context).pop();
                       }
