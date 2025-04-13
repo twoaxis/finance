@@ -21,8 +21,7 @@ class _IncomeAddItemState extends State<IncomeAddItem> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-      ),
+      appBar: AppBar(),
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.all(fullscreenSpacing),
@@ -45,12 +44,13 @@ class _IncomeAddItemState extends State<IncomeAddItem> {
                                   Text(
                                     "Add an income source.",
                                     style: TextStyle(
-                                        fontSize: 25, fontWeight: FontWeight.bold),
+                                        fontSize: 25,
+                                        fontWeight: FontWeight.bold),
                                   ),
                                   Text(
                                     "Adding an income source lets you automatically add to your balance.",
-                                    style:
-                                    TextStyle(fontSize: 15, color: Colors.grey),
+                                    style: TextStyle(
+                                        fontSize: 15, color: Colors.grey),
                                   ),
                                 ],
                               ),
@@ -63,11 +63,11 @@ class _IncomeAddItemState extends State<IncomeAddItem> {
                         ),
                         SizedBox(height: 40),
                         ThemedInputField(
-                            label: "Name",
-                            controller: nameController,
-                            placeholder: "Job",
+                          label: "Name",
+                          controller: nameController,
+                          placeholder: "Job",
                           enabled: !pending,
-                            textInputAction: TextInputAction.next,
+                          textInputAction: TextInputAction.next,
                         ),
                         SizedBox(height: 20),
                         ThemedInputField(

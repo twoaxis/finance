@@ -193,7 +193,7 @@ class _LiabilityPaymentState extends State<LiabilityPayment> {
                             .update({"liabilities": context.read<LiabilitiesCubit>().state});
 
                         if(balanceIndex != -1) {
-                          balances[balanceIndex]["value"] -= valueController.value;
+                          balances[balanceIndex]["value"] -= double.parse(valueController.text);
                           await FirebaseFirestore.instance
                               .collection("users")
                               .doc(FirebaseAuth.instance.currentUser?.uid)

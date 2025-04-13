@@ -21,11 +21,7 @@ class _AddReceivablesState extends State<AddReceivables> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Add a new receivable",
-        ),
-      ),
+      appBar: AppBar(),
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.all(fullscreenSpacing),
@@ -48,12 +44,13 @@ class _AddReceivablesState extends State<AddReceivables> {
                                   Text(
                                     "Add an receivable.",
                                     style: TextStyle(
-                                        fontSize: 25, fontWeight: FontWeight.bold),
+                                        fontSize: 25,
+                                        fontWeight: FontWeight.bold),
                                   ),
                                   Text(
                                     "Adding a receivable allows you to track money owed to you and automatically add it to one of your balances!",
-                                    style:
-                                    TextStyle(fontSize: 15, color: Colors.grey),
+                                    style: TextStyle(
+                                        fontSize: 15, color: Colors.grey),
                                   ),
                                 ],
                               ),
@@ -101,8 +98,7 @@ class _AddReceivablesState extends State<AddReceivables> {
                         builder: (context) {
                           return AlertDialog(
                             title: Text("Error"),
-                            content:
-                            Text("Please fill all fields"),
+                            content: Text("Please fill all fields"),
                             actions: [
                               TextButton(
                                 onPressed: () {
@@ -114,14 +110,13 @@ class _AddReceivablesState extends State<AddReceivables> {
                           );
                         },
                       );
-                    } else if(double.parse(valueController.text) < 0) {
+                    } else if (double.parse(valueController.text) < 0) {
                       showDialog(
                         context: context,
                         builder: (context) {
                           return AlertDialog(
                             title: Text("Error"),
-                            content:
-                            Text("Value cannot be negative."),
+                            content: Text("Value cannot be negative."),
                             actions: [
                               TextButton(
                                 onPressed: () {
@@ -149,7 +144,7 @@ class _AddReceivablesState extends State<AddReceivables> {
                       );
                       nameController.clear();
                       valueController.clear();
-        
+
                       if (context.mounted) {
                         Navigator.of(context).pop();
                       }
@@ -161,8 +156,7 @@ class _AddReceivablesState extends State<AddReceivables> {
                         builder: (context) {
                           return AlertDialog(
                             title: Text("Error"),
-                            content:
-                            Text("Value must be an number."),
+                            content: Text("Value must be an number."),
                             actions: [
                               TextButton(
                                 onPressed: () {
@@ -182,8 +176,7 @@ class _AddReceivablesState extends State<AddReceivables> {
                         builder: (context) {
                           return AlertDialog(
                             title: Text("Error"),
-                            content:
-                            Text("An unknown error has occurred"),
+                            content: Text("An unknown error has occurred"),
                             actions: [
                               TextButton(
                                 onPressed: () {

@@ -22,8 +22,7 @@ class _BillsAddItemState extends State<BillsAddItem> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-      ),
+      appBar: AppBar(),
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.all(fullscreenSpacing),
@@ -46,12 +45,13 @@ class _BillsAddItemState extends State<BillsAddItem> {
                                   Text(
                                     "Add a recurring bill.",
                                     style: TextStyle(
-                                        fontSize: 25, fontWeight: FontWeight.bold),
+                                        fontSize: 25,
+                                        fontWeight: FontWeight.bold),
                                   ),
                                   Text(
                                     "Adding a bill lets you pay it from one of your balances without manually adding an expense.",
-                                    style:
-                                    TextStyle(fontSize: 15, color: Colors.grey),
+                                    style: TextStyle(
+                                        fontSize: 15, color: Colors.grey),
                                   ),
                                 ],
                               ),
@@ -65,11 +65,11 @@ class _BillsAddItemState extends State<BillsAddItem> {
                         ),
                         SizedBox(height: 40),
                         ThemedInputField(
-                            label: "Name",
-                            controller: nameController,
-                            placeholder: "Groceries",
+                          label: "Name",
+                          controller: nameController,
+                          placeholder: "Groceries",
                           enabled: !pending,
-                            textInputAction: TextInputAction.next,
+                          textInputAction: TextInputAction.next,
                         ),
                         SizedBox(height: 20),
                         ThemedInputField(
