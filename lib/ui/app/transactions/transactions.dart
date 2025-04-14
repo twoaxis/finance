@@ -10,13 +10,14 @@ import '../../../util/theme.dart';
 class TransactionsPage extends StatelessWidget {
   const TransactionsPage({super.key});
 
-  Map<String, List<dynamic>> groupTransactionsByDate(List<dynamic> transactions) {
-    Map<String, List<dynamic>> grouped = {};
+  Map<DateTime, List<dynamic>> groupTransactionsByDate(List<dynamic> transactions) {
+    Map<DateTime, List<dynamic>> grouped = {};
 
     for (var tx in transactions) {
-      String dateKey = DateFormat('MMM d, y').format(tx["date"].toDate());
+      DateTime rawDate = tx["date"].toDate();
+      DateTime dateKey = DateTime(rawDate.year, rawDate.month, rawDate.day); // remove time
 
-      if (grouped[dateKey] == null) {
+      if (!grouped.containsKey(dateKey)) {
         grouped[dateKey] = [];
       }
 
@@ -69,14 +70,14 @@ class TransactionsPage extends StatelessWidget {
               return ListView.separated(
                 itemCount: sortedKeys.length,
                 itemBuilder: (BuildContext context, int index) {
-                  final dateKey = sortedKeys.reversed.elementAt(index);
+                  final dateKey = sortedKeys.elementAt(index);
                   final txList = grouped[dateKey]!;
 
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        dateKey,
+                        DateFormat('MMM d, y').format(dateKey), // format here only for display
                         style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                       ),
                       SizedBox(height: 10,),
