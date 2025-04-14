@@ -14,7 +14,23 @@
       },
       "oauth_client": [
         {
-          "client_id": "859455980881-dl15pgkmtqfkk8i86g5trvqiseaig7oo.apps.googleusercontent.com",
+          "client_id": "859455980881-ovufbhgt45afq5csmpr1bkckmu4hg7p1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.twoaxis.finance",
+            "certificate_hash": "917d011be11846e992990fc706d3cdc2706a6f12"
+          }
+        },
+        {
+          "client_id": "859455980881-vnvqidd0cfpnh10oomkh4otiuba5pc1u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.twoaxis.finance",
+            "certificate_hash": "5bfd547679e16529f4b9243bd258a3ad0aa18c12"
+          }
+        },
+        {
+          "client_id": "859455980881-6kk0ocpjdq3ufe2ih1c7bh39kmht2m31.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -27,7 +43,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "859455980881-dl15pgkmtqfkk8i86g5trvqiseaig7oo.apps.googleusercontent.com",
+              "client_id": "859455980881-6kk0ocpjdq3ufe2ih1c7bh39kmht2m31.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
