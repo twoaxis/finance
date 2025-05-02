@@ -1,5 +1,12 @@
 {
   "projects": {
     "default": "financial-planner-72109"
+  },
+  "targets": {
+    "financial-planner-72109": {
+      "hosting": {
+        "website": ["financial-planner-72109"]
+      }
+    }
   }
 }

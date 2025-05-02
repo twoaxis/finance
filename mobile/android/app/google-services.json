@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "859455980881",
+    "project_id": "financial-planner-72109",
+    "storage_bucket": "financial-planner-72109.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:859455980881:android:8f21d0626a1810ac903f70",
+        "android_client_info": {
+          "package_name": "org.twoaxis.finance"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "859455980881-ovufbhgt45afq5csmpr1bkckmu4hg7p1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.twoaxis.finance",
+            "certificate_hash": "917d011be11846e992990fc706d3cdc2706a6f12"
+          }
+        },
+        {
+          "client_id": "859455980881-vnvqidd0cfpnh10oomkh4otiuba5pc1u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.twoaxis.finance",
+            "certificate_hash": "5bfd547679e16529f4b9243bd258a3ad0aa18c12"
+          }
+        },
+        {
+          "client_id": "859455980881-6kk0ocpjdq3ufe2ih1c7bh39kmht2m31.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCxA9Louij8gPQFHF4IzFXbzQr3i0NeSLA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "859455980881-6kk0ocpjdq3ufe2ih1c7bh39kmht2m31.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
