@@ -11,7 +11,9 @@ TwoAxis Finance is a mobile app designed to help individuals and businesses mana
 - **Simple & Intuitive UI**: Designed for ease of use.
 
 ## Download
-TwoAxis Finance is coming soon on Google Play
+<a href="https://play.google.com/store/apps/details?id=org.twoaxis.finance">
+  <img src="https://finance.twoaxis.org/img/GetItOnGooglePlay_Badge_Web_color_English.png" alt="Google Play Download Link" width="200"/>
+</a>
 
 ## Open Source & Contributions
 This project is open-source but currently has no license. This means:
