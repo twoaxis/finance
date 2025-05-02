@@ -2,3 +2,4 @@
 .vs/
 .idea/ 
 .DS_STORE
+*.log
