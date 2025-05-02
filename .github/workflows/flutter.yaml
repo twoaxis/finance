@@ -1,8 +1,3 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-
 name: Flutter
 
 on:
@@ -25,9 +20,11 @@ jobs:
 
       - name: Install Dependencies
         run: flutter pub get
+        working-directory: mobile
 
       - name: Analyze Code
         run: flutter analyze
+        working-directory: mobile
 
   build-apk:
     name: Build APK
@@ -45,21 +42,22 @@ jobs:
 
       - name: Install Dependencies
         run: flutter pub get
+        working-directory: mobile
 
       - name: Decode Keystore
         run: |
-          echo "${{ secrets.KEYSTORE }}" | base64 --decode > android/app/keystore.jks
+          echo "${{ secrets.KEYSTORE }}" | base64 --decode > mobile/android/app/keystore.jks
 
       - name: Create key.properties
         run: |
-          echo "storeFile=keystore.jks" > android/key.properties
-          echo "storePassword=${{ secrets.KEYSTORE_PASSWORD }}" >> android/key.properties
-          echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> android/key.properties
-          echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> android/key.properties
-
+          echo "storeFile=keystore.jks" > mobile/android/key.properties
+          echo "storePassword=${{ secrets.KEYSTORE_PASSWORD }}" >> mobile/android/key.properties
+          echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> mobile/android/key.properties
+          echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> mobile/android/key.properties
 
       - name: Build APK
         run: flutter build apk --release
+        working-directory: mobile
 
   build-aab:
     name: Build App Bundle
@@ -77,17 +75,19 @@ jobs:
 
       - name: Install Dependencies
         run: flutter pub get
+        working-directory: mobile
 
       - name: Decode Keystore
         run: |
-          echo "${{ secrets.KEYSTORE }}" | base64 --decode > android/app/keystore.jks
+          echo "${{ secrets.KEYSTORE }}" | base64 --decode > mobile/android/app/keystore.jks
 
       - name: Create key.properties
         run: |
-          echo "storeFile=keystore.jks" > android/key.properties
-          echo "storePassword=${{ secrets.KEYSTORE_PASSWORD }}" >> android/key.properties
-          echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> android/key.properties
-          echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> android/key.properties
+          echo "storeFile=keystore.jks" > mobile/android/key.properties
+          echo "storePassword=${{ secrets.KEYSTORE_PASSWORD }}" >> mobile/android/key.properties
+          echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> mobile/android/key.properties
+          echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> mobile/android/key.properties
 
       - name: Build App Bundle
         run: flutter build appbundle
+        working-directory: mobile
