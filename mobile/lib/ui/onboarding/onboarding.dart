@@ -76,7 +76,7 @@ class _OnboardingState extends State<Onboarding> {
                             idToken: googleAuth?.idToken,
                           );
 
-                          UserCredential user = await FirebaseAuth.instance
+                         await FirebaseAuth.instance
                               .signInWithCredential(credential);
                         },
                         child: Image.asset(
