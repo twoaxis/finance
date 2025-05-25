@@ -38,7 +38,7 @@ dependencies:
   firebase_core: ^3.6.0
   firebase_analytics: ^11.3.3
   firebase_auth: ^5.3.1
-  cloud_firestore: ^5.4.4
+  cloud_firestore: ^5.6.8
   intl: ^0.20.1
   url_launcher: ^6.3.1
   flutter_bloc: ^9.0.0
