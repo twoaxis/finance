@@ -26,10 +26,10 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  if(kDebugMode) {
-    await FirebaseAuth.instance.useAuthEmulator("10.0.2.2", 9099);
-    FirebaseFirestore.instance.useFirestoreEmulator("10.0.2.2", 8080);
-  }
+  // if(kDebugMode) {
+  //   await FirebaseAuth.instance.useAuthEmulator("10.0.2.2", 9099);
+  //   FirebaseFirestore.instance.useFirestoreEmulator("10.0.2.2", 8080);
+  // }
 
   runApp(
     MultiBlocProvider(
