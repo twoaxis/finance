@@ -116,7 +116,7 @@ class _ReceivableDetailsState extends State<ReceivableDetails> {
                                                   .doc(FirebaseAuth.instance
                                                       .currentUser?.uid)
                                                   .update({
-                                                "receivable":
+                                                "receivables":
                                                     FieldValue.arrayRemove(
                                                         [widget.receivable])
                                               });
