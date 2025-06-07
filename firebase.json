@@ -38,6 +38,7 @@
 		{
 			"target": "website",
 			"public": "website",
+			"cleanUrls": true,
 			"ignore": [
 				"firebase.json",
 				"**/.*",
