@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:financial_planner_mobile/cubit/transactions_cubit.dart';
 import 'package:financial_planner_mobile/values/spaces.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -82,61 +84,103 @@ class TransactionsPage extends StatelessWidget {
                       ),
                       SizedBox(height: 10,),
                       ...txList.map((tx) {
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 4.0),
-                          child: Row(
-                            spacing: 20,
-                            children: [
-                              Container(
-                                padding: EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                    color: darkTheme.surfaceBright,
-                                    borderRadius: BorderRadius.circular(10)),
-                                child: Column(
-                                  children: [
-                                    if (tx["type"] == "expense")
-                                      Icon(
-                                        Icons.payments_rounded,
-                                        size: 25,
-                                      )
-                                    else if (tx["type"] ==
-                                        "income")
-                                      Icon(
-                                        Icons.file_download_rounded,
-                                        size: 25,
-                                      )
-                                  ],
-                                ),
+                        return GestureDetector(
+                          onLongPress: () {
+                            showModalBottomSheet(
+                              context: context,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.vertical(
+                                    top: Radius.circular(16)),
                               ),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(tx["name"]),
-                                    Text(
-                                        DateFormat('MMM d, y. hh:mm a').format(tx["date"].toDate()),
-                                        style: TextStyle(
-                                            fontSize: 12, color: Colors.grey))
-                                  ],
+                              builder: (BuildContext context) {
+                                return Container(
+                                  height: 180,
+                                  padding: EdgeInsets.all(20),
+                                  width: MediaQuery.of(context).size.width,
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        width: 40,
+                                        height: 4,
+                                        decoration: BoxDecoration(
+                                          color: Colors.grey[300],
+                                          borderRadius:
+                                          BorderRadius.circular(2),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 20,
+                                      ),
+                                      ListTile(
+                                        onTap: () async {
+                                          await FirebaseFirestore.instance.collection("users").doc(FirebaseAuth.instance.currentUser?.uid).collection("transactions").doc(tx.id).delete();
+
+                                          if(context.mounted) Navigator.pop(context);
+                                        },
+                                        title: Text("Delete"),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 4.0),
+                            child: Row(
+                              spacing: 20,
+                              children: [
+                                Container(
+                                  padding: EdgeInsets.all(10),
+                                  decoration: BoxDecoration(
+                                      color: darkTheme.surfaceBright,
+                                      borderRadius: BorderRadius.circular(10)),
+                                  child: Column(
+                                    children: [
+                                      if (tx["type"] == "expense")
+                                        Icon(
+                                          Icons.payments_rounded,
+                                          size: 25,
+                                        )
+                                      else if (tx["type"] ==
+                                          "income")
+                                        Icon(
+                                          Icons.file_download_rounded,
+                                          size: 25,
+                                        )
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              if (tx["type"] == "expense")
-                                Text(
-                                  "-${formatMoneyWithContext(context, tx["value"])}",
-                                  style: TextStyle(
-                                      color: darkTheme.primary,
-                                      fontSize: 17,
-                                      fontWeight: FontWeight.bold),
-                                )
-                              else if (tx["type"] == "income")
-                                Text(
-                                  "+${formatMoneyWithContext(context, tx["value"])}",
-                                  style: TextStyle(
-                                      color: Colors.green,
-                                      fontSize: 17,
-                                      fontWeight: FontWeight.bold),
-                                )
-                            ],
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(tx["name"]),
+                                      Text(
+                                          DateFormat('MMM d, y. hh:mm a').format(tx["date"].toDate()),
+                                          style: TextStyle(
+                                              fontSize: 12, color: Colors.grey))
+                                    ],
+                                  ),
+                                ),
+                                if (tx["type"] == "expense")
+                                  Text(
+                                    "-${formatMoneyWithContext(context, tx["value"])}",
+                                    style: TextStyle(
+                                        color: darkTheme.primary,
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.bold),
+                                  )
+                                else if (tx["type"] == "income")
+                                  Text(
+                                    "+${formatMoneyWithContext(context, tx["value"])}",
+                                    style: TextStyle(
+                                        color: Colors.green,
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.bold),
+                                  )
+                              ],
+                            ),
                           ),
                         );
                       })
