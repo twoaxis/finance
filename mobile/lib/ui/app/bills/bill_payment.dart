@@ -22,6 +22,7 @@ class BillPayment extends StatefulWidget {
 class _BillPaymentState extends State<BillPayment> {
   bool pending = false;
   int balanceIndex = -1;
+  bool addToBudget = true;
 
   @override
   Widget build(BuildContext context) {
@@ -123,6 +124,34 @@ class _BillPaymentState extends State<BillPayment> {
                               )
                             ],
                           ),
+                          SizedBox(height: 20),
+                          BlocBuilder<BudgetCubit, dynamic>(builder: (context, state) {
+                            if(state != null) {
+                              return GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    addToBudget = !addToBudget;
+                                  });
+                                },
+                                child: Row(
+                                  spacing: 10,
+                                  children: [
+                                    Container(
+                                      width: 30,
+                                      height: 30,
+                                      decoration: BoxDecoration(
+                                          color: addToBudget ? darkTheme.primary : darkTheme.surfaceContainer,
+                                          borderRadius: BorderRadius.circular(5)
+                                      ),
+                                      child: addToBudget ? Icon(Icons.check) : null,
+                                    ),
+                                    Text("Add to budget")
+                                  ],
+                                ),
+                              );
+                            }
+                            return SizedBox();
+                          })
                         ],
                       ),
                     ),
@@ -143,7 +172,7 @@ class _BillPaymentState extends State<BillPayment> {
                               .doc(FirebaseAuth.instance.currentUser?.uid)
                               .update({"balances": balances});
                         }
-                        if(context.mounted && context.read<BudgetCubit>().state != null) {
+                        if(context.mounted && context.read<BudgetCubit>().state != null && addToBudget) {
                           await FirebaseFirestore.instance
                               .collection("users")
                               .doc(FirebaseAuth.instance.currentUser?.uid)
