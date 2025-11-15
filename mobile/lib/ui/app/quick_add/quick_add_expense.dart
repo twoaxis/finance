@@ -51,7 +51,7 @@ class _QuickAddExpenseState extends State<QuickAddExpense> {
   void _setDate(BuildContext context) async {
     DateTime? pickedDate = await showDatePicker(
       context: context,
-      initialDate: DateTime.now(),
+      initialDate: dateTime,
       firstDate: DateTime(2000),
       lastDate: DateTime(2100),
     );
