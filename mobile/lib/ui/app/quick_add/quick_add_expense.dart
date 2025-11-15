@@ -24,12 +24,14 @@ class _QuickAddExpenseState extends State<QuickAddExpense> {
   TextEditingController dateController = TextEditingController();
   int balanceIndex = -1;
   DateTime dateTime = DateTime.now();
+  bool addToBudget = true;
 
   @override
   void initState() {
     super.initState();
 
-    final String date = "${dateTime.day.toString().padLeft(2, '0')}/${dateTime.month.toString().padLeft(2, '0')}/${dateTime.year}";
+    final String date =
+        "${dateTime.day.toString().padLeft(2, '0')}/${dateTime.month.toString().padLeft(2, '0')}/${dateTime.year}";
 
     int hour = dateTime.hour;
     final int minute = dateTime.minute;
@@ -38,7 +40,8 @@ class _QuickAddExpenseState extends State<QuickAddExpense> {
     hour = hour % 12;
     if (hour == 0) hour = 12;
 
-    final String time = "${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')} $period";
+    final String time =
+        "${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')} $period";
 
     setState(() {
       dateController.text = "$date $time";
@@ -70,10 +73,13 @@ class _QuickAddExpenseState extends State<QuickAddExpense> {
       pickedTime.minute,
     );
 
-    final String formattedDate = "${fullDateTime.day.toString().padLeft(2, '0')}/${fullDateTime.month.toString().padLeft(2, '0')}/${fullDateTime.year}";
-    final int hour = pickedTime.hourOfPeriod == 0 ? 12 : pickedTime.hourOfPeriod;
+    final String formattedDate =
+        "${fullDateTime.day.toString().padLeft(2, '0')}/${fullDateTime.month.toString().padLeft(2, '0')}/${fullDateTime.year}";
+    final int hour =
+        pickedTime.hourOfPeriod == 0 ? 12 : pickedTime.hourOfPeriod;
     final String period = pickedTime.period == DayPeriod.am ? "AM" : "PM";
-    final String formattedTime = "${hour.toString().padLeft(2, '0')}:${pickedTime.minute.toString().padLeft(2, '0')} $period";
+    final String formattedTime =
+        "${hour.toString().padLeft(2, '0')}:${pickedTime.minute.toString().padLeft(2, '0')} $period";
 
     setState(() {
       dateTime = fullDateTime;
@@ -207,6 +213,34 @@ class _QuickAddExpenseState extends State<QuickAddExpense> {
                             readOnly: true,
                             onTap: () => _setDate(context),
                           ),
+                          SizedBox(height: 20),
+                          BlocBuilder<BudgetCubit, dynamic>(builder: (context, state) {
+                            if(state != null) {
+                              return GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    addToBudget = !addToBudget;
+                                  });
+                                },
+                                child: Row(
+                                  spacing: 10,
+                                  children: [
+                                    Container(
+                                      width: 30,
+                                      height: 30,
+                                      decoration: BoxDecoration(
+                                          color: addToBudget ? darkTheme.primary : darkTheme.surfaceContainer,
+                                          borderRadius: BorderRadius.circular(5)
+                                      ),
+                                      child: addToBudget ? Icon(Icons.check) : null,
+                                    ),
+                                    Text("Add to budget")
+                                  ],
+                                ),
+                              );
+                            }
+                            return SizedBox();
+                          })
                         ],
                       ),
                     ),
@@ -268,15 +302,19 @@ class _QuickAddExpenseState extends State<QuickAddExpense> {
                               .update({"balances": balances});
                         }
 
-                        if(context.mounted && context.read<BudgetCubit>().state != null) {
+                        if (context.mounted &&
+                            context.read<BudgetCubit>().state != null && addToBudget) {
                           await FirebaseFirestore.instance
                               .collection("users")
                               .doc(FirebaseAuth.instance.currentUser?.uid)
                               .update(
                             {
                               "budget": {
-                                "spent": context.read<BudgetCubit>().state["spent"] + double.parse(valueController.text),
-                                "value": context.read<BudgetCubit>().state["value"]
+                                "spent":
+                                    context.read<BudgetCubit>().state["spent"] +
+                                        double.parse(valueController.text),
+                                "value":
+                                    context.read<BudgetCubit>().state["value"]
                               }
                             },
                           );
