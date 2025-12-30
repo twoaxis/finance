@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:financial_planner_mobile/cubit/balances_cubit.dart';
 import 'package:financial_planner_mobile/cubit/currency_cubit.dart';
 import 'package:financial_planner_mobile/cubit/transactions_cubit.dart';
@@ -14,8 +16,15 @@ import 'package:intl/intl.dart';
 
 import '../../../util/money_format.dart';
 
-class DashboardPage extends StatelessWidget {
+class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
+
+  @override
+  State<DashboardPage> createState() => _DashboardPageState();
+}
+
+class _DashboardPageState extends State<DashboardPage> {
+  bool isHidden = true;
 
   @override
   Widget build(BuildContext context) {
@@ -42,19 +51,53 @@ class DashboardPage extends StatelessWidget {
                       height: 80,
                     ),
                     Text("Total balance"),
-                    BlocBuilder<BalancesCubit, List<dynamic>>(
-                      builder: (content, balances) {
-                        var total = balances.fold(0, (sum, asset) {
-                          double value =
-                              double.tryParse(asset["value"].toString()) ?? 0.0;
-                          return sum + value.toInt();
-                        });
-                        return Text(
-                          formatMoneyWithContext(context, total),
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 40),
-                        );
-                      },
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          width: 50,
+                        ),
+                        BlocBuilder<BalancesCubit, List<dynamic>>(
+                          builder: (content, balances) {
+                            var total = balances.fold(0, (sum, asset) {
+                              double value =
+                                  double.tryParse(asset["value"].toString()) ??
+                                      0.0;
+                              return sum + value.toInt();
+                            });
+                            if (isHidden) {
+                              return Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 8.5),
+                                child: Container(
+                                  width: 120,
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                    color: darkTheme.surfaceContainer,
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                ),
+                              );
+                            } else {
+                              return Text(
+                                formatMoneyWithContext(context, total),
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 40),
+                              );
+                            }
+                          },
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            setState(() {
+                              isHidden = !isHidden;
+                            });
+                          },
+                          color: Colors.white,
+                          icon: Icon(isHidden
+                              ? Icons.visibility_outlined
+                              : Icons.visibility_off_outlined),
+                        ),
+                      ],
                     ),
                     SizedBox(
                       height: 30,
@@ -202,8 +245,9 @@ class DashboardPage extends StatelessWidget {
                         }
                         return ListView.separated(
                           padding: EdgeInsets.zero,
-                          itemCount:
-                          transactions.length <= 30 ? transactions.length : 30,
+                          itemCount: transactions.length <= 30
+                              ? transactions.length
+                              : 30,
                           itemBuilder: (BuildContext context, int index) {
                             return Row(
                               spacing: 20,
@@ -215,7 +259,8 @@ class DashboardPage extends StatelessWidget {
                                       borderRadius: BorderRadius.circular(10)),
                                   child: Column(
                                     children: [
-                                      if (transactions[index]["type"] == "expense")
+                                      if (transactions[index]["type"] ==
+                                          "expense")
                                         Icon(
                                           Icons.payments_rounded,
                                           size: 25,
@@ -231,12 +276,15 @@ class DashboardPage extends StatelessWidget {
                                 ),
                                 Expanded(
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(transactions[index]["name"]),
                                       Text(
-                                          DateFormat('MMM d, y. hh:mm a').format(
-                                              transactions[index]["date"].toDate()),
+                                          DateFormat('MMM d, y. hh:mm a')
+                                              .format(transactions[index]
+                                                      ["date"]
+                                                  .toDate()),
                                           style: TextStyle(
                                               fontSize: 12, color: Colors.grey))
                                     ],
@@ -250,7 +298,8 @@ class DashboardPage extends StatelessWidget {
                                         fontSize: 17,
                                         fontWeight: FontWeight.bold),
                                   )
-                                else if (transactions[index]["type"] == "income")
+                                else if (transactions[index]["type"] ==
+                                    "income")
                                   Text(
                                     "+${formatMoneyWithContext(context, transactions[index]["value"])}",
                                     style: TextStyle(
