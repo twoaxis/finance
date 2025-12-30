@@ -98,7 +98,7 @@ class _FinancialPlannerState extends State<FinancialPlanner> {
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Financial Planner',
+        title: "TwoAxis Finance",
         theme: ThemeData(
           splashFactory: NoSplash.splashFactory,
           colorScheme: darkTheme,
