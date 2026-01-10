@@ -20,12 +20,6 @@ This project is open-source but currently has no license. This means:
 - You **may** contribute to the project.
 - You **may not** redistribute, modify, or rebrand the project without explicit permission.
 
-### How to Contribute
-1. Fork the repository.
-2. Create a new branch for your feature or fix.
-3. Commit and push your changes.
-4. Submit a pull request for review.
-
 ## Website
 Visit [finance.twoaxis.org](https://finance.twoaxis.org) for more details about the app. Note that there is no web version of TwoAxis Finance at this time.
 
