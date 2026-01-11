@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:financial_planner_mobile/app_observer.dart';
 import 'package:financial_planner_mobile/cubit/assets_cubit.dart';
 import 'package:financial_planner_mobile/cubit/balances_cubit.dart';
 import 'package:financial_planner_mobile/cubit/bills_cubit.dart';
@@ -10,11 +10,11 @@ import 'package:financial_planner_mobile/cubit/liabilities_cubit.dart';
 import 'package:financial_planner_mobile/cubit/name_cubit.dart';
 import 'package:financial_planner_mobile/cubit/receivables_cubit.dart';
 import 'package:financial_planner_mobile/cubit/transactions_cubit.dart';
-import 'package:financial_planner_mobile/ui/app/app.dart';
+import 'package:financial_planner_mobile/app/app.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:financial_planner_mobile/ui/onboarding/onboarding.dart';
-import 'package:financial_planner_mobile/util/theme.dart';
+import 'package:financial_planner_mobile/app/onboarding/onboarding.dart';
+import 'package:financial_planner_mobile/core/theme/theme.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,10 +26,16 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  if(kDebugMode) {
-    await FirebaseAuth.instance.useAuthEmulator("10.0.2.2", 9099);
-    FirebaseFirestore.instance.useFirestoreEmulator("10.0.2.2", 8080);
+  if (kDebugMode) {
+    // TODO: Remove this in production
+    await FirebaseAuth.instance
+        .setSettings(appVerificationDisabledForTesting: true);
+
+    // await FirebaseAuth.instance.useAuthEmulator("10.0.2.2", 9099);
+    // FirebaseFirestore.instance.useFirestoreEmulator("10.0.2.2", 8080);
   }
+
+  Bloc.observer = MyBlocObserver();
 
   runApp(
     MultiBlocProvider(
