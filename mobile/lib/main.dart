@@ -11,7 +11,7 @@ import 'package:financial_planner_mobile/cubit/name_cubit.dart';
 import 'package:financial_planner_mobile/cubit/receivables_cubit.dart';
 import 'package:financial_planner_mobile/cubit/transactions_cubit.dart';
 import 'package:financial_planner_mobile/features/app.dart';
-import 'package:financial_planner_mobile/features/onboarding/onboarding.dart';
+import 'package:financial_planner_mobile/features/auth/presentation/screens/onboarding_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:financial_planner_mobile/core/theme/theme.dart';
