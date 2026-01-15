@@ -5,7 +5,7 @@ import 'package:financial_planner_mobile/values/spaces.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../../common/themed_input_field.dart';
+import 'package:financial_planner_mobile/ui/common/themed_input_field.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -151,7 +151,7 @@ class _SignupPageState extends State<SignupPage> {
                             },
                           );
                         } else {
-                          final credential = await FirebaseAuth.instance
+                          var credential = await FirebaseAuth.instance
                               .createUserWithEmailAndPassword(
                             email: emailController.text,
                             password: passwordController.text,

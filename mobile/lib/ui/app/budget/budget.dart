@@ -6,8 +6,8 @@ import 'package:financial_planner_mobile/values/spaces.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../cubit/budget_cubit.dart';
-import 'budget_info.dart';
+import 'package:financial_planner_mobile/cubit/budget_cubit.dart';
+import 'package:financial_planner_mobile/ui/app/budget/budget_info.dart';
 
 class BudgetPage extends StatelessWidget {
   const BudgetPage({super.key});
@@ -48,9 +48,9 @@ class BudgetPage extends StatelessWidget {
                     );
                   }
 
-                  final limit = budget["value"];
-                  final spent = budget["spent"];
-                  final percent = (spent / limit);
+                  var limit = budget["value"];
+                  var spent = budget["spent"];
+                  var percent = spent / limit;
 
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.center,

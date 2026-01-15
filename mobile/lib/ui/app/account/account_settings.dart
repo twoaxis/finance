@@ -6,8 +6,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../cubit/name_cubit.dart';
-import '../../../util/theme.dart';
+import 'package:financial_planner_mobile/cubit/name_cubit.dart';
+import 'package:financial_planner_mobile/util/theme.dart';
 
 class AccountSettings extends StatefulWidget {
   const AccountSettings({super.key});

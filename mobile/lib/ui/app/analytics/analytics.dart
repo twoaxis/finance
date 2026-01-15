@@ -3,22 +3,22 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../cubit/assets_cubit.dart';
-import '../../../cubit/balances_cubit.dart';
-import '../../../cubit/receivables_cubit.dart';
-import '../../../cubit/transactions_cubit.dart';
-import '../../../util/money_format.dart';
-import '../../../util/theme.dart';
+import 'package:financial_planner_mobile/cubit/assets_cubit.dart';
+import 'package:financial_planner_mobile/cubit/balances_cubit.dart';
+import 'package:financial_planner_mobile/cubit/receivables_cubit.dart';
+import 'package:financial_planner_mobile/cubit/transactions_cubit.dart';
+import 'package:financial_planner_mobile/util/money_format.dart';
+import 'package:financial_planner_mobile/util/theme.dart';
 
 class AnalyticsPage extends StatelessWidget {
   const AnalyticsPage({super.key});
 
   List<FlSpot> generateExpenseSpots(List<dynamic> transactions) {
-    final now = DateTime.now();
-    final lastWeek = List.generate(7, (i) => DateTime(now.year, now.month, now.day).subtract(Duration(days: 6 - i)));
+    var now = DateTime.now();
+    var lastWeek = List.generate(7, (i) => DateTime(now.year, now.month, now.day).subtract(Duration(days: 6 - i)));
 
     // Initialize a map with zeroes for each day
-    final Map<String, double> dailyTotals = {
+    Map<String, double> dailyTotals = {
       for (var day in lastWeek)
         "${day.year}-${day.month}-${day.day}": 0.0,
     };
@@ -26,8 +26,8 @@ class AnalyticsPage extends StatelessWidget {
     for (var tx in transactions) {
       if (tx["type"] != "expense") continue;
 
-      final date = tx["date"].toDate();
-      final dateKey = "${date.year}-${date.month}-${date.day}";
+      var date = tx["date"].toDate();
+      var dateKey = "${date.year}-${date.month}-${date.day}";
 
       if (dailyTotals.containsKey(dateKey)) {
         dailyTotals[dateKey] = dailyTotals[dateKey]! + tx["value"];
@@ -37,7 +37,7 @@ class AnalyticsPage extends StatelessWidget {
     // Convert to FlSpot
     List<FlSpot> spots = [];
     for (int i = 0; i < lastWeek.length; i++) {
-      final key = "${lastWeek[i].year}-${lastWeek[i].month}-${lastWeek[i].day}";
+      var key = "${lastWeek[i].year}-${lastWeek[i].month}-${lastWeek[i].day}";
       spots.add(FlSpot(i.toDouble(), dailyTotals[key]!));
     }
 
@@ -174,7 +174,7 @@ class AnalyticsPage extends StatelessWidget {
                 SizedBox(height: 30),
                 BlocBuilder<TransactionsCubit, List<dynamic>>(
                   builder: (context, transactions) {
-                    final spots = generateExpenseSpots(transactions);
+                    var spots = generateExpenseSpots(transactions);
 
                     return SizedBox(
                       height: 200,
@@ -194,7 +194,7 @@ class AnalyticsPage extends StatelessWidget {
                                   int index = value.toInt();
                                   if (index < 0 || index >= 7) return SizedBox.shrink();
 
-                                  final date = DateTime.now().subtract(Duration(days: 6 - index));
+                                  var date = DateTime.now().subtract(Duration(days: 6 - index));
                                   return Text("${date.day.toString().padLeft(2, '0')}/${date.month}", style: TextStyle(color: Colors.white, fontSize: 10));
                                 },
                               ),
@@ -205,7 +205,7 @@ class AnalyticsPage extends StatelessWidget {
                                 reservedSize: 40,
                                 getTitlesWidget: (value, meta) {
                                   // Only show actual used Y values
-                                  final usedY = spots.map((e) => e.y).toSet();
+                                  var usedY = spots.map((e) => e.y).toSet();
                                   if (usedY.contains(value)) {
                                     return Text(value.toInt().toString(), style: TextStyle(color: Colors.white, fontSize: 12));
                                   }

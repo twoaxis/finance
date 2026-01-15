@@ -6,7 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../util/money_format.dart';
+import 'package:financial_planner_mobile/util/money_format.dart';
 
 class AssetsPage extends StatefulWidget {
   const AssetsPage({super.key});

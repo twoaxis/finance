@@ -1,4 +1,3 @@
-import 'dart:ui';
 
 import 'package:financial_planner_mobile/cubit/balances_cubit.dart';
 import 'package:financial_planner_mobile/cubit/currency_cubit.dart';
@@ -14,7 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
-import '../../../util/money_format.dart';
+import 'package:financial_planner_mobile/util/money_format.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});

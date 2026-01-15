@@ -3,8 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../cubit/currency_cubit.dart';
-import '../../../util/theme.dart';
+import 'package:financial_planner_mobile/cubit/currency_cubit.dart';
+import 'package:financial_planner_mobile/util/theme.dart';
 
 class AccountCurrency extends StatelessWidget {
   const AccountCurrency({super.key});
@@ -72,10 +72,10 @@ class AccountCurrency extends StatelessWidget {
             separatorBuilder: (_, __) => Divider(
               color: darkTheme.surfaceContainer, height: 1),
             itemBuilder: (context, index) {
-              final code = currencies.keys.elementAt(index);
-              final name = currencies[code]!;
+              var code = currencies.keys.elementAt(index);
+              var name = currencies[code]!;
 
-              final isSelected = code == selectedCurrency;
+              var isSelected = code == selectedCurrency;
 
               return ListTile(
                 title: Text('$code - $name'),
