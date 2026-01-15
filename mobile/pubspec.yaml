@@ -45,7 +45,7 @@ dependencies:
   fl_chart: ^0.70.2
   lottie: ^3.3.1
   google_sign_in: ^6.3.0
-  flutter_native_splash: ^2.4.6
+  flutter_native_splash: ^2.4.7
 
 dev_dependencies:
   flutter_test:
