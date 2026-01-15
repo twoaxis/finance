@@ -6,8 +6,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../util/theme.dart';
-import '../../common/primary_button.dart';
+import 'package:financial_planner_mobile/util/theme.dart';
+import 'package:financial_planner_mobile/ui/common/primary_button.dart';
 
 class BudgetSetup extends StatefulWidget {
   const BudgetSetup({super.key});

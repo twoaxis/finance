@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
-import '../../../util/money_format.dart';
-import '../../../util/theme.dart';
+import 'package:financial_planner_mobile/util/money_format.dart';
+import 'package:financial_planner_mobile/util/theme.dart';
 
 class TransactionsPage extends StatelessWidget {
   const TransactionsPage({super.key});
@@ -64,7 +64,7 @@ class TransactionsPage extends StatelessWidget {
                 );
               }
 
-              final grouped = groupTransactionsByDate(transactions);
+              var grouped = groupTransactionsByDate(transactions);
 
               var sortedKeys = grouped.keys.toList()
                 ..sort((a, b) => b.compareTo(a));
@@ -72,8 +72,8 @@ class TransactionsPage extends StatelessWidget {
               return ListView.separated(
                 itemCount: sortedKeys.length,
                 itemBuilder: (BuildContext context, int index) {
-                  final dateKey = sortedKeys.elementAt(index);
-                  final txList = grouped[dateKey]!;
+                  var dateKey = sortedKeys.elementAt(index);
+                  var txList = grouped[dateKey]!;
 
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

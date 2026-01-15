@@ -6,8 +6,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../cubit/balances_cubit.dart';
-import '../../common/primary_button.dart';
+import 'package:financial_planner_mobile/cubit/balances_cubit.dart';
+import 'package:financial_planner_mobile/ui/common/primary_button.dart';
 
 class QuickAddIncome extends StatefulWidget {
   const QuickAddIncome({super.key});
@@ -28,16 +28,16 @@ class _QuickAddIncomeState extends State<QuickAddIncome> {
   void initState() {
     super.initState();
 
-    final String date = "${dateTime.day.toString().padLeft(2, '0')}/${dateTime.month.toString().padLeft(2, '0')}/${dateTime.year}";
+    String date = "${dateTime.day.toString().padLeft(2, '0')}/${dateTime.month.toString().padLeft(2, '0')}/${dateTime.year}";
 
     int hour = dateTime.hour;
-    final int minute = dateTime.minute;
-    final String period = hour >= 12 ? "PM" : "AM";
+    int minute = dateTime.minute;
+    String period = hour >= 12 ? "PM" : "AM";
 
     hour = hour % 12;
     if (hour == 0) hour = 12;
 
-    final String time = "${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')} $period";
+    String time = "${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')} $period";
 
     setState(() {
       dateController.text = "$date $time";
@@ -61,7 +61,7 @@ class _QuickAddIncomeState extends State<QuickAddIncome> {
 
     if (pickedTime == null) return;
 
-    final DateTime fullDateTime = DateTime(
+    DateTime fullDateTime = DateTime(
       pickedDate.year,
       pickedDate.month,
       pickedDate.day,
@@ -69,10 +69,10 @@ class _QuickAddIncomeState extends State<QuickAddIncome> {
       pickedTime.minute,
     );
 
-    final String formattedDate = "${fullDateTime.day.toString().padLeft(2, '0')}/${fullDateTime.month.toString().padLeft(2, '0')}/${fullDateTime.year}";
-    final int hour = pickedTime.hourOfPeriod == 0 ? 12 : pickedTime.hourOfPeriod;
-    final String period = pickedTime.period == DayPeriod.am ? "AM" : "PM";
-    final String formattedTime = "${hour.toString().padLeft(2, '0')}:${pickedTime.minute.toString().padLeft(2, '0')} $period";
+    String formattedDate = "${fullDateTime.day.toString().padLeft(2, '0')}/${fullDateTime.month.toString().padLeft(2, '0')}/${fullDateTime.year}";
+    int hour = pickedTime.hourOfPeriod == 0 ? 12 : pickedTime.hourOfPeriod;
+    String period = pickedTime.period == DayPeriod.am ? "AM" : "PM";
+    String formattedTime = "${hour.toString().padLeft(2, '0')}:${pickedTime.minute.toString().padLeft(2, '0')} $period";
 
     setState(() {
       dateTime = fullDateTime;

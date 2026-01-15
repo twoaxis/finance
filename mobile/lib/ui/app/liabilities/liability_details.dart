@@ -5,8 +5,8 @@ import 'package:financial_planner_mobile/values/spaces.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../../../util/money_format.dart';
-import '../../../util/theme.dart';
+import 'package:financial_planner_mobile/util/money_format.dart';
+import 'package:financial_planner_mobile/util/theme.dart';
 
 class LiabilityDetails extends StatefulWidget {
   const LiabilityDetails({super.key, required this.index, required this.liability});

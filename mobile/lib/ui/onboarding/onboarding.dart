@@ -65,13 +65,13 @@ class _OnboardingState extends State<Onboarding> {
                     children: [
                       GestureDetector(
                         onTap: () async {
-                          final GoogleSignInAccount? googleUser =
+                          GoogleSignInAccount? googleUser =
                               await GoogleSignIn().signIn();
 
-                          final GoogleSignInAuthentication? googleAuth =
+                          GoogleSignInAuthentication? googleAuth =
                               await googleUser?.authentication;
 
-                          final credential = GoogleAuthProvider.credential(
+                          var credential = GoogleAuthProvider.credential(
                             accessToken: googleAuth?.accessToken,
                             idToken: googleAuth?.idToken,
                           );
@@ -147,7 +147,7 @@ class _OnboardingState extends State<Onboarding> {
                   ),
                   GestureDetector(
                     onTap: () async {
-                      final Uri uri =
+                      Uri uri =
                           Uri.parse("https://finance.twoaxis.org/privacy.html");
 
                       await launchUrl(uri,

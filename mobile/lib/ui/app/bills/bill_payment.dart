@@ -6,8 +6,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../cubit/balances_cubit.dart';
-import '../../common/primary_button.dart';
+import 'package:financial_planner_mobile/cubit/balances_cubit.dart';
+import 'package:financial_planner_mobile/ui/common/primary_button.dart';
 
 class BillPayment extends StatefulWidget {
   const BillPayment({super.key, required this.bill, required this.index});
