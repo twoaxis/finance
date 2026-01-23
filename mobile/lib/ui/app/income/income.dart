@@ -1,11 +1,11 @@
-import 'package:financial_planner_mobile/cubit/income_cubit.dart';
-import 'package:financial_planner_mobile/ui/app/income/income_action_button.dart';
-import 'package:financial_planner_mobile/ui/app/income/income_details.dart';
-import 'package:financial_planner_mobile/util/theme.dart';
+import 'package:twoaxis_finance/cubit/income_cubit.dart';
+import 'package:twoaxis_finance/ui/app/income/income_action_button.dart';
+import 'package:twoaxis_finance/ui/app/income/income_details.dart';
+import 'package:twoaxis_finance/core/util/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:financial_planner_mobile/util/money_format.dart';
+import 'package:twoaxis_finance/core/util/money_format.dart';
 
 class IncomePage extends StatefulWidget {
   const IncomePage({super.key});

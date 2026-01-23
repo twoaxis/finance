@@ -3,8 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:financial_planner_mobile/cubit/currency_cubit.dart';
-import 'package:financial_planner_mobile/util/theme.dart';
+import 'package:twoaxis_finance/cubit/currency_cubit.dart';
+import 'package:twoaxis_finance/core/util/theme.dart';
 
 class AccountCurrency extends StatelessWidget {
   const AccountCurrency({super.key});

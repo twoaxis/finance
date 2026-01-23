@@ -1,4 +1,4 @@
-import 'package:financial_planner_mobile/util/theme.dart';
+import 'package:twoaxis_finance/core/util/theme.dart';
 import 'package:flutter/material.dart';
 
 class PrimaryButton extends StatelessWidget {

@@ -1,11 +1,11 @@
-import 'package:financial_planner_mobile/cubit/liabilities_cubit.dart';
-import 'package:financial_planner_mobile/ui/app/liabilities/liabilities_action_button.dart';
-import 'package:financial_planner_mobile/ui/app/liabilities/liability_details.dart';
-import 'package:financial_planner_mobile/util/theme.dart';
+import 'package:twoaxis_finance/cubit/liabilities_cubit.dart';
+import 'package:twoaxis_finance/ui/app/liabilities/liabilities_action_button.dart';
+import 'package:twoaxis_finance/ui/app/liabilities/liability_details.dart';
+import 'package:twoaxis_finance/core/util/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:financial_planner_mobile/util/money_format.dart';
+import 'package:twoaxis_finance/core/util/money_format.dart';
 
 class LiabilitiesPage extends StatefulWidget {
   const LiabilitiesPage({super.key});

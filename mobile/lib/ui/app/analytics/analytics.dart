@@ -1,14 +1,14 @@
-import 'package:financial_planner_mobile/values/spaces.dart';
+import 'package:twoaxis_finance/core/values/spaces.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:financial_planner_mobile/cubit/assets_cubit.dart';
-import 'package:financial_planner_mobile/cubit/balances_cubit.dart';
-import 'package:financial_planner_mobile/cubit/receivables_cubit.dart';
-import 'package:financial_planner_mobile/cubit/transactions_cubit.dart';
-import 'package:financial_planner_mobile/util/money_format.dart';
-import 'package:financial_planner_mobile/util/theme.dart';
+import 'package:twoaxis_finance/cubit/assets_cubit.dart';
+import 'package:twoaxis_finance/cubit/balances_cubit.dart';
+import 'package:twoaxis_finance/cubit/receivables_cubit.dart';
+import 'package:twoaxis_finance/cubit/transactions_cubit.dart';
+import 'package:twoaxis_finance/core/util/money_format.dart';
+import 'package:twoaxis_finance/core/util/theme.dart';
 
 class AnalyticsPage extends StatelessWidget {
   const AnalyticsPage({super.key});

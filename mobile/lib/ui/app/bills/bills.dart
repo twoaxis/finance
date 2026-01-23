@@ -1,11 +1,11 @@
-import 'package:financial_planner_mobile/cubit/bills_cubit.dart';
-import 'package:financial_planner_mobile/ui/app/bills/bill_details.dart';
-import 'package:financial_planner_mobile/ui/app/bills/bills_action_button.dart';
-import 'package:financial_planner_mobile/util/theme.dart';
+import 'package:twoaxis_finance/cubit/bills_cubit.dart';
+import 'package:twoaxis_finance/ui/app/bills/bill_details.dart';
+import 'package:twoaxis_finance/ui/app/bills/bills_action_button.dart';
+import 'package:twoaxis_finance/core/util/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:financial_planner_mobile/util/money_format.dart';
+import 'package:twoaxis_finance/core/util/money_format.dart';
 
 class BillsPage extends StatefulWidget {
   const BillsPage({super.key});

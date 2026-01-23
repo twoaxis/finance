@@ -1,4 +1,4 @@
-import 'package:financial_planner_mobile/ui/app/assets/assets_add.dart';
+import 'package:twoaxis_finance/ui/app/assets/assets_add.dart';
 import 'package:flutter/material.dart';
 
 class AssetActionButton extends StatelessWidget {

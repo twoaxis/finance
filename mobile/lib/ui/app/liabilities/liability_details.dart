@@ -1,12 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:financial_planner_mobile/ui/app/liabilities/liability_payment.dart';
-import 'package:financial_planner_mobile/ui/common/primary_button.dart';
-import 'package:financial_planner_mobile/values/spaces.dart';
+import 'package:twoaxis_finance/ui/app/liabilities/liability_payment.dart';
+import 'package:twoaxis_finance/ui/common/primary_button.dart';
+import 'package:twoaxis_finance/core/values/spaces.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import 'package:financial_planner_mobile/util/money_format.dart';
-import 'package:financial_planner_mobile/util/theme.dart';
+import 'package:twoaxis_finance/core/util/money_format.dart';
+import 'package:twoaxis_finance/core/util/theme.dart';
 
 class LiabilityDetails extends StatefulWidget {
   const LiabilityDetails({super.key, required this.index, required this.liability});

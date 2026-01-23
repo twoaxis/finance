@@ -1,9 +1,9 @@
-import 'package:financial_planner_mobile/cubit/name_cubit.dart';
-import 'package:financial_planner_mobile/ui/app/account/account_currency.dart';
-import 'package:financial_planner_mobile/ui/app/account/account_settings.dart';
-import 'package:financial_planner_mobile/ui/app/info/info.dart';
-import 'package:financial_planner_mobile/util/theme.dart';
-import 'package:financial_planner_mobile/values/spaces.dart';
+import 'package:twoaxis_finance/cubit/name_cubit.dart';
+import 'package:twoaxis_finance/ui/app/account/account_currency.dart';
+import 'package:twoaxis_finance/ui/app/account/account_settings.dart';
+import 'package:twoaxis_finance/ui/app/info/info.dart';
+import 'package:twoaxis_finance/core/util/theme.dart';
+import 'package:twoaxis_finance/core/values/spaces.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

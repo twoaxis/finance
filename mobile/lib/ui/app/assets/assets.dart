@@ -1,12 +1,12 @@
-import 'package:financial_planner_mobile/cubit/assets_cubit.dart';
-import 'package:financial_planner_mobile/ui/app/assets/asset_action_button.dart';
-import 'package:financial_planner_mobile/util/theme.dart';
+import 'package:twoaxis_finance/cubit/assets_cubit.dart';
+import 'package:twoaxis_finance/ui/app/assets/asset_action_button.dart';
+import 'package:twoaxis_finance/core/util/theme.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:financial_planner_mobile/util/money_format.dart';
+import 'package:twoaxis_finance/core/util/money_format.dart';
 
 class AssetsPage extends StatefulWidget {
   const AssetsPage({super.key});

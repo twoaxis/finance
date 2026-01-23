@@ -1,9 +1,9 @@
-import 'package:financial_planner_mobile/ui/app/assets/assets.dart';
-import 'package:financial_planner_mobile/ui/app/balances/balances.dart';
-import 'package:financial_planner_mobile/ui/app/income/income.dart';
-import 'package:financial_planner_mobile/ui/app/receivables/receivables.dart';
-import 'package:financial_planner_mobile/util/theme.dart';
-import 'package:financial_planner_mobile/values/spaces.dart';
+import 'package:twoaxis_finance/ui/app/assets/assets.dart';
+import 'package:twoaxis_finance/ui/app/balances/balances.dart';
+import 'package:twoaxis_finance/ui/app/income/income.dart';
+import 'package:twoaxis_finance/ui/app/receivables/receivables.dart';
+import 'package:twoaxis_finance/core/util/theme.dart';
+import 'package:twoaxis_finance/core/values/spaces.dart';
 import 'package:flutter/material.dart';
 
 class Wallet extends StatelessWidget {

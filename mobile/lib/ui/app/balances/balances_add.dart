@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:financial_planner_mobile/ui/common/primary_button.dart';
-import 'package:financial_planner_mobile/values/spaces.dart';
+import 'package:twoaxis_finance/ui/common/primary_button.dart';
+import 'package:twoaxis_finance/core/values/spaces.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import 'package:financial_planner_mobile/ui/common/themed_input_field.dart';
+import 'package:twoaxis_finance/ui/common/themed_input_field.dart';
 
 class BalancesAdd extends StatefulWidget {
   const BalancesAdd({super.key});

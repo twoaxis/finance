@@ -1,8 +1,8 @@
-import 'package:financial_planner_mobile/ui/common/primary_button.dart';
-import 'package:financial_planner_mobile/ui/common/themed_input_field.dart';
-import 'package:financial_planner_mobile/ui/onboarding/screens/forget_password.dart';
-import 'package:financial_planner_mobile/util/theme.dart';
-import 'package:financial_planner_mobile/values/spaces.dart';
+import 'package:twoaxis_finance/ui/common/primary_button.dart';
+import 'package:twoaxis_finance/ui/common/themed_input_field.dart';
+import 'package:twoaxis_finance/ui/onboarding/screens/forget_password.dart';
+import 'package:twoaxis_finance/core/util/theme.dart';
+import 'package:twoaxis_finance/core/values/spaces.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 

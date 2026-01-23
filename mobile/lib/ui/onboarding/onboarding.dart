@@ -1,8 +1,8 @@
-import 'package:financial_planner_mobile/ui/common/primary_button.dart';
-import 'package:financial_planner_mobile/ui/onboarding/screens/login.dart';
-import 'package:financial_planner_mobile/ui/onboarding/screens/signup.dart';
-import 'package:financial_planner_mobile/util/theme.dart';
-import 'package:financial_planner_mobile/values/spaces.dart';
+import 'package:twoaxis_finance/ui/common/primary_button.dart';
+import 'package:twoaxis_finance/ui/onboarding/screens/login.dart';
+import 'package:twoaxis_finance/ui/onboarding/screens/signup.dart';
+import 'package:twoaxis_finance/core/util/theme.dart';
+import 'package:twoaxis_finance/core/values/spaces.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';

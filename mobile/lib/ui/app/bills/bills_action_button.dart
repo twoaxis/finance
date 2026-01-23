@@ -1,4 +1,4 @@
-import 'package:financial_planner_mobile/ui/app/bills/bills_add.dart';
+import 'package:twoaxis_finance/ui/app/bills/bills_add.dart';
 import 'package:flutter/material.dart';
 
 class BillsActionButton extends StatelessWidget {

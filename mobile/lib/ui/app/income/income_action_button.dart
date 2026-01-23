@@ -1,4 +1,4 @@
-import 'package:financial_planner_mobile/ui/app/income/income_add.dart';
+import 'package:twoaxis_finance/ui/app/income/income_add.dart';
 import 'package:flutter/material.dart';
 
 class IncomeActionButton extends StatelessWidget {

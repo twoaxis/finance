@@ -1,13 +1,13 @@
-import 'package:financial_planner_mobile/ui/app/budget/budget_setup.dart';
-import 'package:financial_planner_mobile/ui/common/primary_button.dart';
-import 'package:financial_planner_mobile/util/money_format.dart';
-import 'package:financial_planner_mobile/util/theme.dart';
-import 'package:financial_planner_mobile/values/spaces.dart';
+import 'package:twoaxis_finance/ui/app/budget/budget_setup.dart';
+import 'package:twoaxis_finance/ui/common/primary_button.dart';
+import 'package:twoaxis_finance/core/util/money_format.dart';
+import 'package:twoaxis_finance/core/util/theme.dart';
+import 'package:twoaxis_finance/core/values/spaces.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:financial_planner_mobile/cubit/budget_cubit.dart';
-import 'package:financial_planner_mobile/ui/app/budget/budget_info.dart';
+import 'package:twoaxis_finance/cubit/budget_cubit.dart';
+import 'package:twoaxis_finance/ui/app/budget/budget_info.dart';
 
 class BudgetPage extends StatelessWidget {
   const BudgetPage({super.key});
