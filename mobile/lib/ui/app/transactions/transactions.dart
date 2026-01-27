@@ -132,8 +132,9 @@ class TransactionsPage extends StatelessWidget {
                                               .doc(tx.id)
                                               .delete();
 
-                                          if (context.mounted)
+                                          if (context.mounted){
                                             Navigator.pop(context);
+                                          }
                                         },
                                         title: Text("Delete"),
                                       ),
