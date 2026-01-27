@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:financial_planner_mobile/ui/common/themed_input_field.dart';
 import 'package:financial_planner_mobile/util/theme.dart';
+import 'package:financial_planner_mobile/values/categories.dart';
 import 'package:financial_planner_mobile/values/spaces.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,7 @@ class _QuickAddExpenseState extends State<QuickAddExpense> {
   int balanceIndex = -1;
   DateTime dateTime = DateTime.now();
   bool addToBudget = true;
+  Category? selectedCategory;
 
   @override
   void initState() {
@@ -75,8 +77,7 @@ class _QuickAddExpenseState extends State<QuickAddExpense> {
 
     String formattedDate =
         "${fullDateTime.day.toString().padLeft(2, '0')}/${fullDateTime.month.toString().padLeft(2, '0')}/${fullDateTime.year}";
-    int hour =
-        pickedTime.hourOfPeriod == 0 ? 12 : pickedTime.hourOfPeriod;
+    int hour = pickedTime.hourOfPeriod == 0 ? 12 : pickedTime.hourOfPeriod;
     String period = pickedTime.period == DayPeriod.am ? "AM" : "PM";
     String formattedTime =
         "${hour.toString().padLeft(2, '0')}:${pickedTime.minute.toString().padLeft(2, '0')} $period";
@@ -139,6 +140,73 @@ class _QuickAddExpenseState extends State<QuickAddExpense> {
                             ],
                           ),
                           SizedBox(height: 40),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Category:",
+                                style: TextStyle(color: Colors.grey),
+                              ),
+                              SizedBox(height: 10),
+                              SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Row(
+                                  spacing: 8,
+                                  children: expenseCategories.map((category) {
+                                    var isSelected =
+                                        selectedCategory == category;
+                                    return GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          selectedCategory = category;
+                                        });
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 16, vertical: 10),
+                                        decoration: BoxDecoration(
+                                          color: isSelected
+                                              ? darkTheme.primary
+                                              : darkTheme.surfaceContainer,
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          border: isSelected
+                                              ? null
+                                              : Border.all(
+                                                  color: Colors.grey.shade700),
+                                        ),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          spacing: 6,
+                                          children: [
+                                            Icon(
+                                              category.icon,
+                                              size: 18,
+                                              color: isSelected
+                                                  ? Colors.black
+                                                  : Colors.white,
+                                            ),
+                                            Text(
+                                              category.name,
+                                              style: TextStyle(
+                                                color: isSelected
+                                                    ? Colors.black
+                                                    : Colors.white,
+                                                fontWeight: isSelected
+                                                    ? FontWeight.bold
+                                                    : FontWeight.normal,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  }).toList(),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 20),
                           ThemedInputField(
                             label: "Name",
                             controller: nameController,
@@ -214,8 +282,9 @@ class _QuickAddExpenseState extends State<QuickAddExpense> {
                             onTap: () => _setDate(context),
                           ),
                           SizedBox(height: 20),
-                          BlocBuilder<BudgetCubit, dynamic>(builder: (context, state) {
-                            if(state != null) {
+                          BlocBuilder<BudgetCubit, dynamic>(
+                              builder: (context, state) {
+                            if (state != null) {
                               return GestureDetector(
                                 onTap: () {
                                   setState(() {
@@ -229,10 +298,14 @@ class _QuickAddExpenseState extends State<QuickAddExpense> {
                                       width: 30,
                                       height: 30,
                                       decoration: BoxDecoration(
-                                          color: addToBudget ? darkTheme.primary : darkTheme.surfaceContainer,
-                                          borderRadius: BorderRadius.circular(5)
-                                      ),
-                                      child: addToBudget ? Icon(Icons.check) : null,
+                                          color: addToBudget
+                                              ? darkTheme.primary
+                                              : darkTheme.surfaceContainer,
+                                          borderRadius:
+                                              BorderRadius.circular(5)),
+                                      child: addToBudget
+                                          ? Icon(Icons.check)
+                                          : null,
                                     ),
                                     Text("Add to budget")
                                   ],
@@ -303,7 +376,8 @@ class _QuickAddExpenseState extends State<QuickAddExpense> {
                         }
 
                         if (context.mounted &&
-                            context.read<BudgetCubit>().state != null && addToBudget) {
+                            context.read<BudgetCubit>().state != null &&
+                            addToBudget) {
                           await FirebaseFirestore.instance
                               .collection("users")
                               .doc(FirebaseAuth.instance.currentUser?.uid)
@@ -330,6 +404,7 @@ class _QuickAddExpenseState extends State<QuickAddExpense> {
                             "name": nameController.text,
                             "value": double.parse(valueController.text),
                             "date": dateTime,
+                            "category": selectedCategory?.name,
                             "source": balanceIndex != -1
                                 ? balances[balanceIndex]["name"]
                                 : null

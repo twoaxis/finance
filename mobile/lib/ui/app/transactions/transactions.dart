@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:financial_planner_mobile/cubit/transactions_cubit.dart';
+import 'package:financial_planner_mobile/values/categories.dart';
 import 'package:financial_planner_mobile/values/spaces.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -12,12 +13,14 @@ import 'package:financial_planner_mobile/util/theme.dart';
 class TransactionsPage extends StatelessWidget {
   const TransactionsPage({super.key});
 
-  Map<DateTime, List<dynamic>> groupTransactionsByDate(List<dynamic> transactions) {
+  Map<DateTime, List<dynamic>> groupTransactionsByDate(
+      List<dynamic> transactions) {
     Map<DateTime, List<dynamic>> grouped = {};
 
     for (var tx in transactions) {
       DateTime rawDate = tx["date"].toDate();
-      DateTime dateKey = DateTime(rawDate.year, rawDate.month, rawDate.day); // remove time
+      DateTime dateKey =
+          DateTime(rawDate.year, rawDate.month, rawDate.day); // remove time
 
       if (!grouped.containsKey(dateKey)) {
         grouped[dateKey] = [];
@@ -41,7 +44,6 @@ class TransactionsPage extends StatelessWidget {
           padding: const EdgeInsets.all(fullscreenSpacing),
           child: BlocBuilder<TransactionsCubit, List<dynamic>>(
             builder: (BuildContext context, List<dynamic> transactions) {
-
               if (transactions.isEmpty) {
                 return Center(
                   child: Column(
@@ -54,10 +56,15 @@ class TransactionsPage extends StatelessWidget {
                           width: 200,
                         ),
                       ),
-                      SizedBox(height: 20,),
+                      SizedBox(
+                        height: 20,
+                      ),
                       Opacity(
                         opacity: 0.3,
-                        child: Text("No transactions", style: TextStyle(fontSize: 25),),
+                        child: Text(
+                          "No transactions",
+                          style: TextStyle(fontSize: 25),
+                        ),
                       )
                     ],
                   ),
@@ -79,10 +86,14 @@ class TransactionsPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        DateFormat('MMM d, y').format(dateKey), // format here only for display
-                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                        DateFormat('MMM d, y')
+                            .format(dateKey), // format here only for display
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
                       ),
-                      SizedBox(height: 10,),
+                      SizedBox(
+                        height: 10,
+                      ),
                       ...txList.map((tx) {
                         return GestureDetector(
                           onLongPress: () {
@@ -105,7 +116,7 @@ class TransactionsPage extends StatelessWidget {
                                         decoration: BoxDecoration(
                                           color: Colors.grey[300],
                                           borderRadius:
-                                          BorderRadius.circular(2),
+                                              BorderRadius.circular(2),
                                         ),
                                       ),
                                       SizedBox(
@@ -113,9 +124,16 @@ class TransactionsPage extends StatelessWidget {
                                       ),
                                       ListTile(
                                         onTap: () async {
-                                          await FirebaseFirestore.instance.collection("users").doc(FirebaseAuth.instance.currentUser?.uid).collection("transactions").doc(tx.id).delete();
+                                          await FirebaseFirestore.instance
+                                              .collection("users")
+                                              .doc(FirebaseAuth
+                                                  .instance.currentUser?.uid)
+                                              .collection("transactions")
+                                              .doc(tx.id)
+                                              .delete();
 
-                                          if(context.mounted) Navigator.pop(context);
+                                          if (context.mounted)
+                                            Navigator.pop(context);
                                         },
                                         title: Text("Delete"),
                                       ),
@@ -135,29 +153,27 @@ class TransactionsPage extends StatelessWidget {
                                   decoration: BoxDecoration(
                                       color: darkTheme.surfaceBright,
                                       borderRadius: BorderRadius.circular(10)),
-                                  child: Column(
-                                    children: [
-                                      if (tx["type"] == "expense")
-                                        Icon(
-                                          Icons.payments_rounded,
-                                          size: 25,
-                                        )
-                                      else if (tx["type"] ==
-                                          "income")
-                                        Icon(
-                                          Icons.file_download_rounded,
-                                          size: 25,
-                                        )
-                                    ],
+                                  child: Icon(
+                                    getCategoryIcon(
+                                      tx.data().containsKey("category")
+                                          ? tx["category"]
+                                          : null,
+                                      defaultIcon: tx["type"] == "expense"
+                                          ? Icons.payments_rounded
+                                          : Icons.file_download_rounded,
+                                    ),
+                                    size: 25,
                                   ),
                                 ),
                                 Expanded(
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(tx["name"]),
                                       Text(
-                                          DateFormat('MMM d, y. hh:mm a').format(tx["date"].toDate()),
+                                          DateFormat('MMM d, y. hh:mm a')
+                                              .format(tx["date"].toDate()),
                                           style: TextStyle(
                                               fontSize: 12, color: Colors.grey))
                                     ],
@@ -188,8 +204,7 @@ class TransactionsPage extends StatelessWidget {
                   );
                 },
                 separatorBuilder: (BuildContext context, int index) {
-                  return Divider(
-                      color: darkTheme.surfaceBright, height: 30);
+                  return Divider(color: darkTheme.surfaceBright, height: 30);
                 },
               );
             },

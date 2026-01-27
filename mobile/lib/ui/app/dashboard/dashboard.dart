@@ -1,4 +1,3 @@
-
 import 'package:financial_planner_mobile/cubit/balances_cubit.dart';
 import 'package:financial_planner_mobile/cubit/currency_cubit.dart';
 import 'package:financial_planner_mobile/cubit/transactions_cubit.dart';
@@ -9,6 +8,7 @@ import 'package:financial_planner_mobile/ui/app/quick_add/quick_add_expense.dart
 import 'package:financial_planner_mobile/ui/app/quick_add/quick_add_income.dart';
 import 'package:financial_planner_mobile/ui/app/transactions/transactions.dart';
 import 'package:financial_planner_mobile/util/theme.dart';
+import 'package:financial_planner_mobile/values/categories.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -66,7 +66,8 @@ class _DashboardPageState extends State<DashboardPage> {
                             });
                             if (isHidden) {
                               return Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 8.5),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 8.5),
                                 child: Container(
                                   width: 120,
                                   height: 40,
@@ -256,21 +257,20 @@ class _DashboardPageState extends State<DashboardPage> {
                                   decoration: BoxDecoration(
                                       color: darkTheme.surfaceBright,
                                       borderRadius: BorderRadius.circular(10)),
-                                  child: Column(
-                                    children: [
-                                      if (transactions[index]["type"] ==
-                                          "expense")
-                                        Icon(
-                                          Icons.payments_rounded,
-                                          size: 25,
-                                        )
-                                      else if (transactions[index]["type"] ==
-                                          "income")
-                                        Icon(
-                                          Icons.file_download_rounded,
-                                          size: 25,
-                                        )
-                                    ],
+                                  child: Icon(
+                                    getCategoryIcon(
+                                      transactions[index]
+                                              .data()
+                                              .containsKey("category")
+                                          ? transactions[index]["category"]
+                                          : null,
+                                      defaultIcon: transactions[index]
+                                                  ["type"] ==
+                                              "expense"
+                                          ? Icons.payments_rounded
+                                          : Icons.file_download_rounded,
+                                    ),
+                                    size: 25,
                                   ),
                                 ),
                                 Expanded(
