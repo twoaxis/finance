@@ -43,19 +43,20 @@ jobs:
         run: flutter pub get
         working-directory: mobile
 
-      - name: Decode Keystore
-        run: |
-          echo "${{ secrets.KEYSTORE }}" | base64 --decode > mobile/android/app/keystore.jks
+      # Disabled because PRs from forks can't read it. This will be used in CD pipeline later.
+      # - name: Decode Keystore
+      #   run: |
+      #     echo "${{ secrets.KEYSTORE }}" | base64 --decode > mobile/android/app/keystore.jks
 
-      - name: Create key.properties
-        run: |
-          echo "storeFile=keystore.jks" > mobile/android/key.properties
-          echo "storePassword=${{ secrets.KEYSTORE_PASSWORD }}" >> mobile/android/key.properties
-          echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> mobile/android/key.properties
-          echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> mobile/android/key.properties
+      # - name: Create key.properties
+      #   run: |
+      #     echo "storeFile=keystore.jks" > mobile/android/key.properties
+      #     echo "storePassword=${{ secrets.KEYSTORE_PASSWORD }}" >> mobile/android/key.properties
+      #     echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> mobile/android/key.properties
+      #     echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> mobile/android/key.properties
 
       - name: Build APK
-        run: flutter build apk --release
+        run: flutter build apk --debug
         working-directory: mobile
 
   build-aab:
@@ -76,17 +77,18 @@ jobs:
         run: flutter pub get
         working-directory: mobile
 
-      - name: Decode Keystore
-        run: |
-          echo "${{ secrets.KEYSTORE }}" | base64 --decode > mobile/android/app/keystore.jks
+      # Disabled because PRs from forks can't read it. This will be used in CD pipeline later.
+      # - name: Decode Keystore
+      #   run: |
+      #     echo "${{ secrets.KEYSTORE }}" | base64 --decode > mobile/android/app/keystore.jks
 
-      - name: Create key.properties
-        run: |
-          echo "storeFile=keystore.jks" > mobile/android/key.properties
-          echo "storePassword=${{ secrets.KEYSTORE_PASSWORD }}" >> mobile/android/key.properties
-          echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> mobile/android/key.properties
-          echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> mobile/android/key.properties
+      # - name: Create key.properties
+      #   run: |
+      #     echo "storeFile=keystore.jks" > mobile/android/key.properties
+      #     echo "storePassword=${{ secrets.KEYSTORE_PASSWORD }}" >> mobile/android/key.properties
+      #     echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> mobile/android/key.properties
+      #     echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> mobile/android/key.properties
 
       - name: Build App Bundle
-        run: flutter build appbundle
+        run: flutter build appbundle --debug
         working-directory: mobile
