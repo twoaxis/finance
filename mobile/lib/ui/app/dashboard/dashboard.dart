@@ -8,7 +8,7 @@ import 'package:financial_planner_mobile/ui/app/quick_add/quick_add_expense.dart
 import 'package:financial_planner_mobile/ui/app/quick_add/quick_add_income.dart';
 import 'package:financial_planner_mobile/ui/app/transactions/transactions.dart';
 import 'package:financial_planner_mobile/util/theme.dart';
-import 'package:financial_planner_mobile/values/categories.dart';
+import 'package:financial_planner_mobile/util/get_category_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';

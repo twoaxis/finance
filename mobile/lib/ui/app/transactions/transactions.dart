@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:financial_planner_mobile/cubit/transactions_cubit.dart';
-import 'package:financial_planner_mobile/values/categories.dart';
+import 'package:financial_planner_mobile/util/get_category_icon.dart';
 import 'package:financial_planner_mobile/values/spaces.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
