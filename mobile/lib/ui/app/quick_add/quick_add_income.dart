@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:financial_planner_mobile/ui/common/themed_input_field.dart';
 import 'package:financial_planner_mobile/util/theme.dart';
+import 'package:financial_planner_mobile/values/categories.dart';
 import 'package:financial_planner_mobile/values/spaces.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -23,12 +24,14 @@ class _QuickAddIncomeState extends State<QuickAddIncome> {
   TextEditingController dateController = TextEditingController();
   int balanceIndex = -1;
   DateTime dateTime = DateTime.now();
+  String? selectedCategory;
 
   @override
   void initState() {
     super.initState();
 
-    String date = "${dateTime.day.toString().padLeft(2, '0')}/${dateTime.month.toString().padLeft(2, '0')}/${dateTime.year}";
+    String date =
+        "${dateTime.day.toString().padLeft(2, '0')}/${dateTime.month.toString().padLeft(2, '0')}/${dateTime.year}";
 
     int hour = dateTime.hour;
     int minute = dateTime.minute;
@@ -37,7 +40,8 @@ class _QuickAddIncomeState extends State<QuickAddIncome> {
     hour = hour % 12;
     if (hour == 0) hour = 12;
 
-    String time = "${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')} $period";
+    String time =
+        "${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')} $period";
 
     setState(() {
       dateController.text = "$date $time";
@@ -69,10 +73,12 @@ class _QuickAddIncomeState extends State<QuickAddIncome> {
       pickedTime.minute,
     );
 
-    String formattedDate = "${fullDateTime.day.toString().padLeft(2, '0')}/${fullDateTime.month.toString().padLeft(2, '0')}/${fullDateTime.year}";
+    String formattedDate =
+        "${fullDateTime.day.toString().padLeft(2, '0')}/${fullDateTime.month.toString().padLeft(2, '0')}/${fullDateTime.year}";
     int hour = pickedTime.hourOfPeriod == 0 ? 12 : pickedTime.hourOfPeriod;
     String period = pickedTime.period == DayPeriod.am ? "AM" : "PM";
-    String formattedTime = "${hour.toString().padLeft(2, '0')}:${pickedTime.minute.toString().padLeft(2, '0')} $period";
+    String formattedTime =
+        "${hour.toString().padLeft(2, '0')}:${pickedTime.minute.toString().padLeft(2, '0')} $period";
 
     setState(() {
       dateTime = fullDateTime;
@@ -131,6 +137,74 @@ class _QuickAddIncomeState extends State<QuickAddIncome> {
                             ],
                           ),
                           SizedBox(height: 40),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Category:",
+                                style: TextStyle(color: Colors.grey),
+                              ),
+                              SizedBox(height: 10),
+                              SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Row(
+                                  spacing: 8,
+                                  children:
+                                      incomeCategoryIcons.keys.map((category) {
+                                    var isSelected =
+                                        selectedCategory == category;
+                                    return GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          selectedCategory = category;
+                                        });
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 16, vertical: 10),
+                                        decoration: BoxDecoration(
+                                          color: isSelected
+                                              ? darkTheme.primary
+                                              : darkTheme.surfaceContainer,
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          border: isSelected
+                                              ? null
+                                              : Border.all(
+                                                  color: Colors.grey.shade700),
+                                        ),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          spacing: 6,
+                                          children: [
+                                            Icon(
+                                              incomeCategoryIcons[category],
+                                              size: 18,
+                                              color: isSelected
+                                                  ? Colors.black
+                                                  : Colors.white,
+                                            ),
+                                            Text(
+                                              category,
+                                              style: TextStyle(
+                                                color: isSelected
+                                                    ? Colors.black
+                                                    : Colors.white,
+                                                fontWeight: isSelected
+                                                    ? FontWeight.bold
+                                                    : FontWeight.normal,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  }).toList(),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 20),
                           ThemedInputField(
                             label: "Name",
                             controller: nameController,
@@ -276,6 +350,7 @@ class _QuickAddIncomeState extends State<QuickAddIncome> {
                             "name": nameController.text,
                             "value": double.parse(valueController.text),
                             "date": dateTime,
+                            "category": selectedCategory,
                             "source": balanceIndex != -1
                                 ? balances[balanceIndex]["name"]
                                 : null
