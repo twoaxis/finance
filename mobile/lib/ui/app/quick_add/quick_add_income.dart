@@ -24,7 +24,7 @@ class _QuickAddIncomeState extends State<QuickAddIncome> {
   TextEditingController dateController = TextEditingController();
   int balanceIndex = -1;
   DateTime dateTime = DateTime.now();
-  Category? selectedCategory;
+  String? selectedCategory;
 
   @override
   void initState() {
@@ -149,7 +149,8 @@ class _QuickAddIncomeState extends State<QuickAddIncome> {
                                 scrollDirection: Axis.horizontal,
                                 child: Row(
                                   spacing: 8,
-                                  children: incomeCategories.map((category) {
+                                  children:
+                                      incomeCategoryIcons.keys.map((category) {
                                     var isSelected =
                                         selectedCategory == category;
                                     return GestureDetector(
@@ -177,14 +178,14 @@ class _QuickAddIncomeState extends State<QuickAddIncome> {
                                           spacing: 6,
                                           children: [
                                             Icon(
-                                              category.icon,
+                                              incomeCategoryIcons[category],
                                               size: 18,
                                               color: isSelected
                                                   ? Colors.black
                                                   : Colors.white,
                                             ),
                                             Text(
-                                              category.name,
+                                              category,
                                               style: TextStyle(
                                                 color: isSelected
                                                     ? Colors.black
@@ -349,7 +350,7 @@ class _QuickAddIncomeState extends State<QuickAddIncome> {
                             "name": nameController.text,
                             "value": double.parse(valueController.text),
                             "date": dateTime,
-                            "category": selectedCategory?.name,
+                            "category": selectedCategory,
                             "source": balanceIndex != -1
                                 ? balances[balanceIndex]["name"]
                                 : null

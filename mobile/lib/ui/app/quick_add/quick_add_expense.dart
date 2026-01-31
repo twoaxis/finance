@@ -26,7 +26,7 @@ class _QuickAddExpenseState extends State<QuickAddExpense> {
   int balanceIndex = -1;
   DateTime dateTime = DateTime.now();
   bool addToBudget = true;
-  Category? selectedCategory;
+  String? selectedCategory;
 
   @override
   void initState() {
@@ -152,7 +152,8 @@ class _QuickAddExpenseState extends State<QuickAddExpense> {
                                 scrollDirection: Axis.horizontal,
                                 child: Row(
                                   spacing: 8,
-                                  children: expenseCategories.map((category) {
+                                  children:
+                                      expenseCategoryIcons.keys.map((category) {
                                     var isSelected =
                                         selectedCategory == category;
                                     return GestureDetector(
@@ -180,14 +181,14 @@ class _QuickAddExpenseState extends State<QuickAddExpense> {
                                           spacing: 6,
                                           children: [
                                             Icon(
-                                              category.icon,
+                                              expenseCategoryIcons[category],
                                               size: 18,
                                               color: isSelected
                                                   ? Colors.black
                                                   : Colors.white,
                                             ),
                                             Text(
-                                              category.name,
+                                              category,
                                               style: TextStyle(
                                                 color: isSelected
                                                     ? Colors.black
@@ -404,7 +405,7 @@ class _QuickAddExpenseState extends State<QuickAddExpense> {
                             "name": nameController.text,
                             "value": double.parse(valueController.text),
                             "date": dateTime,
-                            "category": selectedCategory?.name,
+                            "category": selectedCategory,
                             "source": balanceIndex != -1
                                 ? balances[balanceIndex]["name"]
                                 : null

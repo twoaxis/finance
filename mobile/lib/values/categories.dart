@@ -1,51 +1,36 @@
 import 'package:flutter/material.dart';
 
-/// Represents a transaction category with a name and icon.
-class Category {
-  final String name;
-  final IconData icon;
+/// Const map of expense category names to icons.
+const Map<String, IconData> expenseCategoryIcons = {
+  'Transportation': Icons.directions_car,
+  'Food': Icons.restaurant,
+  'Entertainment': Icons.movie,
+  'Bills': Icons.receipt_long,
+  'Shopping': Icons.shopping_bag,
+  'Health': Icons.medical_services,
+  'Education': Icons.school,
+  'Housing': Icons.home,
+  'Travel': Icons.flight,
+  'Other': Icons.more_horiz,
+};
 
-  const Category({
-    required this.name,
-    required this.icon,
-  });
-}
-
-/// Predefined expense categories
-const List<Category> expenseCategories = [
-  Category(name: 'Transportation', icon: Icons.directions_car),
-  Category(name: 'Food', icon: Icons.restaurant),
-  Category(name: 'Entertainment', icon: Icons.movie),
-  Category(name: 'Bills', icon: Icons.receipt_long),
-  Category(name: 'Shopping', icon: Icons.shopping_bag),
-  Category(name: 'Health', icon: Icons.medical_services),
-  Category(name: 'Education', icon: Icons.school),
-  Category(name: 'Housing', icon: Icons.home),
-  Category(name: 'Travel', icon: Icons.flight),
-  Category(name: 'Other', icon: Icons.more_horiz),
-];
-
-/// Predefined income categories
-const List<Category> incomeCategories = [
-  Category(name: 'Salary', icon: Icons.work),
-  Category(name: 'Gift', icon: Icons.card_giftcard),
-  Category(name: 'Bonus', icon: Icons.stars),
-  Category(name: 'Investment', icon: Icons.trending_up),
-  Category(name: 'Freelance', icon: Icons.laptop),
-  Category(name: 'Refund', icon: Icons.replay),
-  Category(name: 'Other', icon: Icons.more_horiz),
-];
-
-/// Map of category names to their icons for quick lookup
-final Map<String, IconData> _categoryIconMap = {
-  for (final category in [...expenseCategories, ...incomeCategories])
-    category.name: category.icon,
+/// Const map of income category names to icons.
+const Map<String, IconData> incomeCategoryIcons = {
+  'Salary': Icons.work,
+  'Gift': Icons.card_giftcard,
+  'Bonus': Icons.stars,
+  'Investment': Icons.trending_up,
+  'Freelance': Icons.laptop,
+  'Refund': Icons.replay,
+  'Other': Icons.more_horiz,
 };
 
 /// Gets the icon for a category by name.
-/// Returns default icon if the category name is null or not found.
+/// Returns [defaultIcon] if the category name is null or not found.
 IconData getCategoryIcon(String? categoryName,
     {IconData defaultIcon = Icons.category}) {
   if (categoryName == null) return defaultIcon;
-  return _categoryIconMap[categoryName] ?? defaultIcon;
+  return expenseCategoryIcons[categoryName] ??
+      incomeCategoryIcons[categoryName] ??
+      defaultIcon;
 }
