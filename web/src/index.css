@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #a72222;
+  --color-secondary: #5e1919;
+  --color-surface: #141414;
+  --color-surface-container: #1e1e1e;
+  --color-surface-bright: #282828;
+  --color-on-surface-variant: #646464;
+  --color-outline: #646464;
+}
+
+body {
+  @apply bg-surface text-white font-sans;
+  margin: 0;
+  min-height: 100vh;
+}
