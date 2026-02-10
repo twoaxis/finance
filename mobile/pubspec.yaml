@@ -23,6 +23,8 @@ dependencies:
   lottie: ^3.3.1
   google_sign_in: ^6.3.0
   flutter_native_splash: ^2.4.7
+  equatable: ^2.0.8
+  rxdart: ^0.28.0
 
 dev_dependencies:
   flutter_test:
