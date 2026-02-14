@@ -154,7 +154,7 @@ class _LiabilityPaymentState extends State<LiabilityPayment> {
                 PrimaryButton(
                   text: "Pay liability",
                   enabled: !pending,
-                  onPressed: () async {
+                  onPressed: () {
                     setState(() {
                       pending = true;
                     });
@@ -232,7 +232,7 @@ class _LiabilityPaymentState extends State<LiabilityPayment> {
 
                     } on Exception {
                       if (context.mounted) {
-                        return showDialog(
+                        showDialog(
                           context: context,
                           builder: (context) {
                             return AlertDialog(

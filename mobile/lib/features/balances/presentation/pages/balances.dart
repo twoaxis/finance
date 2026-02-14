@@ -144,7 +144,7 @@ class _BalancesPageState extends State<BalancesPage> {
                                               TextButton(
                                                 onPressed: pending
                                                     ? null
-                                                    : () async {
+                                                    : () {
                                                         setState(() {
                                                           errorPayment = "";
                                                           pending = true;

@@ -330,7 +330,7 @@ class _QuickAddExpenseState extends State<QuickAddExpense> {
                 PrimaryButton(
                   text: "Add expense",
                   enabled: !pending,
-                  onPressed: () async {
+                  onPressed: () {
                     setState(() {
                       pending = true;
                     });
@@ -414,7 +414,7 @@ class _QuickAddExpenseState extends State<QuickAddExpense> {
                       }
                     } on Exception {
                       if (context.mounted) {
-                        return showDialog(
+                        showDialog(
                           context: context,
                           builder: (context) {
                             return AlertDialog(

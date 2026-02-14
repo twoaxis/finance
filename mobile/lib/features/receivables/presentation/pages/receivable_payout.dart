@@ -154,7 +154,7 @@ class _ReceivablePayState extends State<ReceivablePay> {
                 PrimaryButton(
                   text: "Pay receivable",
                   enabled: !pending,
-                  onPressed: () async {
+                  onPressed: () {
                     setState(() {
                       pending = true;
                     });
@@ -239,7 +239,7 @@ class _ReceivablePayState extends State<ReceivablePay> {
                       }
                     } on Exception {
                       if (context.mounted) {
-                        return showDialog(
+                        showDialog(
                           context: context,
                           builder: (context) {
                             return AlertDialog(

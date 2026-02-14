@@ -169,7 +169,7 @@ class _BillPaymentState extends State<BillPayment> {
                 PrimaryButton(
                   text: "Pay bill",
                   enabled: !pending,
-                  onPressed: () async {
+                  onPressed: () {
                     setState(() {
                       pending = true;
                     });
@@ -206,7 +206,7 @@ class _BillPaymentState extends State<BillPayment> {
 
                     } on Exception {
                       if (context.mounted) {
-                        return showDialog(
+                        showDialog(
                           context: context,
                           builder: (context) {
                             return AlertDialog(

@@ -130,7 +130,7 @@ class _IncomePayoutState extends State<IncomePayout> {
                 PrimaryButton(
                   text: "Payout Income Source",
                   enabled: !pending && balanceIndex != -1,
-                  onPressed: () async {
+                  onPressed: () {
                     setState(() {
                       pending = true;
                     });
@@ -156,7 +156,7 @@ class _IncomePayoutState extends State<IncomePayout> {
                       }
                     } on Exception {
                       if (context.mounted) {
-                        return showDialog(
+                        showDialog(
                           context: context,
                           builder: (context) {
                             return AlertDialog(
