@@ -18,8 +18,8 @@ class DashboardButton extends StatelessWidget {
             style: ElevatedButton.styleFrom(
               backgroundColor: Theme.of(context).colorScheme.surfaceContainer,
               shape: const CircleBorder(),
-              elevation: 6, // Adjust for shadow depth
-              padding: const EdgeInsets.all(16), // Ensures circular shape
+              elevation: 6,
+              padding: const EdgeInsets.all(16),
             ),
             child: Icon(
               icon,
@@ -31,7 +31,7 @@ class DashboardButton extends StatelessWidget {
             textAlign: TextAlign.center,
             softWrap: true,
             style: TextStyle(
-              color: Theme.of(context).colorScheme.onPrimary
+              color: Theme.of(context).colorScheme.onSurface
             ),
           ),
         ],

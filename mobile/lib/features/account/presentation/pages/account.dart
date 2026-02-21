@@ -36,9 +36,13 @@ class AccountPage extends StatelessWidget {
                   decoration: BoxDecoration(
                       color: Theme.of(context).colorScheme.surfaceContainer,
                       gradient: LinearGradient(
-                        colors: [Theme.of(context).colorScheme.primary, Theme.of(context).colorScheme.secondary],
+                        colors: [
+                          Theme.of(context).colorScheme.primary,
+                          Theme.of(context).colorScheme.secondary
+                        ],
                       ),
-                      borderRadius: const BorderRadius.all(Radius.circular(10))),
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(10))),
                   child: Row(
                     spacing: 10,
                     children: [
@@ -68,12 +72,20 @@ class AccountPage extends StatelessWidget {
                             },
                             errorBuilder: (BuildContext context, Object error,
                                 StackTrace? stackTrace) {
-                              return const Icon(Icons.person, size: 60);
+                              return Icon(
+                                Icons.person,
+                                size: 60,
+                                color: Theme.of(context).colorScheme.onPrimary,
+                              );
                             },
                           ),
                         )
                       else
-                        const Icon(Icons.person, size: 60),
+                        Icon(
+                          Icons.person,
+                          size: 60,
+                          color: Theme.of(context).colorScheme.onPrimary,
+                        ),
                       Flexible(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -81,19 +93,30 @@ class AccountPage extends StatelessWidget {
                             if (user.name.isNotEmpty)
                               Text(
                                 user.name,
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 24),
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 24,
+                                  color:
+                                      Theme.of(context).colorScheme.onPrimary,
+                                ),
                               )
                             else
-                              const Text(
+                              Text(
                                 "No display name",
                                 style: TextStyle(
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 24,
-                                    fontStyle: FontStyle.italic),
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 24,
+                                  fontStyle: FontStyle.italic,
+                                  color:
+                                      Theme.of(context).colorScheme.onPrimary,
+                                ),
                               ),
-                            Text(user.email)
+                            Text(
+                              user.email,
+                              style: TextStyle(
+                                color: Theme.of(context).colorScheme.onPrimary,
+                              ),
+                            )
                           ],
                         ),
                       )
@@ -105,7 +128,7 @@ class AccountPage extends StatelessWidget {
                 ),
                 Container(
                   decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.surfaceBright,
+                    color: Theme.of(context).colorScheme.surfaceContainer,
                     borderRadius: const BorderRadius.all(Radius.circular(10)),
                   ),
                   child: Column(
@@ -172,13 +195,15 @@ class AccountPage extends StatelessWidget {
                       ),
                       Container(
                         width: double.infinity,
-                        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 15, vertical: 5),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             const Text("Dark Mode"),
                             Switch(
-                              value: context.read<ThemeCubit>().state == ThemeMode.dark,
+                              value: context.read<ThemeCubit>().state ==
+                                  ThemeMode.dark,
                               onChanged: (val) {
                                 context.read<ThemeCubit>().toggleTheme(val);
                               },
@@ -200,7 +225,7 @@ class AccountPage extends StatelessWidget {
                     width: double.infinity,
                     padding: const EdgeInsets.all(15),
                     decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.surfaceBright,
+                      color: Theme.of(context).colorScheme.surfaceContainer,
                       borderRadius: const BorderRadius.all(Radius.circular(10)),
                     ),
                     child: const Text(
@@ -218,7 +243,9 @@ class AccountPage extends StatelessWidget {
                     Text(
                       "(c) ${DateTime.now().year} TwoAxis. All Rights Reserved.",
                       textAlign: TextAlign.center,
-                      style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),
+                      style: TextStyle(
+                          color:
+                              Theme.of(context).colorScheme.onSurfaceVariant),
                     ),
                   ],
                 ),

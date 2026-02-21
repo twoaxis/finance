@@ -27,7 +27,7 @@ class Navbar extends StatelessWidget {
         showUnselectedLabels: true,
         selectedItemColor: Theme.of(context).colorScheme.primary,
         type: BottomNavigationBarType.fixed,
-        unselectedItemColor: Color(0x44FFFFFF),
+        unselectedItemColor: Theme.of(context).colorScheme.onSurfaceVariant,
         onTap: onTap,
         items: [
           BottomNavigationBarItem(
