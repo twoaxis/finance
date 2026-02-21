@@ -5,7 +5,6 @@ import 'package:twoaxis_finance/core/values/spaces.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:twoaxis_finance/app/theme.dart';
 import 'package:twoaxis_finance/core/widgets/primary_button.dart';
 import 'package:twoaxis_finance/features/user/presentation/bloc/user_cubit.dart';
 import 'package:twoaxis_finance/features/user/presentation/bloc/user_state.dart';
@@ -90,7 +89,7 @@ class _BudgetSetupState extends State<BudgetSetup> {
                               Icon(
                                 Icons.money_off_csred,
                                 size: 100,
-                                color: darkTheme.primary,
+                                color: Theme.of(context).colorScheme.primary,
                               ),
                             ],
                           ),

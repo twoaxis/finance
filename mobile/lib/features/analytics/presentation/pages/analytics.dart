@@ -8,7 +8,6 @@ import 'package:twoaxis_finance/features/user/presentation/bloc/user_state.dart'
 import 'package:twoaxis_finance/features/transactions/presentation/bloc/transactions_bloc.dart';
 import 'package:twoaxis_finance/features/transactions/domain/transaction_type.dart';
 import 'package:twoaxis_finance/core/util/money_format.dart';
-import 'package:twoaxis_finance/app/theme.dart';
 
 class AnalyticsPage extends StatelessWidget {
   const AnalyticsPage({super.key});
@@ -49,7 +48,7 @@ class AnalyticsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Analytics"),
-        backgroundColor: darkTheme.surfaceContainer,
+        backgroundColor: Theme.of(context).colorScheme.surfaceContainer,
       ),
       body: SafeArea(
         child: Padding(
@@ -86,7 +85,7 @@ class AnalyticsPage extends StatelessWidget {
                         ),
                         SizedBox(height: 20),
                         Divider(
-                          color: darkTheme.surfaceBright,
+                          color: Theme.of(context).colorScheme.surfaceBright,
                         ),
                         SizedBox(height: 20),
                         Row(
@@ -102,7 +101,7 @@ class AnalyticsPage extends StatelessWidget {
                         ),
                         SizedBox(height: 20),
                         Divider(
-                          color: darkTheme.surfaceBright,
+                          color: Theme.of(context).colorScheme.surfaceBright,
                         ),
                         SizedBox(height: 20),
                         Row(
@@ -118,7 +117,7 @@ class AnalyticsPage extends StatelessWidget {
                         ),
                         SizedBox(height: 20),
                         Divider(
-                          color: darkTheme.surfaceBright,
+                          color: Theme.of(context).colorScheme.surfaceBright,
                         ),
                         SizedBox(height: 20),
                         Row(
@@ -194,20 +193,20 @@ class AnalyticsPage extends StatelessWidget {
                                   LineChartBarData(
                                     spots: spots,
                                     gradient: LinearGradient(
-                                      colors: [darkTheme.primary, darkTheme.secondary],
+                                      colors: [Theme.of(context).colorScheme.primary, Theme.of(context).colorScheme.secondary],
                                     ),
                                     barWidth: 5,
                                     belowBarData: BarAreaData(
                                       show: true,
                                       gradient: LinearGradient(
-                                        colors: [darkTheme.primary, darkTheme.secondary]
+                                        colors: [Theme.of(context).colorScheme.primary, Theme.of(context).colorScheme.secondary]
                                             .map((color) => color.withAlpha(77))
                                             .toList(),
                                       ),
                                     ),
                                   ),
                                 ],
-                                backgroundColor: darkTheme.surfaceContainer),
+                                backgroundColor: Theme.of(context).colorScheme.surfaceContainer),
                           ),
                         );
                       },

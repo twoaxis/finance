@@ -1,7 +1,6 @@
 import 'package:twoaxis_finance/features/budget/presentation/pages/budget_setup.dart';
 import 'package:twoaxis_finance/core/widgets/primary_button.dart';
 import 'package:twoaxis_finance/core/util/money_format.dart';
-import 'package:twoaxis_finance/app/theme.dart';
 import 'package:twoaxis_finance/core/values/spaces.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,7 +17,7 @@ class BudgetPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Budget"),
-        backgroundColor: darkTheme.surfaceContainer,
+        backgroundColor: Theme.of(context).colorScheme.surfaceContainer,
       ),
       body: SafeArea(
         child: Padding(
@@ -71,7 +70,7 @@ class BudgetPage extends StatelessWidget {
                             CircularProgressIndicator(
                               value: percent > 1.0 ? 1.0 : percent,
                               strokeWidth: 100,
-                              backgroundColor: darkTheme.surfaceBright,
+                              backgroundColor: Theme.of(context).colorScheme.surfaceBright,
                               color: percent < 0.75
                                   ? Colors.green
                                   : percent < 1

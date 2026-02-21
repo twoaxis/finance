@@ -1,7 +1,6 @@
 import 'package:twoaxis_finance/core/widgets/primary_button.dart';
 import 'package:twoaxis_finance/features/auth/presentation/pages/login.dart';
 import 'package:twoaxis_finance/features/auth/presentation/pages/signup.dart';
-import 'package:twoaxis_finance/app/theme.dart';
 import 'package:twoaxis_finance/core/values/spaces.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +26,7 @@ class _OnboardingState extends State<Onboarding> {
                 .height, // Extends beyond the App Bar
             decoration: BoxDecoration(
               gradient: RadialGradient(
-                colors: [darkTheme.secondary, Colors.transparent],
+                colors: [Theme.of(context).colorScheme.secondary, Colors.transparent],
                 radius: 1,
                 center: Alignment.topCenter,
               ),
@@ -125,7 +124,7 @@ class _OnboardingState extends State<Onboarding> {
                     height: 50,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                          backgroundColor: darkTheme.surfaceContainer,
+                          backgroundColor: Theme.of(context).colorScheme.surfaceContainer,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10)),
                           shadowColor: Colors.black,
@@ -138,7 +137,7 @@ class _OnboardingState extends State<Onboarding> {
                       },
                       child: Text(
                         "Create an account",
-                        style: TextStyle(color: darkTheme.onPrimary),
+                        style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
                       ),
                     ),
                   ),

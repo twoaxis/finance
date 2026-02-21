@@ -2,7 +2,6 @@ import 'package:twoaxis_finance/features/liabilities/presentation/widgets/liabil
 import 'package:twoaxis_finance/features/liabilities/presentation/pages/liability_details.dart';
 import 'package:twoaxis_finance/features/user/presentation/bloc/user_cubit.dart';
 import 'package:twoaxis_finance/features/user/presentation/bloc/user_state.dart';
-import 'package:twoaxis_finance/app/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -21,7 +20,7 @@ class _LiabilitiesPageState extends State<LiabilitiesPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Liabilities"),
-        backgroundColor: darkTheme.surfaceContainer,
+        backgroundColor: Theme.of(context).colorScheme.surfaceContainer,
         actions: [LiabilitiesActionButton()],
       ),
       body: Column(
@@ -87,7 +86,7 @@ class _LiabilitiesPageState extends State<LiabilitiesPage> {
                             Text(
                               formatMoneyWithContext(context, item.value),
                               style: TextStyle(
-                                  color: darkTheme.surfaceTint, fontSize: 15),
+                                  color: Theme.of(context).colorScheme.surfaceTint, fontSize: 15),
                             ),
                             SizedBox(width: 10),
                             Icon(Icons.arrow_forward_ios, size: 15)
@@ -98,7 +97,7 @@ class _LiabilitiesPageState extends State<LiabilitiesPage> {
                   );
                 },
                 separatorBuilder: (BuildContext context, int index) {
-                  return Divider(color: darkTheme.surfaceContainer, height: 1);
+                  return Divider(color: Theme.of(context).colorScheme.surfaceContainer, height: 1);
                 },
               );
             }),

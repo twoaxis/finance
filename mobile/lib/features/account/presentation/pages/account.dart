@@ -1,10 +1,10 @@
 import 'package:twoaxis_finance/features/account/presentation/pages/account_currency.dart';
 import 'package:twoaxis_finance/features/account/presentation/pages/account_settings.dart';
+import 'package:twoaxis_finance/app/theme_cubit.dart';
 import 'package:twoaxis_finance/features/auth/domain/auth_repository.dart';
 import 'package:twoaxis_finance/features/user/presentation/bloc/user_cubit.dart';
 import 'package:twoaxis_finance/features/user/presentation/bloc/user_state.dart';
 import 'package:twoaxis_finance/features/info/presentation/pages/info.dart';
-import 'package:twoaxis_finance/app/theme.dart';
 import 'package:twoaxis_finance/core/values/spaces.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -34,9 +34,9 @@ class AccountPage extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(20),
                   decoration: BoxDecoration(
-                      color: darkTheme.surfaceContainer,
+                      color: Theme.of(context).colorScheme.surfaceContainer,
                       gradient: LinearGradient(
-                        colors: [darkTheme.primary, darkTheme.secondary],
+                        colors: [Theme.of(context).colorScheme.primary, Theme.of(context).colorScheme.secondary],
                       ),
                       borderRadius: const BorderRadius.all(Radius.circular(10))),
                   child: Row(
@@ -105,7 +105,7 @@ class AccountPage extends StatelessWidget {
                 ),
                 Container(
                   decoration: BoxDecoration(
-                    color: darkTheme.surfaceBright,
+                    color: Theme.of(context).colorScheme.surfaceBright,
                     borderRadius: const BorderRadius.all(Radius.circular(10)),
                   ),
                   child: Column(
@@ -126,7 +126,7 @@ class AccountPage extends StatelessWidget {
                         ),
                       ),
                       Divider(
-                        color: darkTheme.surface,
+                        color: Theme.of(context).colorScheme.surface,
                         height: 1,
                         thickness: 3,
                       ),
@@ -146,7 +146,7 @@ class AccountPage extends StatelessWidget {
                         ),
                       ),
                       Divider(
-                        color: darkTheme.surface,
+                        color: Theme.of(context).colorScheme.surface,
                         height: 1,
                         thickness: 3,
                       ),
@@ -165,6 +165,27 @@ class AccountPage extends StatelessWidget {
                           child: const Text("Currency"),
                         ),
                       ),
+                      Divider(
+                        color: Theme.of(context).colorScheme.surface,
+                        height: 1,
+                        thickness: 3,
+                      ),
+                      Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text("Dark Mode"),
+                            Switch(
+                              value: context.read<ThemeCubit>().state == ThemeMode.dark,
+                              onChanged: (val) {
+                                context.read<ThemeCubit>().toggleTheme(val);
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -179,7 +200,7 @@ class AccountPage extends StatelessWidget {
                     width: double.infinity,
                     padding: const EdgeInsets.all(15),
                     decoration: BoxDecoration(
-                      color: darkTheme.surfaceBright,
+                      color: Theme.of(context).colorScheme.surfaceBright,
                       borderRadius: const BorderRadius.all(Radius.circular(10)),
                     ),
                     child: const Text(
@@ -197,7 +218,7 @@ class AccountPage extends StatelessWidget {
                     Text(
                       "(c) ${DateTime.now().year} TwoAxis. All Rights Reserved.",
                       textAlign: TextAlign.center,
-                      style: TextStyle(color: darkTheme.onSurfaceVariant),
+                      style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),
                     ),
                   ],
                 ),

@@ -8,7 +8,6 @@ import 'package:twoaxis_finance/features/budget/presentation/pages/budget.dart';
 import 'package:twoaxis_finance/features/quick_add/presentation/pages/quick_add_expense.dart';
 import 'package:twoaxis_finance/features/quick_add/presentation/pages/quick_add_income.dart';
 import 'package:twoaxis_finance/features/transactions/presentation/pages/transactions.dart';
-import 'package:twoaxis_finance/app/theme.dart';
 import 'package:twoaxis_finance/core/util/get_category_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -38,7 +37,7 @@ class _DashboardPageState extends State<DashboardPage> {
               height: 500,
               decoration: BoxDecoration(
                 gradient: RadialGradient(
-                  colors: [darkTheme.primary, Colors.transparent],
+                  colors: [Theme.of(context).colorScheme.primary, Colors.transparent],
                   radius: 1,
                   center: Alignment.topCenter,
                 ),
@@ -69,7 +68,7 @@ class _DashboardPageState extends State<DashboardPage> {
                                   width: 120,
                                   height: 40,
                                   decoration: BoxDecoration(
-                                    color: darkTheme.surfaceContainer,
+                                    color: Theme.of(context).colorScheme.surfaceContainer,
                                     borderRadius: BorderRadius.circular(5),
                                   ),
                                 ),
@@ -260,7 +259,7 @@ class _DashboardPageState extends State<DashboardPage> {
                                   Container(
                                     padding: const EdgeInsets.all(10),
                                     decoration: BoxDecoration(
-                                        color: darkTheme.surfaceBright,
+                                        color: Theme.of(context).colorScheme.surfaceBright,
                                         borderRadius:
                                         BorderRadius.circular(10)),
                                     child: Icon(
@@ -295,7 +294,7 @@ class _DashboardPageState extends State<DashboardPage> {
                                     Text(
                                       "-${formatMoneyWithContext(context, item.amount)}",
                                       style: TextStyle(
-                                          color: darkTheme.primary,
+                                          color: Theme.of(context).colorScheme.primary,
                                           fontSize: 17,
                                           fontWeight: FontWeight.bold),
                                     )
@@ -314,7 +313,7 @@ class _DashboardPageState extends State<DashboardPage> {
                             separatorBuilder:
                                 (BuildContext context, int index) {
                               return Divider(
-                                  color: darkTheme.surfaceBright, height: 20);
+                                  color: Theme.of(context).colorScheme.surfaceBright, height: 20);
                             },
                           );
                         }

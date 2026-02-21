@@ -1,4 +1,3 @@
-import 'package:twoaxis_finance/app/theme.dart';
 import 'package:twoaxis_finance/core/values/spaces.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -86,7 +85,7 @@ class _BillPaymentState extends State<BillPayment> {
                               Icon(
                                 Icons.edit_document,
                                 size: 100,
-                                color: darkTheme.primary,
+                                color: Theme.of(context).colorScheme.primary,
                               ),
                             ],
                           ),
@@ -105,7 +104,7 @@ class _BillPaymentState extends State<BillPayment> {
                                   initialSelection: -1,
                                   inputDecorationTheme: InputDecorationTheme(
                                     filled: true,
-                                    fillColor: darkTheme.surfaceContainer,
+                                    fillColor: Theme.of(context).colorScheme.surfaceContainer,
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(10),
                                       borderSide: BorderSide.none,
@@ -152,7 +151,7 @@ class _BillPaymentState extends State<BillPayment> {
                                     width: 30,
                                     height: 30,
                                     decoration: BoxDecoration(
-                                        color: addToBudget ? darkTheme.primary : darkTheme.surfaceContainer,
+                                        color: addToBudget ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.surfaceContainer,
                                         borderRadius: BorderRadius.circular(5)
                                     ),
                                     child: addToBudget ? Icon(Icons.check) : null,

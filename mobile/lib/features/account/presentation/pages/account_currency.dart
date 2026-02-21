@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:twoaxis_finance/app/theme.dart';
 import 'package:twoaxis_finance/features/account/presentation/bloc/account_bloc.dart';
 import 'package:twoaxis_finance/features/user/presentation/bloc/user_cubit.dart';
 import 'package:twoaxis_finance/features/user/presentation/bloc/user_state.dart';
@@ -62,7 +61,7 @@ class AccountCurrency extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Select Currency'),
-        backgroundColor: darkTheme.surfaceContainer,
+        backgroundColor: Theme.of(context).colorScheme.surfaceContainer,
       ),
       body: BlocBuilder<UserCubit, UserState>(
         builder: (context, state) {
@@ -76,7 +75,7 @@ class AccountCurrency extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 8),
             itemCount: currencies.length,
             separatorBuilder: (_, __) => Divider(
-              color: darkTheme.surfaceContainer, height: 1),
+              color: Theme.of(context).colorScheme.surfaceContainer, height: 1),
             itemBuilder: (context, index) {
               var code = currencies.keys.elementAt(index);
               var name = currencies[code]!;

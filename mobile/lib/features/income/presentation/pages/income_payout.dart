@@ -1,4 +1,3 @@
-import 'package:twoaxis_finance/app/theme.dart';
 import 'package:twoaxis_finance/core/values/spaces.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -95,7 +94,7 @@ class _IncomePayoutState extends State<IncomePayout> {
                                       : "Add a balance first",
                                   inputDecorationTheme: InputDecorationTheme(
                                     filled: true,
-                                    fillColor: darkTheme.surfaceContainer,
+                                    fillColor: Theme.of(context).colorScheme.surfaceContainer,
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(10),
                                       borderSide: BorderSide.none,

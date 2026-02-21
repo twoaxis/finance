@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:twoaxis_finance/core/util/money_format.dart';
-import 'package:twoaxis_finance/app/theme.dart';
 
 class TransactionsPage extends StatelessWidget {
   const TransactionsPage({super.key});
@@ -16,7 +15,7 @@ class TransactionsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Transactions"),
-        backgroundColor: darkTheme.surfaceContainer,
+        backgroundColor: Theme.of(context).colorScheme.surfaceContainer,
       ),
       body: SafeArea(
         child: Padding(
@@ -125,7 +124,7 @@ class TransactionsPage extends StatelessWidget {
                                   Container(
                                     padding: EdgeInsets.all(10),
                                     decoration: BoxDecoration(
-                                        color: darkTheme.surfaceBright,
+                                        color: Theme.of(context).colorScheme.surfaceBright,
                                         borderRadius: BorderRadius.circular(10)),
                                     child: Icon(
                                       getCategoryIcon(
@@ -155,7 +154,7 @@ class TransactionsPage extends StatelessWidget {
                                     Text(
                                       "-${formatMoneyWithContext(context, tx.amount)}",
                                       style: TextStyle(
-                                          color: darkTheme.primary,
+                                          color: Theme.of(context).colorScheme.primary,
                                           fontSize: 17,
                                           fontWeight: FontWeight.bold),
                                     )
@@ -176,7 +175,7 @@ class TransactionsPage extends StatelessWidget {
                     );
                   },
                   separatorBuilder: (BuildContext context, int index) {
-                    return Divider(color: darkTheme.surfaceBright, height: 30);
+                    return Divider(color: Theme.of(context).colorScheme.surfaceBright, height: 30);
                   },
                 );
               }

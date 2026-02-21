@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:twoaxis_finance/app/theme.dart';
+import 'package:twoaxis_finance/app/theme_cubit.dart';
 import 'package:twoaxis_finance/features/app_shell/presentation/pages/app_shell.dart';
 import 'package:twoaxis_finance/features/auth/data/auth_repository_impl.dart';
 import 'package:twoaxis_finance/features/auth/domain/auth_repository.dart';
@@ -57,6 +58,9 @@ class _AppState extends State<App> {
       child: MultiBlocProvider(
         providers: [
           BlocProvider(
+            create: (context) => ThemeCubit(),
+          ),
+          BlocProvider(
             create: (context) => UserCubit(
               authRepository: context.read<AuthRepository>(),
             ),
@@ -107,16 +111,25 @@ class _AppState extends State<App> {
             ),
           ),
         ],
-        child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: "TwoAxis Finance",
-          themeMode: ThemeMode.dark,
-          darkTheme: ThemeData(
-            splashFactory: NoSplash.splashFactory,
-            colorScheme: darkTheme,
-            useMaterial3: true,
-          ),
-          home: const AppShell(),
+        child: BlocBuilder<ThemeCubit, ThemeMode>(
+          builder: (context, mode) {
+            return MaterialApp(
+              debugShowCheckedModeBanner: false,
+              title: "TwoAxis Finance",
+              themeMode: mode,
+              theme: ThemeData(
+                splashFactory: NoSplash.splashFactory,
+                colorScheme: appLightTheme,
+                useMaterial3: true,
+              ),
+              darkTheme: ThemeData(
+                splashFactory: NoSplash.splashFactory,
+                colorScheme: appDarkTheme,
+                useMaterial3: true,
+              ),
+              home: const AppShell(),
+            );
+          },
         ),
       ),
     );

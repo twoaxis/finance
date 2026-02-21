@@ -1,7 +1,6 @@
 import 'package:twoaxis_finance/features/bills/presentation/pages/bills.dart';
 import 'package:twoaxis_finance/features/budget/presentation/widgets/budget_info.dart';
 import 'package:twoaxis_finance/features/liabilities/presentation/pages/liabilities.dart';
-import 'package:twoaxis_finance/app/theme.dart';
 import 'package:twoaxis_finance/core/values/spaces.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -46,7 +45,7 @@ class MoneyFlowPage extends StatelessWidget {
                         height: 150,
                         width: 150,
                         decoration: BoxDecoration(
-                            color: darkTheme.surfaceContainer,
+                            color: Theme.of(context).colorScheme.surfaceContainer,
                             borderRadius: BorderRadius.circular(10)
                         ),
                         child: Column(
@@ -54,7 +53,7 @@ class MoneyFlowPage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           spacing: 10,
                           children: [
-                            Icon(Icons.edit_document, size: 50, color: darkTheme.primary,),
+                            Icon(Icons.edit_document, size: 50, color: Theme.of(context).colorScheme.primary,),
                             const Text("Bills", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),)
                           ],
                         ),
@@ -73,7 +72,7 @@ class MoneyFlowPage extends StatelessWidget {
                         height: 150,
                         width: 150,
                         decoration: BoxDecoration(
-                            color: darkTheme.surfaceContainer,
+                            color: Theme.of(context).colorScheme.surfaceContainer,
                             borderRadius: BorderRadius.circular(10)
                         ),
                         child: Column(
@@ -81,7 +80,7 @@ class MoneyFlowPage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           spacing: 10,
                           children: [
-                            Icon(Icons.card_travel, size: 50, color: darkTheme.primary,),
+                            Icon(Icons.card_travel, size: 50, color: Theme.of(context).colorScheme.primary,),
                             const Text("Liabilities", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),)
                           ],
                         ),
@@ -149,7 +148,7 @@ class MoneyFlowPage extends StatelessWidget {
                             CircularProgressIndicator(
                               value: percent > 1.0 ? 1.0 : percent,
                               strokeWidth: 100,
-                              backgroundColor: darkTheme.surfaceBright,
+                              backgroundColor: Theme.of(context).colorScheme.surfaceBright,
                               color: percent < 0.75
                                   ? Colors.green
                                   : percent < 1

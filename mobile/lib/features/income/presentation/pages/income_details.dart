@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:twoaxis_finance/core/util/money_format.dart';
-import 'package:twoaxis_finance/app/theme.dart';
 
 class IncomeDetails extends StatefulWidget {
   const IncomeDetails({super.key, required this.index, required this.income});
@@ -46,7 +45,7 @@ class _IncomeDetailsState extends State<IncomeDetails> {
                     Text(
                       formatMoneyWithContext(context, widget.income.value),
                       style: TextStyle(
-                        color: darkTheme.primary,
+                        color: Theme.of(context).colorScheme.primary,
                         fontSize: 20,
                       ),
                     ),

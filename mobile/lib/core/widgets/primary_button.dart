@@ -1,4 +1,3 @@
-import 'package:twoaxis_finance/app/theme.dart';
 import 'package:flutter/material.dart';
 
 class PrimaryButton extends StatelessWidget {
@@ -15,7 +14,7 @@ class PrimaryButton extends StatelessWidget {
       height: 50,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor: darkTheme.primary,
+          backgroundColor: Theme.of(context).colorScheme.primary,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),
@@ -27,7 +26,7 @@ class PrimaryButton extends StatelessWidget {
         } : null,
         child: Text(
           text,
-          style: TextStyle(color: darkTheme.onPrimary),
+          style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
         ),
       ),
     );

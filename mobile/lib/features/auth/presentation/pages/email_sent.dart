@@ -1,4 +1,3 @@
-import 'package:twoaxis_finance/app/theme.dart';
 import 'package:twoaxis_finance/core/values/spaces.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
@@ -27,7 +26,7 @@ class EmailSent extends StatelessWidget {
                 'Email has been sent',
                 style: TextStyle(
                   fontSize: 30,
-                  color: darkTheme.onPrimary,
+                  color: Theme.of(context).colorScheme.onPrimary,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -35,7 +34,7 @@ class EmailSent extends StatelessWidget {
                 textAlign: TextAlign.center,
                 'Make sure to check your spam or junk folder.',
                 style: TextStyle(
-                  color: darkTheme.onSurfaceVariant,
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
                   fontSize: 20,
                 ),
               ),

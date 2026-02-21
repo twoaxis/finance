@@ -7,7 +7,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:twoaxis_finance/app/theme.dart';
 import 'package:twoaxis_finance/features/user/presentation/bloc/user_cubit.dart';
 import 'package:twoaxis_finance/features/user/presentation/bloc/user_state.dart';
 
@@ -59,7 +58,7 @@ class _AccountSettingsState extends State<AccountSettings> {
       child: Scaffold(
         appBar: AppBar(
           title: const Text("Account settings"),
-          backgroundColor: darkTheme.surfaceContainer,
+          backgroundColor: Theme.of(context).colorScheme.surfaceContainer,
         ),
         body: SafeArea(
           child: Padding(
