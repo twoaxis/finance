@@ -2,7 +2,6 @@ import 'package:twoaxis_finance/features/income/presentation/widgets/income_acti
 import 'package:twoaxis_finance/features/income/presentation/pages/income_details.dart';
 import 'package:twoaxis_finance/features/user/presentation/bloc/user_cubit.dart';
 import 'package:twoaxis_finance/features/user/presentation/bloc/user_state.dart';
-import 'package:twoaxis_finance/app/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -21,7 +20,7 @@ class _IncomePageState extends State<IncomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Income"),
-        backgroundColor: darkTheme.surfaceContainer,
+        backgroundColor: Theme.of(context).colorScheme.surfaceContainer,
         actions: [IncomeActionButton()],
       ),
       body: Column(
@@ -88,7 +87,7 @@ class _IncomePageState extends State<IncomePage> {
                                 formatMoneyWithContext(
                                     context, item.value),
                                 style: TextStyle(
-                                  color: darkTheme.primary,
+                                  color: Theme.of(context).colorScheme.primary,
                                   fontSize: 15,
                                 ),
                               ),
@@ -102,7 +101,7 @@ class _IncomePageState extends State<IncomePage> {
                   },
                   separatorBuilder: (BuildContext context, int index) {
                     return Divider(
-                        color: darkTheme.surfaceContainer, height: 1);
+                        color: Theme.of(context).colorScheme.surfaceContainer, height: 1);
                   },
                 );
               },

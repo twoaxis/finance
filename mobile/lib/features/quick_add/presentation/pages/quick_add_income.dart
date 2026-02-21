@@ -1,5 +1,4 @@
 import 'package:twoaxis_finance/core/widgets/themed_input_field.dart';
-import 'package:twoaxis_finance/app/theme.dart';
 import 'package:twoaxis_finance/core/values/categories.dart';
 import 'package:twoaxis_finance/core/values/spaces.dart';
 import 'package:flutter/material.dart';
@@ -173,8 +172,8 @@ class _QuickAddIncomeState extends State<QuickAddIncome> {
                                             horizontal: 16, vertical: 10),
                                         decoration: BoxDecoration(
                                           color: isSelected
-                                              ? darkTheme.primary
-                                              : darkTheme.surfaceContainer,
+                                              ? Theme.of(context).colorScheme.primary
+                                              : Theme.of(context).colorScheme.surfaceContainer,
                                           borderRadius:
                                               BorderRadius.circular(20),
                                           border: isSelected
@@ -246,7 +245,7 @@ class _QuickAddIncomeState extends State<QuickAddIncome> {
                                   initialSelection: -1,
                                   inputDecorationTheme: InputDecorationTheme(
                                     filled: true,
-                                    fillColor: darkTheme.surfaceContainer,
+                                    fillColor: Theme.of(context).colorScheme.surfaceContainer,
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(10),
                                       borderSide: BorderSide.none,

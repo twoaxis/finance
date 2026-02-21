@@ -1,7 +1,6 @@
 import 'package:twoaxis_finance/features/bills/domain/entities/bill.dart';
 import 'package:twoaxis_finance/features/bills/presentation/bloc/bills_bloc.dart';
 import 'package:twoaxis_finance/core/widgets/themed_input_field.dart';
-import 'package:twoaxis_finance/app/theme.dart';
 import 'package:twoaxis_finance/core/values/spaces.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -80,7 +79,7 @@ class _BillsAddItemState extends State<BillsAddItem> {
                               Icon(
                                 Icons.edit_document,
                                 size: 100,
-                                color: darkTheme.primary,
+                                color: Theme.of(context).colorScheme.primary,
                               ),
                             ],
                           ),

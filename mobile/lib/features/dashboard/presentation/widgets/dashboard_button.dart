@@ -1,4 +1,3 @@
-import 'package:twoaxis_finance/app/theme.dart';
 import 'package:flutter/material.dart';
 
 class DashboardButton extends StatelessWidget {
@@ -17,10 +16,10 @@ class DashboardButton extends StatelessWidget {
           ElevatedButton(
             onPressed: onPressed,
             style: ElevatedButton.styleFrom(
-              backgroundColor: darkTheme.surfaceContainer,
+              backgroundColor: Theme.of(context).colorScheme.surfaceContainer,
               shape: const CircleBorder(),
-              elevation: 6, // Adjust for shadow depth
-              padding: const EdgeInsets.all(16), // Ensures circular shape
+              elevation: 6,
+              padding: const EdgeInsets.all(16),
             ),
             child: Icon(
               icon,
@@ -32,7 +31,7 @@ class DashboardButton extends StatelessWidget {
             textAlign: TextAlign.center,
             softWrap: true,
             style: TextStyle(
-              color: darkTheme.onPrimary
+              color: Theme.of(context).colorScheme.onSurface
             ),
           ),
         ],

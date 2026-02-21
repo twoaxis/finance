@@ -1,4 +1,3 @@
-import 'package:twoaxis_finance/app/theme.dart';
 import 'package:flutter/material.dart';
 
 class ThemedInputField extends StatelessWidget {
@@ -45,7 +44,7 @@ class ThemedInputField extends StatelessWidget {
           decoration: InputDecoration(
             filled: true,
             hintText: placeholder,
-            fillColor: darkTheme.surfaceContainer,
+            fillColor: Theme.of(context).colorScheme.surfaceContainer,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
               borderSide: BorderSide.none,

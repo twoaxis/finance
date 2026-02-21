@@ -1,5 +1,4 @@
 import 'package:twoaxis_finance/core/widgets/themed_input_field.dart';
-import 'package:twoaxis_finance/app/theme.dart';
 import 'package:twoaxis_finance/core/values/categories.dart';
 import 'package:twoaxis_finance/core/values/spaces.dart';
 import 'package:flutter/material.dart';
@@ -147,7 +146,7 @@ class _QuickAddExpenseState extends State<QuickAddExpense> {
                               Icon(
                                 Icons.edit_document,
                                 size: 100,
-                                color: darkTheme.primary,
+                                color: Theme.of(context).colorScheme.primary,
                               ),
                             ],
                           ),
@@ -179,8 +178,8 @@ class _QuickAddExpenseState extends State<QuickAddExpense> {
                                             horizontal: 16, vertical: 10),
                                         decoration: BoxDecoration(
                                           color: isSelected
-                                              ? darkTheme.primary
-                                              : darkTheme.surfaceContainer,
+                                              ? Theme.of(context).colorScheme.primary
+                                              : Theme.of(context).colorScheme.surfaceContainer,
                                           borderRadius:
                                               BorderRadius.circular(20),
                                           border: isSelected
@@ -252,7 +251,7 @@ class _QuickAddExpenseState extends State<QuickAddExpense> {
                                   initialSelection: -1,
                                   inputDecorationTheme: InputDecorationTheme(
                                     filled: true,
-                                    fillColor: darkTheme.surfaceContainer,
+                                    fillColor: Theme.of(context).colorScheme.surfaceContainer,
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(10),
                                       borderSide: BorderSide.none,
@@ -310,8 +309,8 @@ class _QuickAddExpenseState extends State<QuickAddExpense> {
                                     height: 30,
                                     decoration: BoxDecoration(
                                         color: addToBudget
-                                            ? darkTheme.primary
-                                            : darkTheme.surfaceContainer,
+                                            ? Theme.of(context).colorScheme.primary
+                                            : Theme.of(context).colorScheme.surfaceContainer,
                                         borderRadius:
                                             BorderRadius.circular(5)),
                                     child: addToBudget

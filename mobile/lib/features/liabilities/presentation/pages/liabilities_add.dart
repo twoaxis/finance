@@ -2,7 +2,6 @@ import 'package:twoaxis_finance/features/liabilities/domain/entities/liability.d
 import 'package:twoaxis_finance/features/liabilities/presentation/bloc/liabilities_bloc.dart';
 import 'package:twoaxis_finance/features/transactions/presentation/bloc/transactions_bloc.dart';
 import 'package:twoaxis_finance/features/transactions/domain/transaction_type.dart';
-import 'package:twoaxis_finance/app/theme.dart';
 import 'package:twoaxis_finance/core/values/spaces.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -82,7 +81,7 @@ class _LiabilitiesAddState extends State<LiabilitiesAdd> {
                               Icon(
                                 Icons.card_travel,
                                 size: 100,
-                                color: darkTheme.primary,
+                                color: Theme.of(context).colorScheme.primary,
                               ),
                             ],
                           ),

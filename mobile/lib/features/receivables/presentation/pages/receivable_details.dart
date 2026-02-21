@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:twoaxis_finance/core/util/money_format.dart';
-import 'package:twoaxis_finance/app/theme.dart';
 
 class ReceivableDetails extends StatefulWidget {
   const ReceivableDetails({super.key, required this.index, required this.receivable});
@@ -46,7 +45,7 @@ class _ReceivableDetailsState extends State<ReceivableDetails> {
                     Text(
                       formatMoneyWithContext(context, widget.receivable.value),
                       style: TextStyle(
-                        color: darkTheme.primary,
+                        color: Theme.of(context).colorScheme.primary,
                         fontSize: 20,
                       ),
                     ),

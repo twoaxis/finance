@@ -2,7 +2,6 @@ import 'package:twoaxis_finance/features/receivables/presentation/pages/receivab
 import 'package:twoaxis_finance/features/receivables/presentation/widgets/receivables_action_button.dart';
 import 'package:twoaxis_finance/features/user/presentation/bloc/user_cubit.dart';
 import 'package:twoaxis_finance/features/user/presentation/bloc/user_state.dart';
-import 'package:twoaxis_finance/app/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -21,7 +20,7 @@ class _ReceivablesPageState extends State<ReceivablesPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Receivables"),
-        backgroundColor: darkTheme.surfaceContainer,
+        backgroundColor: Theme.of(context).colorScheme.surfaceContainer,
         actions: [ReceivablesActionButton()],
       ),
       body: Column(
@@ -93,7 +92,7 @@ class _ReceivablesPageState extends State<ReceivablesPage> {
                               formatMoneyWithContext(
                                   context, item.value),
                               style: TextStyle(
-                                color: darkTheme.primary,
+                                color: Theme.of(context).colorScheme.primary,
                                 fontSize: 15,
                               ),
                             ),
@@ -106,7 +105,7 @@ class _ReceivablesPageState extends State<ReceivablesPage> {
                   );
                 },
                 separatorBuilder: (BuildContext context, int index) {
-                  return Divider(color: darkTheme.surfaceContainer, height: 1);
+                  return Divider(color: Theme.of(context).colorScheme.surfaceContainer, height: 1);
                 },
               );
             }),

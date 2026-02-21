@@ -4,7 +4,6 @@ import 'package:twoaxis_finance/core/widgets/themed_input_field.dart';
 import 'package:twoaxis_finance/features/auth/domain/auth_repository.dart';
 import 'package:twoaxis_finance/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:twoaxis_finance/features/auth/presentation/pages/forget_password.dart';
-import 'package:twoaxis_finance/app/theme.dart';
 import 'package:twoaxis_finance/core/values/spaces.dart';
 import 'package:flutter/material.dart';
 
@@ -58,7 +57,7 @@ class _LoginPageState extends State<LoginPage> {
                   height: MediaQuery.of(context).size.height,
                   decoration: BoxDecoration(
                     gradient: RadialGradient(
-                      colors: [darkTheme.secondary, Colors.transparent],
+                      colors: [Theme.of(context).colorScheme.secondary, Colors.transparent],
                       radius: 1,
                       center: Alignment.topCenter,
                     ),

@@ -25,6 +25,7 @@ dependencies:
   flutter_native_splash: ^2.4.7
   equatable: ^2.0.8
   rxdart: ^0.28.0
+  shared_preferences: ^2.5.4
 
 dev_dependencies:
   flutter_test:

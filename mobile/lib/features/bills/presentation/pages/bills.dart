@@ -2,7 +2,6 @@ import 'package:twoaxis_finance/features/bills/presentation/pages/bill_details.d
 import 'package:twoaxis_finance/features/bills/presentation/widgets/bills_action_button.dart';
 import 'package:twoaxis_finance/features/user/presentation/bloc/user_cubit.dart';
 import 'package:twoaxis_finance/features/user/presentation/bloc/user_state.dart';
-import 'package:twoaxis_finance/app/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -21,7 +20,7 @@ class _BillsPageState extends State<BillsPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Bills"),
-        backgroundColor: darkTheme.surfaceContainer,
+        backgroundColor: Theme.of(context).colorScheme.surfaceContainer,
         actions: [BillsActionButton()],
       ),
       body: Column(
@@ -92,7 +91,7 @@ class _BillsPageState extends State<BillsPage> {
                               Text(
                                 formatMoneyWithContext(context, item.value),
                                 style: TextStyle(
-                                  color: darkTheme.primary,
+                                  color: Theme.of(context).colorScheme.primary,
                                   fontSize: 15,
                                 ),
                               ),
@@ -106,7 +105,7 @@ class _BillsPageState extends State<BillsPage> {
                   },
                   separatorBuilder: (BuildContext context, int index) {
                     return Divider(
-                        color: darkTheme.surfaceContainer, height: 1);
+                        color: Theme.of(context).colorScheme.surfaceContainer, height: 1);
                   },
                 );
               },

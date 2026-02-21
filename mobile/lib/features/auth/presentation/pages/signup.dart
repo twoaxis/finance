@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:twoaxis_finance/core/widgets/primary_button.dart';
-import 'package:twoaxis_finance/app/theme.dart';
 import 'package:twoaxis_finance/core/values/spaces.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +31,7 @@ class _SignupPageState extends State<SignupPage> {
                 .height, // Extends beyond the App Bar
             decoration: BoxDecoration(
               gradient: RadialGradient(
-                colors: [darkTheme.secondary, Colors.transparent],
+                colors: [Theme.of(context).colorScheme.secondary, Colors.transparent],
                 radius: 1,
                 center: Alignment.topCenter,
               ),
