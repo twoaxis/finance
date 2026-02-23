@@ -1,4 +1,4 @@
-name: Flutter
+name: Build & Analyze the app on PR
 
 on: ["pull_request"]
 
@@ -42,19 +42,7 @@ jobs:
       - name: Install Dependencies
         run: flutter pub get
         working-directory: mobile
-
-      # Disabled because PRs from forks can't read it. This will be used in CD pipeline later.
-      # - name: Decode Keystore
-      #   run: |
-      #     echo "${{ secrets.KEYSTORE }}" | base64 --decode > mobile/android/app/keystore.jks
-
-      # - name: Create key.properties
-      #   run: |
-      #     echo "storeFile=keystore.jks" > mobile/android/key.properties
-      #     echo "storePassword=${{ secrets.KEYSTORE_PASSWORD }}" >> mobile/android/key.properties
-      #     echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> mobile/android/key.properties
-      #     echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> mobile/android/key.properties
-
+        
       - name: Build APK
         run: flutter build apk --debug
         working-directory: mobile
@@ -76,18 +64,6 @@ jobs:
       - name: Install Dependencies
         run: flutter pub get
         working-directory: mobile
-
-      # Disabled because PRs from forks can't read it. This will be used in CD pipeline later.
-      # - name: Decode Keystore
-      #   run: |
-      #     echo "${{ secrets.KEYSTORE }}" | base64 --decode > mobile/android/app/keystore.jks
-
-      # - name: Create key.properties
-      #   run: |
-      #     echo "storeFile=keystore.jks" > mobile/android/key.properties
-      #     echo "storePassword=${{ secrets.KEYSTORE_PASSWORD }}" >> mobile/android/key.properties
-      #     echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> mobile/android/key.properties
-      #     echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> mobile/android/key.properties
 
       - name: Build App Bundle
         run: flutter build appbundle --debug

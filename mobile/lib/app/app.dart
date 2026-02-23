@@ -21,6 +21,7 @@ import 'package:twoaxis_finance/features/income/presentation/bloc/income_bloc.da
 import 'package:twoaxis_finance/features/liabilities/presentation/bloc/liabilities_bloc.dart';
 import 'package:twoaxis_finance/features/receivables/presentation/bloc/receivables_bloc.dart';
 import 'package:twoaxis_finance/features/transactions/presentation/bloc/transactions_bloc.dart';
+import 'package:twoaxis_finance/features/version/presentation/cubit/version_cubit.dart';
 
 class App extends StatefulWidget {
   const App({super.key});
@@ -38,9 +39,8 @@ class _AppState extends State<App> {
       providers: [
         RepositoryProvider<AuthRepository>(
           create: (context) => AuthRepositoryImpl(
-            firebaseAuth: FirebaseAuth.instance,
-            firestore: FirebaseFirestore.instance
-          ),
+              firebaseAuth: FirebaseAuth.instance,
+              firestore: FirebaseFirestore.instance),
         ),
         RepositoryProvider<UserRepository>(
           create: (context) => UserRepositoryImpl(
@@ -59,6 +59,9 @@ class _AppState extends State<App> {
         providers: [
           BlocProvider(
             create: (context) => ThemeCubit(),
+          ),
+          BlocProvider(
+            create: (context) => VersionCubit(),
           ),
           BlocProvider(
             create: (context) => UserCubit(
