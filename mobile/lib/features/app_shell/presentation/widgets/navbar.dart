@@ -36,11 +36,11 @@ class Navbar extends StatelessWidget {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.attach_money),
-            label: "Wallet",
+            label: "Money Flow",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.account_balance_wallet),
-            label: "Money Flow",
+            label: "Wallet",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
