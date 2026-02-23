@@ -1,0 +1,47 @@
+name: Build & Release the app on Google Play
+
+on: 
+  push:
+    tags: 
+      - "v*"
+
+jobs:
+  build_and_release:
+    name: Build & Release
+    runs-on: ubuntu-latest
+    environment: 
+      name: Google Play
+      url: https://play.google.com/store/apps/details?id=org.twoaxis.finance
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 3.38.5
+          channel: stable
+
+      - name: Decode Keystore
+        run: |
+          echo "${{ secrets.KEYSTORE }}" | base64 --decode > mobile/android/app/keystore.jks
+
+      - name: Create key.properties
+        run: |
+          echo "storeFile=keystore.jks" > mobile/android/key.properties
+          echo "storePassword=${{ secrets.KEYSTORE_PASSWORD }}" >> mobile/android/key.properties
+          echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> mobile/android/key.properties
+          echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> mobile/android/key.properties
+
+      - name: Build Appbundle
+        run: flutter build appbundle --release --build-name=${GITHUB_REF_NAME#v} --build-number=${{ github.run_number }}
+        working-directory: mobile
+
+      - name: Deploy to Play Store
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT }}
+          packageName: org.twoaxis.finance
+          releaseFiles: mobile/build/app/outputs/bundle/release/app-release.aab
+          track: production
+          status: draft
