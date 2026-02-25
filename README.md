@@ -1,6 +1,10 @@
+
 # TwoAxis Finance
 
 [![Website](https://img.shields.io/badge/Website-finance.twoaxis.org-blue)](https://finance.twoaxis.org)
+
+<img width="2752" height="1536" alt="TwoAxis Finance" src="https://github.com/user-attachments/assets/8b08efb3-b801-44bd-bff3-b2ae23e1b943" />
+
 
 TwoAxis Finance is a mobile app designed to help individuals and businesses manage their income, expenses, assets, liabilities, and debts efficiently.
 
