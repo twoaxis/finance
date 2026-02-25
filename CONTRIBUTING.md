@@ -14,6 +14,14 @@ In order to contribute, you must use the Firebase Emulator Suite.
 
 Note: The mobile client connects to the Firebase Emulators in debug mode only (`kDebugMode`). You may change this in `lib/main.dart`, but do not commit your changes.
 
+## Running the web app
+- Open the `web/` directory in any IDE you'd like.
+- Run `npm install` to install all the dependencies.
+- Run `npm run dev` to run the app locally.
+
+Note: The web client connects to the Firebase Emulators in `localhost`. You may change this in `lib/firebase/firebase.ts`, but do not commit your changes. If you'd like to connect to the real Firebase project, use `https://127.0.0.1:3000` instead.
+
+
 ## Pull Requests
 Your pull requests will be reviewed throughly, please submit many small pull requests rather than one big one. 
 Make sure to assign proper labels to your pull request as it will impact the review.
