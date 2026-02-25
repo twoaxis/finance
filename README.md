@@ -2,6 +2,8 @@
 # TwoAxis Finance
 
 [![Website](https://img.shields.io/badge/Website-finance.twoaxis.org-blue)](https://finance.twoaxis.org)
+![Build](https://img.shields.io/github/actions/workflow/status/twoaxis/finance/mobile-pull-request.yaml)
+
 
 <img width="2752" height="1536" alt="TwoAxis Finance" src="https://github.com/user-attachments/assets/8b08efb3-b801-44bd-bff3-b2ae23e1b943" />
 
