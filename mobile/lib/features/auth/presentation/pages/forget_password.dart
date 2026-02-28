@@ -1,8 +1,11 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:twoaxis_finance/app/theme_cubit.dart';
 import 'package:twoaxis_finance/core/widgets/primary_button.dart';
 import 'package:twoaxis_finance/core/widgets/themed_input_field.dart';
+import 'package:twoaxis_finance/features/auth/domain/auth_repository.dart';
+import 'package:twoaxis_finance/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:twoaxis_finance/features/auth/presentation/pages/email_sent.dart';
 import 'package:twoaxis_finance/core/values/spaces.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
@@ -17,144 +20,146 @@ class ForgetPassword extends StatefulWidget {
 
 class _ForgetPasswordState extends State<ForgetPassword> {
   TextEditingController emailController = TextEditingController();
-  bool pending = false;
+
+  void _showErrorDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text("Error"),
+          content: Text(message),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text("Okay"),
+            )
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(),
-        body: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(fullscreenSpacing),
-            child: Column(
-              children: [
-                Expanded(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Lottie.asset("assets/animations/forgot_password.json", width: 200),
-                        Text(
-                          "Everybody forgets!",
-                          style: TextStyle(
-                              fontSize: 30, fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          "We'll help you get right back.",
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.normal),
-                        ),
-                        SizedBox(height: 40,),
-                        ThemedInputField(
-                          label: "E-mail",
-                          controller: emailController,
-                          placeholder: "john@hotmail.com",
-                          enabled: !pending,
-                          textInputAction: TextInputAction.done,
-                        ),
-                      ],
-                    ),
+    return BlocProvider(
+      create: (context) =>
+          AuthBloc(authRepository: context.read<AuthRepository>()),
+      child: BlocConsumer<AuthBloc, AuthState>(
+        listener: (context, state) {
+          if (state is AuthFailure) {
+            if (state.message == "E-mail does not exist") {
+               Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const EmailSent(),
+                ),
+              );
+            } else {
+              _showErrorDialog(state.message);
+            }
+          } else if (state is AuthSuccess) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const EmailSent(),
+              ),
+            );
+          }
+        },
+        builder: (context, state) {
+          bool pending = state is AuthLoading;
+
+          return BlocBuilder<ThemeCubit, ThemeMode>(
+            builder: (context, theme) {
+              return Scaffold(
+                appBar: AppBar(
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
+                  iconTheme: IconThemeData(
+                    color: Theme.of(context).colorScheme.onSurface,
                   ),
                 ),
-                PrimaryButton(
-                  text: "Reset Password",
-                  enabled: !pending,
-                  onPressed: () async {
-                    setState(() {
-                      pending = true;
-                    });
-
-                    try {
-                      if (emailController.text.isEmpty) {
-                        showDialog(
-                          context: context,
-                          builder: (context) {
-                            return AlertDialog(
-                              title: Text("Error"),
-                              content: Text("Please enter your e-mail"),
-                              actions: [
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                  child: Text("Okay"),
-                                )
-                              ],
-                            );
-                          },
-                        );
-                      } else {
-                        await FirebaseAuth.instance.sendPasswordResetEmail(
-                          email: emailController.text,
-                        );
-
-                        if (context.mounted) {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const EmailSent(),
-                            ),
-                          );
-                        }
-                      }
-                    } on FirebaseAuthException catch(e) {
-                      if (context.mounted && e.code == "user-not-found") {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const EmailSent(),
+                body: Stack(
+                  children: [
+                    if (theme == ThemeMode.dark)
+                      Container(
+                        height: MediaQuery.of(context).size.height,
+                        decoration: BoxDecoration(
+                          gradient: RadialGradient(
+                            colors: [
+                              Theme.of(context).colorScheme.secondary,
+                              Colors.transparent
+                            ],
+                            radius: 1,
+                            center: Alignment.topCenter,
                           ),
-                        );
-                      }
-                      else if (context.mounted) {
-                        showDialog(
-                          context: context,
-                          builder: (context) {
-                            return AlertDialog(
-                              title: Text("Error"),
-                              content: Text("An unexpected error has occurred"),
-                              actions: [
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                  child: Text("Okay"),
-                                )
-                              ],
-                            );
-                          },
-                        );
-                      }
-                    } on Exception {
-                      if (context.mounted) {
-                        showDialog(
-                          context: context,
-                          builder: (context) {
-                            return AlertDialog(
-                              title: Text("Error"),
-                              content: Text("An unexpected error has occurred"),
-                              actions: [
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                  child: Text("Okay"),
-                                )
-                              ],
-                            );
-                          },
-                        );
-                      }
-                    } finally {
-                      setState(() {
-                        pending = false;
-                      });
-                    }
-                  },
+                        ),
+                      ),
+                    SafeArea(
+                      child: Padding(
+                        padding: const EdgeInsets.all(fullscreenSpacing),
+                        child: Column(
+                          children: [
+                            Expanded(
+                              child: SingleChildScrollView(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Lottie.asset(
+                                        "assets/animations/forgot_password.json",
+                                        width: 200),
+                                    const Text(
+                                      "Everybody forgets!",
+                                      style: TextStyle(
+                                          fontSize: 30,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    const Text(
+                                      "We'll help you get right back.",
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.normal),
+                                    ),
+                                    const SizedBox(
+                                      height: 40,
+                                    ),
+                                    ThemedInputField(
+                                      label: "E-mail",
+                                      controller: emailController,
+                                      placeholder: "john@hotmail.com",
+                                      enabled: !pending,
+                                      textInputAction: TextInputAction.done,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            PrimaryButton(
+                              text: "Reset Password",
+                              enabled: !pending,
+                              onPressed: () {
+                                if (emailController.text.isEmpty) {
+                                  _showErrorDialog("Please enter your e-mail");
+                                } else {
+                                  context.read<AuthBloc>().add(
+                                        AuthPasswordResetRequested(
+                                          email: emailController.text,
+                                        ),
+                                      );
+                                }
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          ),
-        ));
+              );
+            },
+          );
+        },
+      ),
+    );
   }
 }

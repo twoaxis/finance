@@ -139,6 +139,25 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
+  Future<void> sendPasswordResetEmail({required String email}) async {
+    try {
+      await _firebaseAuth.sendPasswordResetEmail(email: email);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == "user-not-found") {
+        throw UserNotFoundFailure();
+      } else if (e.code == "invalid-email") {
+        throw InvalidEmailFailure();
+      } else {
+        throw ServerFailure();
+      }
+    } on SocketException {
+      throw ConnectionFailure();
+    } catch (_) {
+      throw ServerFailure();
+    }
+  }
+
+  @override
   Future<void> logOut() async {
     await _firebaseAuth.signOut();
   }
@@ -146,8 +165,21 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<void> signUp({required String email, required String password}) async {
     try {
-      await _firebaseAuth.createUserWithEmailAndPassword(
+      var credential = await _firebaseAuth.createUserWithEmailAndPassword(
           email: email, password: password);
+
+      if (credential.user != null) {
+        await _firestore.collection("users").doc(credential.user!.uid).set({
+          "assets": [],
+          "expenses": [],
+          "income": [],
+          "liabilities": [],
+          "fixedExpenses": [],
+          "receivables": []
+        });
+
+        await credential.user?.sendEmailVerification();
+      }
     } on FirebaseAuthException catch (e) {
       if (e.code == "email-already-in-use") {
         throw UserNotFoundFailure();

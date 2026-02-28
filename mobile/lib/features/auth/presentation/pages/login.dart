@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:twoaxis_finance/app/theme_cubit.dart';
 import 'package:twoaxis_finance/core/widgets/primary_button.dart';
 import 'package:twoaxis_finance/core/widgets/themed_input_field.dart';
 import 'package:twoaxis_finance/features/auth/domain/auth_repository.dart';
@@ -45,114 +46,118 @@ class _LoginPageState extends State<LoginPage> {
           AuthBloc(authRepository: context.read<AuthRepository>()),
       child: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
-          if(state is AuthFailure) {
+          if (state is AuthFailure) {
             _showErrorDialog(state.message);
           }
         },
         builder: (context, state) {
-          return Scaffold(
-            body: Stack(
-              children: [
-                Container(
-                  height: MediaQuery.of(context).size.height,
-                  decoration: BoxDecoration(
-                    gradient: RadialGradient(
-                      colors: [Theme.of(context).colorScheme.secondary, Colors.transparent],
-                      radius: 1,
-                      center: Alignment.topCenter,
-                    ),
-                  ),
-                ),
-                SafeArea(
-                  child: Padding(
-                    padding: const EdgeInsets.all(fullscreenSpacing),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            IconButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              icon: Icon(Icons.arrow_back),
-                              color: Colors.white,
-                            )
-                          ],
+          return BlocBuilder<ThemeCubit, ThemeMode>(
+            builder: (context, theme) {
+              return Scaffold(
+                body: Stack(
+                  children: [
+                    if(theme == ThemeMode.dark) Container(
+                      height: MediaQuery.of(context).size.height,
+                      decoration: BoxDecoration(
+                        gradient: RadialGradient(
+                          colors: [Theme.of(context).colorScheme.secondary, Colors.transparent],
+                          radius: 1,
+                          center: Alignment.topCenter,
                         ),
-                        Expanded(
-                          flex: 1,
-                          child: SingleChildScrollView(
-                            child: Column(
+                      ),
+                    ),
+                    SafeArea(
+                      child: Padding(
+                        padding: const EdgeInsets.all(fullscreenSpacing),
+                        child: Column(
+                          children: [
+                            Row(
                               children: [
-                                Image.asset("assets/images/logo.png"),
-                                Text(
-                                  "Get back to your money!",
-                                  style: TextStyle(
-                                      fontSize: 30,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                Text(
-                                  "Login to your account",
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.normal),
-                                ),
-                                SizedBox(height: 40),
-                                ThemedInputField(
-                                  label: "E-mail",
-                                  controller: emailController,
-                                  placeholder: "john@hotmail.com",
-                                  enabled: !pending,
-                                  textInputAction: TextInputAction.next,
-                                ),
-                                SizedBox(height: 20),
-                                ThemedInputField(
-                                  label: "Password",
-                                  controller: passwordController,
-                                  placeholder: "•••••••••••",
-                                  enabled: !pending,
-                                  obscureText: true,
-                                  textInputAction: TextInputAction.done,
-                                ),
-                                TextButton(
+                                IconButton(
                                   onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            const ForgetPassword(),
-                                      ),
-                                    );
+                                    Navigator.pop(context);
                                   },
-                                  child: Text("Forgot password?"),
+                                  icon: Icon(Icons.arrow_back),
+                                  color: Theme.of(context).colorScheme.onSurface,
                                 )
                               ],
                             ),
-                          ),
-                        ),
-                        PrimaryButton(
-                          text: "Login to your account",
-                          enabled: !pending,
-                          onPressed: () {
-                            if (emailController.text.isEmpty ||
-                                passwordController.text.isEmpty) {
-                              return _showErrorDialog("Please fill all fields");
-                            }
+                            Expanded(
+                              flex: 1,
+                              child: SingleChildScrollView(
+                                child: Column(
+                                  children: [
+                                    Image.asset("assets/images/logo.png"),
+                                    Text(
+                                      "Get back to your money!",
+                                      style: TextStyle(
+                                          fontSize: 30,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      "Login to your account",
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.normal),
+                                    ),
+                                    SizedBox(height: 40),
+                                    ThemedInputField(
+                                      label: "E-mail",
+                                      controller: emailController,
+                                      placeholder: "john@hotmail.com",
+                                      enabled: !pending,
+                                      textInputAction: TextInputAction.next,
+                                    ),
+                                    SizedBox(height: 20),
+                                    ThemedInputField(
+                                      label: "Password",
+                                      controller: passwordController,
+                                      placeholder: "•••••••••••",
+                                      enabled: !pending,
+                                      obscureText: true,
+                                      textInputAction: TextInputAction.done,
+                                    ),
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                            const ForgetPassword(),
+                                          ),
+                                        );
+                                      },
+                                      child: Text("Forgot password?"),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                            PrimaryButton(
+                              text: "Login to your account",
+                              enabled: !pending,
+                              onPressed: () {
+                                if (emailController.text.isEmpty ||
+                                    passwordController.text.isEmpty) {
+                                  return _showErrorDialog("Please fill all fields");
+                                }
 
-                            context.read<AuthBloc>().add(
+                                context.read<AuthBloc>().add(
                                   AuthLoginRequested(
                                     email: emailController.text,
                                     password: passwordController.text,
                                   ),
                                 );
-                          },
+                              },
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  ),
-                )
-              ],
-            ),
+                      ),
+                    )
+                  ],
+                ),
+              );
+            },
           );
         },
       ),

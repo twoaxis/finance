@@ -33,3 +33,14 @@ class AuthSignupRequested extends AuthEvent {
   List<Object> get props => [email, password];
 }
 
+class AuthPasswordResetRequested extends AuthEvent {
+  final String email;
+
+  const AuthPasswordResetRequested({
+    required this.email,
+  });
+
+  @override
+  List<Object> get props => [email];
+}
+

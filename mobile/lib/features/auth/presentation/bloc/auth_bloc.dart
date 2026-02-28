@@ -16,6 +16,24 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         super(AuthInitial()) {
     on<AuthLoginRequested>(_onLoginRequested);
     on<AuthSignupRequested>(_onSignupRequested);
+    on<AuthPasswordResetRequested>(_onPasswordResetRequested);
+  }
+
+  Future<void> _onPasswordResetRequested(
+      AuthPasswordResetRequested event, Emitter<AuthState> emit) async {
+    emit(AuthLoading());
+
+    try {
+      await _authRepository.sendPasswordResetEmail(email: event.email);
+
+      emit(AuthSuccess());
+    } on UserNotFoundFailure {
+      emit(AuthFailure("E-mail does not exist"));
+    } on InvalidEmailFailure {
+      emit(AuthFailure("Invalid E-mail"));
+    } catch (_) {
+      emit(AuthFailure("An error occurred"));
+    }
   }
 
   Future<void> _onLoginRequested(
