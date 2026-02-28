@@ -87,7 +87,7 @@ class _OnboardingState extends State<Onboarding> {
                                   .signInWithCredential(credential);
                             },
                             child: Image.asset(
-                              "assets/images/google.png",
+                              theme == ThemeMode.dark ? "assets/images/google.png" : "assets/images/google-light.png",
                               width: 70,
                             ),
                           ),
