@@ -23,15 +23,8 @@ import 'package:twoaxis_finance/features/receivables/presentation/bloc/receivabl
 import 'package:twoaxis_finance/features/transactions/presentation/bloc/transactions_bloc.dart';
 import 'package:twoaxis_finance/features/version/presentation/cubit/version_cubit.dart';
 
-class App extends StatefulWidget {
+class App extends StatelessWidget {
   const App({super.key});
-
-  @override
-  State<App> createState() => _AppState();
-}
-
-class _AppState extends State<App> {
-  bool loggedIn = false;
 
   @override
   Widget build(BuildContext context) {
