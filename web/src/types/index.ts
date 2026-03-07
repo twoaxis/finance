@@ -16,5 +16,3 @@ export interface AuthContextType {
   logout: () => Promise<void>
   clearError: () => void
 }
-
-export type AuthView = 'landing' | 'login' | 'register'

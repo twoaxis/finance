@@ -1,46 +1,64 @@
-import React from 'react'
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
-import { ThemeProvider } from 'styled-components'
-import { AuthProvider } from './context/AuthContext'
-import { ProtectedRoute, PublicRoute } from './guards/RouteGuards'
-import { AuthPage } from './pages/AuthPage'
-import { DashboardPage } from './pages/DashboardPage'
-import { GlobalStyles, theme } from './styles/theme'
+import React from 'react';
+import {
+	createBrowserRouter,
+	RouterProvider,
+	Navigate,
+} from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
+import { ProtectedRoute, PublicRoute } from './guards/RouteGuards';
+import { AuthPage } from './components/pages/AuthPage';
+import { DashboardPage } from './components/pages/DashboardPage';
+import { LandingCard } from './components/organisms/LandingCard';
+import { LoginCard } from './components/organisms/LoginCard';
+import { RegisterCard } from './components/organisms/RegisterCard';
+import { AUTH_ROUTES, AUTH_ROUTE_SEGMENTS } from './routes/authRoutes';
+
+const router = createBrowserRouter([
+	{
+		path: AUTH_ROUTES.base,
+		element: <PublicRoute />,
+		children: [
+			{
+				element: <AuthPage />,
+				children: [
+					{
+						index: true,
+						element: <LandingCard />,
+					},
+					{
+						path: AUTH_ROUTE_SEGMENTS.login,
+						element: <LoginCard />,
+					},
+					{
+						path: AUTH_ROUTE_SEGMENTS.register,
+						element: <RegisterCard />,
+					},
+				],
+			},
+		],
+	},
+	{
+		path: '/dashboard',
+		element: <ProtectedRoute />,
+		children: [
+			{
+				index: true,
+				element: <DashboardPage />,
+			},
+		],
+	},
+	{
+		path: '*',
+		element: <Navigate to={AUTH_ROUTES.base} replace />,
+	},
+]);
 
 const App: React.FC = () => {
-  return (
-    <ThemeProvider theme={theme}>
-      <GlobalStyles />
-      <BrowserRouter>
-        <AuthProvider>
-          <Routes>
-            {/* Public: redirect to dashboard if already logged in */}
-            <Route
-              path="/auth"
-              element={
-                <PublicRoute>
-                  <AuthPage />
-                </PublicRoute>
-              }
-            />
+	return (
+		<AuthProvider>
+			<RouterProvider router={router} />
+		</AuthProvider>
+	);
+};
 
-            {/* Protected: redirect to /auth if not logged in */}
-            <Route
-              path="/dashboard"
-              element={
-                <ProtectedRoute>
-                  <DashboardPage />
-                </ProtectedRoute>
-              }
-            />
-
-            {/* Default redirect */}
-            <Route path="*" element={<Navigate to="/auth" replace />} />
-          </Routes>
-        </AuthProvider>
-      </BrowserRouter>
-    </ThemeProvider>
-  )
-}
-
-export default App
+export default App;

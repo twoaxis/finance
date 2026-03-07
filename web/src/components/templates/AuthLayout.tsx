@@ -2,6 +2,8 @@ import React from 'react'
 import styled, { keyframes } from 'styled-components'
 import { Logo } from '../atoms/Logo'
 import { PrivacyNote } from '../atoms/PrivacyNote'
+import { Outlet, useLocation } from 'react-router-dom'
+import { AUTH_ROUTES, AUTH_SUBTITLES } from '../../routes/authRoutes'
 
 const fadeIn = keyframes`
   from { opacity: 0; transform: translateY(16px); }
@@ -10,7 +12,6 @@ const fadeIn = keyframes`
 
 const Page = styled.div`
   min-height: 100vh;
-  background: ${({ theme }) => theme.colors.bg};
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -62,19 +63,21 @@ const Footer = styled.div`
   min-width:360px;
 `
 
-interface AuthLayoutProps {
-  subtitle?: string
-  children: React.ReactNode
-}
+export const AuthLayout: React.FC = () => {
+  const { pathname } = useLocation()
+  const subtitle =
+    AUTH_SUBTITLES[pathname as keyof typeof AUTH_SUBTITLES] ??
+    AUTH_SUBTITLES[AUTH_ROUTES.base]
 
-export const AuthLayout: React.FC<AuthLayoutProps> = ({ subtitle, children }) => (
-  <Page>
-    <Card>
-      <Logo subtitle={subtitle} />
-      <ContentArea>{children}</ContentArea>
-      <Footer>
-        <PrivacyNote />
-      </Footer>
-    </Card>
-  </Page>
-)
+  return (
+    <Page>
+      <Card>
+        <Logo subtitle={subtitle} />
+        <ContentArea><Outlet /></ContentArea>
+        <Footer>
+          <PrivacyNote />
+        </Footer>
+      </Card>
+    </Page>
+  )
+}

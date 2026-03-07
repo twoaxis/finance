@@ -1,11 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
-import { useAuth } from '../context/AuthContext'
+import { useAuth } from '../../context/AuthContext'
 import { Button } from '../atoms/Button'
 
 const Page = styled.div`
   min-height: 100vh;
-  background: ${({ theme }) => theme.colors.bg};
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -15,14 +14,14 @@ const Page = styled.div`
 `
 
 const Title = styled.h1`
-  font-family: ${({ theme }) => theme.fonts.display};
+ 
   font-size: 3rem;
-  color: ${({ theme }) => theme.colors.white};
+
   letter-spacing: 0.04em;
 `
 
 const Subtitle = styled.p`
-  color: ${({ theme }) => theme.colors.textSub};
+
   font-size: 1rem;
 `
 
@@ -30,7 +29,7 @@ const Badge = styled.span`
   background: rgba(192, 57, 43, 0.15);
   border: 1px solid rgba(192, 57, 43, 0.3);
   color: #e57373;
-  border-radius: ${({ theme }) => theme.radii.full};
+ 
   padding: 4px 14px;
   font-size: 0.8rem;
   font-weight: 500;

@@ -20,17 +20,13 @@ const LogoImage = styled.img`
 
 
 const Title = styled.h1`
-	font-family: ${({ theme }) => theme.fonts.display};
 	font-size: 2.4rem;
 	letter-spacing: 0.04em;
-	color: ${({ theme }) => theme.colors.white};
 	line-height: 1;
 `;
 
 const Subtitle = styled.p`
 	font-size:20px;
-	color: ${({ theme }) => theme.colors.textSub};
-	font-weight: 300;
 	letter-spacing: 0.02em;
 `;
 

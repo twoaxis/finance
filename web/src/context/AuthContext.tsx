@@ -5,7 +5,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithPopup,
   signOut,
-  type FirebaseError,
+  type FirebaseError 
 } from 'firebase/auth'
 import { auth, googleProvider } from '../lib/firebase/firebase'
 import type { User, AuthContextType } from '../types'
