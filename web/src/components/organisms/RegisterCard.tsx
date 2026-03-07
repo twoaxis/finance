@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { RegisterForm } from '../molecules/RegisterForm'
+import { RegisterForm } from './RegisterForm'
 
 const Wrapper = styled.div`
   display: flex;

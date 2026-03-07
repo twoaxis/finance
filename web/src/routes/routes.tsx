@@ -1,5 +1,5 @@
 import { createBrowserRouter, Navigate } from "react-router";
-import { ProtectedRoute, PublicRoute } from "../guards/RouteGuards";
+import { ProtectedRoute } from "../guards/RouteGuards";
 
 import { AuthPage } from "../components/pages/AuthPage";
 import { DashboardPage } from "../components/pages/DashboardPage";
@@ -13,24 +13,19 @@ import { AUTH_ROUTES, AUTH_ROUTE_SEGMENTS } from "./authRoutes";
 const routes = createBrowserRouter([
   {
     path: AUTH_ROUTES.base,
-    element: <PublicRoute />,
+    element: <AuthPage />,
     children: [
       {
-        element: <AuthPage />,
-        children: [
-          {
-            index: true,
-            element: <LandingCard />,
-          },
-          {
-            path: AUTH_ROUTE_SEGMENTS.login,
-            element: <LoginCard />,
-          },
-          {
-            path: AUTH_ROUTE_SEGMENTS.register,
-            element: <RegisterCard />,
-          },
-        ],
+        index: true,
+        element: <LandingCard />,
+      },
+      {
+        path: AUTH_ROUTE_SEGMENTS.login,
+        element: <LoginCard />,
+      },
+      {
+        path: AUTH_ROUTE_SEGMENTS.register,
+        element: <RegisterCard />,
       },
     ],
   },

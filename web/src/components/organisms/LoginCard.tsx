@@ -1,10 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
-import { LoginForm } from '../molecules/LoginForm'
+import { LoginForm } from './LoginForm'
 
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 16px;
   width: 100%;
 `
 
