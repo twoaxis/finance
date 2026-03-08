@@ -1,10 +1,12 @@
-import { createBrowserRouter, RouterProvider } from "react-router";
+import { RouterProvider } from 'react-router';
+import router from './routes/routes';
+import { AuthProvider } from './context/AuthContext';
+const App: React.FC = () => {
+	return (
+		<AuthProvider>
+			<RouterProvider router={router} />;
+		</AuthProvider>
+	);
+};
 
-const router = createBrowserRouter([{path: "/", element: <div>Hello World</div>}]);
-
-
-export default function App() {
-	
-
-	return <RouterProvider router={router}></RouterProvider>;
-}
+export default App;
