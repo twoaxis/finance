@@ -10,7 +10,7 @@ const Wrapper = styled.span`
 	font-size: 0.75rem;
 	color: var(--color-primary);
 	animation: ${slideIn} 0.2s ease;
-	line-height: 0.5;
+	line-height: 0.2;
 	text-align: center;
 `;
 

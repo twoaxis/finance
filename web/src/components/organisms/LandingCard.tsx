@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { Button } from '../atoms/Button'
 import { Divider } from '../atoms/Divider'
@@ -16,22 +16,27 @@ const Actions = styled.div`
 `
 
 export const LandingCard: React.FC = () => {
-  const { loginWithGoogle, error, clearError } = useAuth()
+  const { googleLogin, error, clearError } = useAuth()
   const navigate = useNavigate()
   const [googleLoading, setGoogleLoading] = useState(false)
+  const{loading,user}=useAuth()
 
   const handleGoogle = async () => {
     try {
       setGoogleLoading(true)
       clearError()
-      await loginWithGoogle()
+      await googleLogin()
     } catch {
       // handled by context
     } finally {
       setGoogleLoading(false)
     }
   }
-
+ useEffect(() => {
+  if (user && !loading) {
+    navigate("/dashboard"); 
+  }
+}, [user, loading]);
   return (
     <Actions>
       {error && <ErrorMessage message={error} />}

@@ -14,14 +14,11 @@ const Page = styled.div`
 `
 
 const Title = styled.h1`
- 
   font-size: 3rem;
-
   letter-spacing: 0.04em;
 `
 
 const Subtitle = styled.p`
-
   font-size: 1rem;
 `
 
@@ -36,7 +33,7 @@ const Badge = styled.span`
 `
 
 export const DashboardPage: React.FC = () => {
-  const { user, logout } = useAuth()
+  const { user, signOut } = useAuth()
 
   return (
     <Page>
@@ -45,7 +42,7 @@ export const DashboardPage: React.FC = () => {
       <Subtitle>
         Welcome, {user?.email ?? 'User'}
       </Subtitle>
-      <Button variant="secondary" onClick={logout}>
+      <Button variant="secondary" onClick={signOut}>
         Sign out
       </Button>
     </Page>

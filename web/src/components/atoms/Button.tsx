@@ -38,7 +38,7 @@ const StyledButton = styled.button<StyledButtonProps>`
 			background-color: var(--color-primary);
 			color: var(--color-on-primary);
 			&:not(:disabled):hover {
-				transform: translateY(-1px);
+				transform: translateY(-0.5px);
 			}
 			box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 		`}
@@ -51,7 +51,7 @@ const StyledButton = styled.button<StyledButtonProps>`
 			box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 
 			&:not(:disabled):hover {
-				transform: translateY(-1px);
+				transform: translateY(-0.5px);
 			}
 		`}
 
@@ -63,7 +63,7 @@ const StyledButton = styled.button<StyledButtonProps>`
 			color: var(--color-on-surface);
 
 			&:not(:disabled):hover {
-				transform: translateY(-1px);
+				transform: translateY(-0.5px);
 			}
 		`}
 `;

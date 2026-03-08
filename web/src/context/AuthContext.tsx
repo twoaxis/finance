@@ -1,109 +1,97 @@
-import React, { createContext, useContext, useEffect, useState, useCallback } from 'react'
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import {
-  onAuthStateChanged,
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-  signInWithPopup,
-  signOut,
-  type FirebaseError 
-} from 'firebase/auth'
-import { auth, googleProvider } from '../lib/firebase/firebase'
-import type { User, AuthContextType } from '../types'
+	loginWithEmail,
+	registerWithEmail,
+	loginWithGoogle,
+	logout,
+} from '../lib/firebase/auth';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../lib/firebase/firebase';
+import type { User } from '../types';
 
-const AuthContext = createContext<AuthContextType | null>(null)
+const AuthContext = createContext<any>(null);
+export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
+	children,
+}) => {
+	const [user, setUser] = useState<User | null>(null);
+	const [loading, setLoading] = useState(true);
+	const [error, setError] = useState<string | null>(null);
+	useEffect(() => {
+		const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+			if (firebaseUser) {
+				setUser({
+					uid: firebaseUser.uid,
+					email: firebaseUser.email,
+					displayName: firebaseUser.displayName,
+					photoURL: firebaseUser.photoURL,
+					emailVerified: firebaseUser.emailVerified,
+				});
+			} else {
+				setUser(null);
+			}
+			setLoading(false);
+		});
 
-function mapFirebaseError(error: FirebaseError): string {
-  switch (error.code) {
-    case 'auth/user-not-found':
-    case 'auth/wrong-password':
-    case 'auth/invalid-credential':
-      return 'Invalid email or password.'
-    case 'auth/email-already-in-use':
-      return 'This email is already registered.'
-    case 'auth/weak-password':
-      return 'Password must be at least 6 characters.'
-    case 'auth/invalid-email':
-      return 'Please enter a valid email address.'
-    case 'auth/too-many-requests':
-      return 'Too many attempts. Please try again later.'
-    case 'auth/popup-closed-by-user':
-      return 'Google sign-in was cancelled.'
-    default:
-      return 'An unexpected error occurred. Please try again.'
-  }
-}
+		return () => unsubscribe();
+	}, []);
 
-export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
+	const clearError = () => setError(null);
+	const login = async (email: string, password: string) => {
+		try {
+			setError(null);
+			await loginWithEmail(email, password);
+		} catch (err: any) {
+			setError(err.message);
+		}
+	};
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
-      if (firebaseUser) {
-        setUser({
-          uid: firebaseUser.uid,
-          email: firebaseUser.email,
-          displayName: firebaseUser.displayName,
-          photoURL: firebaseUser.photoURL,
-          emailVerified: firebaseUser.emailVerified,
-        })
-      } else {
-        setUser(null)
-      }
-      setLoading(false)
-    })
+	const register = async (email: string, password: string) => {
+		try {
+			setError(null);
+			await registerWithEmail(email, password);
+		} catch (err: any) {
+			setError(err.message);
+		}
+	};
 
-    return () => unsubscribe()
-  }, [])
+	const googleLogin = async () => {
+		try {
+			setError(null);
+			await loginWithGoogle();
+		} catch (err: any) {
+			setError(err.message);
+		}
+	};
 
-  const clearError = useCallback(() => setError(null), [])
+	const signOut = async () => {
+		try {
+			setError(null);
+			await logout();
+		} catch (err: any) {
+			setError(err.message);
+		}
+	};
 
-  const loginWithEmail = useCallback(async (email: string, password: string) => {
-    try {
-      setError(null)
-      await signInWithEmailAndPassword(auth, email, password)
-    } catch (err) {
-      setError(mapFirebaseError(err as FirebaseError))
-      throw err
-    }
-  }, [])
+	return (
+		<AuthContext.Provider
+			value={{
+				user,
+				loading,
+				error,
+				clearError,
+				login,
+				register,
+				googleLogin,
+				signOut,
+				setLoading
+			}}
+		>
+			{children}
+		</AuthContext.Provider>
+	);
+};
 
-  const registerWithEmail = useCallback(async (email: string, password: string) => {
-    try {
-      setError(null)
-      await createUserWithEmailAndPassword(auth, email, password)
-    } catch (err) {
-      setError(mapFirebaseError(err as FirebaseError))
-      throw err
-    }
-  }, [])
-
-  const loginWithGoogle = useCallback(async () => {
-    try {
-      setError(null)
-      await signInWithPopup(auth, googleProvider)
-    } catch (err) {
-      setError(mapFirebaseError(err as FirebaseError))
-      throw err
-    }
-  }, [])
-
-  const logout = useCallback(async () => {
-    await signOut(auth)
-  }, [])
-
-  return (
-    <AuthContext.Provider
-      value={{ user, loading, error, loginWithEmail, registerWithEmail, loginWithGoogle, logout, clearError }}
-    >
-      {children}
-    </AuthContext.Provider>
-  )
-}
-
-export const useAuth = (): AuthContextType => {
-  const ctx = useContext(AuthContext)
-  if (!ctx) throw new Error('useAuth must be used inside AuthProvider')
-  return ctx
-}
+export const useAuth = (): any => {
+	const ctx = useContext(AuthContext);
+	return ctx;
+};

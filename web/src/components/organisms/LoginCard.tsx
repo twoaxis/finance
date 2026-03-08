@@ -11,6 +11,6 @@ const Wrapper = styled.div`
 
 export const LoginCard: React.FC = () => (
   <Wrapper>
-    <LoginForm />
+    <LoginForm/>
   </Wrapper>
 )

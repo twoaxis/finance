@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 import styled from 'styled-components';
 
 const Text = styled.p`
@@ -17,8 +18,8 @@ const Text = styled.p`
 export const PrivacyNote: React.FC = () => (
 	<Text>
 		By continuing, you agree to our{' '}
-		<a href="#" target="_blank" rel="noopener noreferrer">
+		<Link to="https://finance.twoaxis.org/privacy" target="_blank" rel="noopener noreferrer">
 			Privacy Policy
-		</a>
+		</Link>
 	</Text>
 );
