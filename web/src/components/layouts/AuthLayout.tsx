@@ -34,6 +34,9 @@ const Page = styled.div`
     background: radial-gradient(circle, rgba(192, 57, 43, 0.06) 0%, transparent 70%);
     pointer-events: none;
   }
+  @media (max-width: 393px) {
+		padding-top: 57px;
+	}
 `
 
 const Card = styled.div`
@@ -44,6 +47,9 @@ const Card = styled.div`
   align-items: center;
   gap: 32px;
   animation: ${fadeIn} 0.4s ease;
+  @media (max-width: 393px) {
+		gap:16px;
+	}
 `
 
 const ContentArea = styled.div`
@@ -52,6 +58,9 @@ const ContentArea = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 12px;
+  @media (max-width: 393px) {
+		gap: 6px;
+	}
  
 `
 

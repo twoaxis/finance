@@ -1,23 +1,21 @@
 import React from 'react';
 import styled from 'styled-components';
 
-;
-
 const Wrapper = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	gap: 12px;
-	
-	
+	@media (max-width: 393px) {
+		gap: 6px;
+	}
 `;
 const LogoImage = styled.img`
- margin-bottom:30px;
-
- `;
-
-
-
+	margin-bottom: 30px;
+	@media (max-width: 393px) {
+		margin-bottom: 15px;
+	}
+`;
 
 const Title = styled.h1`
 	font-size: 2.4rem;
@@ -26,7 +24,7 @@ const Title = styled.h1`
 `;
 
 const Subtitle = styled.p`
-	font-size:20px;
+	font-size: 20px;
 	letter-spacing: 0.02em;
 `;
 
