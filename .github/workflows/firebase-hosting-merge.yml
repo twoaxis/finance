@@ -8,12 +8,30 @@ on:
       - release
     paths:
       - "website/**"
+      - "mobile/**"
       - ".github/workflows/firebase-hosting-merge.yml"
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+
+      - name: Install Dependencies
+        run: flutter pub get
+        working-directory: mobile
+
+      - name: Build Web App
+        run: flutter build web --base-href /app/
+        working-directory: mobile
+
+      - name: Copy Web App to Website
+        run: cp -r mobile/build/web website/app
+
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}

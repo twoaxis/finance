@@ -27,7 +27,7 @@ This project is open-source but currently has no license. This means:
 - You **may not** redistribute, modify, or rebrand the project without explicit permission.
 
 ## Website
-Visit [finance.twoaxis.org](https://finance.twoaxis.org) for more details about the app. Note that there is no web version of TwoAxis Finance at this time.
+Visit [finance.twoaxis.org](https://finance.twoaxis.org) for more details about the app. The web version of TwoAxis Finance is available at [finance.twoaxis.org/app](https://finance.twoaxis.org/app).
 
 ## Contact
 For inquiries, reach out at [contact@twoaxis.org](mailto:contact@twoaxis.org).
