@@ -5,8 +5,14 @@
   "targets": {
     "financial-planner-72109": {
       "hosting": {
-        "website": ["financial-planner-72109"]
+        "website": [
+          "financial-planner-72109"
+        ],
+        "web": [
+          "twoaxis-finance-web"
+        ]
       }
     }
-  }
+  },
+  "etags": {}
 }
