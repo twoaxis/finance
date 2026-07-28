@@ -24,12 +24,15 @@ nav div:nth-of-type(2) {
 }
 
 nav div:nth-of-type(2) a {
-    color: black;
     font-size: 16px;
     text-decoration: none;
+    background: #a72222;
+    color: white;
+    padding: 15px 20px;
+    border-radius: 10px;
 }
 nav div:nth-of-type(2) a + a {
-    margin-left: 45px;
+    margin-left: 20px;
 }
 header {
     text-align: center;
@@ -48,17 +51,34 @@ header a {
     width: fit-content;
 
 }
+header div { 
+    display: flex;
+    width: 400px;
+    margin: 20px auto;
+    align-items: center;
+}
+header a {
+    color: #a72222;
+    text-decoration: none;
+    font-size: 18px;
+}
+header a:hover {
+    text-decoration: underline;
+}
 header a img {
-    width: 225px;
+    width: 180px;
     cursor: pointer;
 }
 header img {
     z-index: -100;
-    width: 400px;
+    border-radius: 10px;
 }
-header img#phone-1{
+header img#screen {
+    max-width: 1000px;
+    width: 90%;
     position: relative;
     animation: fade-in 2s;
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.4);
 }
 @keyframes fade-in {
     from {
@@ -69,7 +89,7 @@ header img#phone-1{
     }
 }
 section#document {
-    margin-top: -70px;
+    margin-top: -200px;
 }
 .transition {
     width: 100%;
@@ -265,6 +285,9 @@ main ul, main ol {
         width: 90%;
     }
 
+    section#document {
+        margin-top: -100px;
+    }
     .content div:nth-of-type(1) h1 {
         font-size: 50px;
     }
@@ -279,6 +302,11 @@ main ul, main ol {
     }
 }
 @media (max-width: 800px) {
+
+    header div {
+        flex-direction: column;
+        width: 100%;
+    }
 
     header img#phone-1 {
         width: 90%;
