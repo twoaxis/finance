@@ -19,7 +19,7 @@ if (keystorePropertiesFile.exists()) {
 
 android {
     namespace = "org.twoaxis.finance"
-    compileSdk = 36
+    compileSdk = 37
     ndkVersion = "29.0.14206865"
 
     compileOptions {
@@ -37,7 +37,7 @@ android {
         applicationId = "org.twoaxis.finance"
 
         minSdk = 24
-        targetSdk = 36
+        targetSdk = 37
         versionCode = flutter.versionCode
         versionName = flutter.versionName
     }

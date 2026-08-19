@@ -61,7 +61,7 @@ Firebase project: `financial-planner-72109` (package: `org.twoaxis.finance`).
 - **State management**: `flutter_bloc` (BLoC + Cubit pattern)
 - **Firebase SDKs**: `firebase_core`, `firebase_auth`, `cloud_firestore`, `firebase_analytics`, `firebase_messaging`
 - **Key libraries**: `fl_chart`, `lottie`, `google_sign_in`, `intl`, `rxdart`, `equatable`, `shared_preferences`, `url_launcher`, `package_info_plus`
-- **Android**: minSdk 24, compileSdk/targetSdk 36, Gradle Kotlin DSL, Java 1.8
+- **Android**: minSdk 24, compileSdk/targetSdk 37, Gradle Kotlin DSL, Java 1.8
 
 ### Web (`web/`)
 - **Language**: TypeScript (`~6.0`)

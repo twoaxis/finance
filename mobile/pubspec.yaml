@@ -2,7 +2,7 @@ name: twoaxis_finance
 description: "An application to manage your finances"
 publish_to: 'none'
 
-version: 1.4.0
+version: 1.5.0+2
 
 environment:
   sdk: ^3.5.3

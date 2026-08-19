@@ -7,7 +7,7 @@ class Version extends Equatable {
   const Version({required this.version, required this.buildNumber});
 
   factory Version.empty() {
-    return Version(version: "v1.0.0", buildNumber: "1");
+    return Version(version: "v1.5.0", buildNumber: "2");
   }
 
   @override

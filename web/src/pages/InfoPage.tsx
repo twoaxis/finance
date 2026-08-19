@@ -17,7 +17,7 @@ export function InfoPage() {
           <span className="material-symbols-outlined text-gray-500 mr-4">build</span>
           <div>
             <div className="font-medium text-gray-500">Version</div>
-            <div>1.4.0</div>
+            <div>1.5.0</div>
           </div>
         </div>
         <div className="h-px bg-gray-200 dark:bg-gray-800 mx-4" />
@@ -26,7 +26,7 @@ export function InfoPage() {
           <span className="material-symbols-outlined text-gray-500 mr-4">build</span>
           <div>
             <div className="font-medium text-gray-500">Build Number</div>
-            <div>1</div>
+            <div>2</div>
           </div>
         </div>
       </div>
