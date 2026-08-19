@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { collection, query, orderBy, onSnapshot, addDoc, deleteDoc, doc } from 'firebase/firestore';
+import { useState, useEffect, useCallback } from 'react';
+import { collection, query, orderBy, onSnapshot, addDoc, deleteDoc, doc, limit } from 'firebase/firestore';
 import { db } from '../firebase';
 import { useAuth } from '../contexts/AuthContext';
 import type { Transaction } from '../types';
@@ -9,6 +9,9 @@ export function useTransactions() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  
+  const [currentLimit, setCurrentLimit] = useState(30);
+  const [hasMore, setHasMore] = useState(true);
 
   useEffect(() => {
     if (!currentUser) {
@@ -18,7 +21,7 @@ export function useTransactions() {
     }
 
     const txRef = collection(db, 'users', currentUser.uid, 'transactions');
-    const q = query(txRef, orderBy('date', 'desc'));
+    const q = query(txRef, orderBy('date', 'desc'), limit(currentLimit));
 
     const unsubscribe = onSnapshot(q, (snapshot) => {
       const txs: Transaction[] = [];
@@ -34,7 +37,9 @@ export function useTransactions() {
           source: data.source
         });
       });
+      
       setTransactions(txs);
+      setHasMore(txs.length >= currentLimit);
       setLoading(false);
     }, (err) => {
       console.error("Error fetching transactions:", err);
@@ -43,7 +48,11 @@ export function useTransactions() {
     });
 
     return () => unsubscribe();
-  }, [currentUser]);
+  }, [currentUser, currentLimit]);
+
+  const loadMore = useCallback(() => {
+    setCurrentLimit(prev => prev + 30);
+  }, []);
 
   const addTransaction = async (tx: Omit<Transaction, 'id'>) => {
     if (!currentUser) return null;
@@ -71,5 +80,5 @@ export function useTransactions() {
     }
   };
 
-  return { transactions, loading, error, addTransaction, deleteTransaction };
+  return { transactions, loading, error, addTransaction, deleteTransaction, loadMore, hasMore };
 }

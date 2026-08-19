@@ -23,7 +23,7 @@ void main() async {
 
   await notificationService.initialize();
   var token = await notificationService.getToken();
-  print("FCM Token: $token");
+  debugPrint("FCM Token: $token");
 
   runApp(const App());
 }

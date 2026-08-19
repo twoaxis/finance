@@ -1,5 +1,5 @@
 import { useUserData } from '../contexts/UserDataContext';
-import { useTransactions } from '../hooks/useTransactions';
+import { useAnalyticsTransactions } from '../hooks/useAnalyticsTransactions';
 import { formatMoney } from '../utils/moneyFormat';
 import {
   Chart as ChartJS,
@@ -26,7 +26,7 @@ ChartJS.register(
 
 export function AnalyticsPage() {
   const { userData } = useUserData();
-  const { transactions } = useTransactions();
+  const { transactions } = useAnalyticsTransactions();
 
   // Calculations
   const assetsSum = userData?.assets.reduce((sum, item) => sum + item.value, 0) || 0;

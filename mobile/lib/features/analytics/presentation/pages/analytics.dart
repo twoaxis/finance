@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:twoaxis_finance/features/user/presentation/bloc/user_cubit.dart';
 import 'package:twoaxis_finance/features/user/presentation/bloc/user_state.dart';
-import 'package:twoaxis_finance/features/transactions/presentation/bloc/transactions_bloc.dart';
+import 'package:twoaxis_finance/features/transactions/domain/transaction_repository.dart';
 import 'package:twoaxis_finance/features/transactions/domain/transaction_type.dart';
 import 'package:twoaxis_finance/core/util/money_format.dart';
 
@@ -140,13 +140,24 @@ class AnalyticsPage extends StatelessWidget {
                       style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
                     ),
                     SizedBox(height: 30),
-                    BlocBuilder<TransactionsBloc, TransactionsState>(
-                      builder: (context, state) {
-                        if (state is! TransactionsStateLoaded) {
+                    FutureBuilder(
+                      future: () {
+                        var now = DateTime.now();
+                        var start = DateTime(now.year, now.month, now.day).subtract(Duration(days: 6));
+                        var end = DateTime(now.year, now.month, now.day, 23, 59, 59);
+                        return context.read<TransactionRepository>().getTransactionsByDateRange(start, end);
+                      }(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.waiting) {
                           return const Center(child: CircularProgressIndicator());
                         }
 
-                        var spots = generateExpenseSpots(state.transactions);
+                        if (snapshot.hasError) {
+                          return Center(child: Text("Error loading chart data"));
+                        }
+
+                        var transactions = snapshot.data ?? [];
+                        var spots = generateExpenseSpots(transactions);
 
                         return SizedBox(
                           height: 200,

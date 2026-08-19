@@ -15,6 +15,7 @@ class TransactionsBloc extends Bloc<TransactionsEvent, TransactionsState> {
       : _transactionRepository = transactionRepository,
         super(TransactionsStateInitial()) {
     on<LoadTransactionsEvent>(_onLoadTransactions);
+    on<LoadMoreTransactionsEvent>(_onLoadMoreTransactions);
     on<AddTransactionEvent>(_onAddTransaction);
     on<DeleteTransactionEvent>(_onDeleteTransaction);
   }
@@ -25,7 +26,9 @@ class TransactionsBloc extends Bloc<TransactionsEvent, TransactionsState> {
   ) async {
     emit(TransactionsStateLoading());
     try {
-      var transactions = await _transactionRepository.getAllTransactions();
+      var result = await _transactionRepository.getTransactions(limit: 30);
+      var transactions = result['transactions'] as List<Transaction>;
+      var lastDocument = result['lastDocument'];
       
       // Sort latest to oldest
       transactions.sort((a, b) => b.date.compareTo(a.date));
@@ -35,11 +38,51 @@ class TransactionsBloc extends Bloc<TransactionsEvent, TransactionsState> {
       emit(TransactionsStateLoaded(
         transactions: transactions,
         groupedTransactions: _groupTransactions(transactions),
+        hasReachedMax: transactions.length < 30,
+        lastDocument: lastDocument,
       ));
 
     } catch (e, stackTrace) {
       developer.log("Error loading transactions", error: e, stackTrace: stackTrace);
       emit(TransactionsStateError(message: "Transactions failed to load: ${e.toString()}"));
+    }
+  }
+
+  Future<void> _onLoadMoreTransactions(
+    LoadMoreTransactionsEvent event,
+    Emitter<TransactionsState> emit,
+  ) async {
+    var currentState = state;
+    if (currentState is TransactionsStateLoaded && !currentState.hasReachedMax) {
+      try {
+        var result = await _transactionRepository.getTransactions(
+          limit: 30,
+          startAfter: currentState.lastDocument,
+        );
+        var newTransactions = result['transactions'] as List<Transaction>;
+        var lastDocument = result['lastDocument'];
+
+        if (newTransactions.isEmpty) {
+          emit(TransactionsStateLoaded(
+            transactions: currentState.transactions,
+            groupedTransactions: currentState.groupedTransactions,
+            hasReachedMax: true,
+            lastDocument: currentState.lastDocument,
+          ));
+        } else {
+          var allTransactions = List<Transaction>.from(currentState.transactions)..addAll(newTransactions);
+          allTransactions.sort((a, b) => b.date.compareTo(a.date));
+          
+          emit(TransactionsStateLoaded(
+            transactions: allTransactions,
+            groupedTransactions: _groupTransactions(allTransactions),
+            hasReachedMax: newTransactions.length < 30,
+            lastDocument: lastDocument,
+          ));
+        }
+      } catch (e, stackTrace) {
+        developer.log("Error loading more transactions", error: e, stackTrace: stackTrace);
+      }
     }
   }
 
@@ -81,6 +124,8 @@ class TransactionsBloc extends Bloc<TransactionsEvent, TransactionsState> {
         emit(TransactionsStateLoaded(
           transactions: updatedTransactions,
           groupedTransactions: _groupTransactions(updatedTransactions),
+          hasReachedMax: currentState.hasReachedMax,
+          lastDocument: currentState.lastDocument,
         ));
       } else {
         add(LoadTransactionsEvent());
@@ -107,6 +152,8 @@ class TransactionsBloc extends Bloc<TransactionsEvent, TransactionsState> {
         emit(TransactionsStateLoaded(
           transactions: updatedTransactions,
           groupedTransactions: _groupTransactions(updatedTransactions),
+          hasReachedMax: currentState.hasReachedMax,
+          lastDocument: currentState.lastDocument,
         ));
       } else {
         add(LoadTransactionsEvent());

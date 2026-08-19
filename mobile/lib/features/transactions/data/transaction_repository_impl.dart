@@ -43,23 +43,30 @@ class TransactionRepositoryImpl implements TransactionRepository {
   }
 
   @override
-  Future<List<Transaction>> getAllTransactions() async {
+  Future<Map<String, dynamic>> getTransactions({int limit = 30, Object? startAfter}) async {
     try {
       var uid = _auth.currentUser?.uid;
       if (uid == null) {
-        developer.log("getAllTransactions: User ID is null");
-        return [];
+        developer.log("getTransactions: User ID is null");
+        return {'transactions': <Transaction>[], 'lastDocument': null};
       }
       
-      var result = await _firestore
+      Query query = _firestore
           .collection("users")
           .doc(uid)
           .collection("transactions")
-          .get();
+          .orderBy("date", descending: true)
+          .limit(limit);
 
-      developer.log("getAllTransactions: Found ${result.docs.length} documents");
+      if (startAfter != null && startAfter is DocumentSnapshot) {
+        query = query.startAfterDocument(startAfter);
+      }
+      
+      var result = await query.get();
 
-      return result.docs.map((doc) {
+      developer.log("getTransactions: Found ${result.docs.length} documents");
+
+      List<Transaction> transactions = result.docs.map((doc) {
         try {
           return Transaction.fromFirestore(doc);
         } catch (e) {
@@ -67,8 +74,41 @@ class TransactionRepositoryImpl implements TransactionRepository {
           rethrow;
         }
       }).toList();
+
+      DocumentSnapshot? lastDocument = result.docs.isNotEmpty ? result.docs.last : null;
+
+      return {
+        'transactions': transactions,
+        'lastDocument': lastDocument,
+      };
     } catch (e) {
-      developer.log("Error in getAllTransactions: $e");
+      developer.log("Error in getTransactions: $e");
+      rethrow;
+    }
+  }
+
+  @override
+  Future<List<Transaction>> getTransactionsByDateRange(DateTime start, DateTime end) async {
+    try {
+      var uid = _auth.currentUser?.uid;
+      if (uid == null) {
+        return [];
+      }
+      
+      var result = await _firestore
+          .collection("users")
+          .doc(uid)
+          .collection("transactions")
+          .where("date", isGreaterThanOrEqualTo: start)
+          .where("date", isLessThanOrEqualTo: end)
+          .orderBy("date", descending: true)
+          .get();
+
+      return result.docs.map((doc) {
+        return Transaction.fromFirestore(doc);
+      }).toList();
+    } catch (e) {
+      developer.log("Error in getTransactionsByDateRange: $e");
       rethrow;
     }
   }

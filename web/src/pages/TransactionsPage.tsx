@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import { useTransactions } from '../hooks/useTransactions';
 import { useUserData } from '../contexts/UserDataContext';
 import { formatMoney } from '../utils/moneyFormat';
@@ -8,10 +8,22 @@ import { Modal } from '../components/Modal';
 import { PrimaryButton } from '../components/PrimaryButton';
 
 export function TransactionsPage() {
-  const { transactions, deleteTransaction } = useTransactions();
+  const { transactions, deleteTransaction, loadMore, hasMore, loading } = useTransactions();
   const { userData } = useUserData();
   
   const [deleteId, setDeleteId] = useState<string | null>(null);
+
+  const observer = useRef<IntersectionObserver | null>(null);
+  const lastTransactionRef = useCallback((node: HTMLDivElement | null) => {
+    if (loading) return;
+    if (observer.current) observer.current.disconnect();
+    observer.current = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting && hasMore) {
+        loadMore();
+      }
+    });
+    if (node) observer.current.observe(node);
+  }, [loading, hasMore, loadMore]);
 
   const handleDelete = async () => {
     if (!deleteId) return;
@@ -32,8 +44,14 @@ export function TransactionsPage() {
           <EmptyState message="No transactions recorded" icon="list_alt" className="py-20" />
         ) : (
           <div className="divide-y divide-gray-200 dark:divide-gray-800">
-            {transactions.map((tx) => (
-              <div key={tx.id} className="flex items-center gap-4 p-4 hover:bg-bright-light dark:hover:bg-bright-dark transition-colors group">
+            {transactions.map((tx, index) => {
+              const isLast = index === transactions.length - 1;
+              return (
+              <div 
+                key={tx.id} 
+                ref={isLast ? lastTransactionRef : null}
+                className="flex items-center gap-4 p-4 hover:bg-bright-light dark:hover:bg-bright-dark transition-colors group"
+              >
                 <div className={`w-12 h-12 rounded-xl flex shrink-0 items-center justify-center ${
                   tx.type === 'income' ? 'bg-green-100 dark:bg-green-900/30 text-green-600' : 'bg-red-100 dark:bg-red-900/30 text-red-600'
                 }`}>
@@ -65,7 +83,12 @@ export function TransactionsPage() {
                   <span className="material-symbols-outlined text-[20px]">delete</span>
                 </button>
               </div>
-            ))}
+            )})}
+          </div>
+        )}
+        {loading && transactions.length > 0 && (
+          <div className="p-4 flex justify-center">
+            <span className="material-symbols-outlined animate-spin text-gray-400">progress_activity</span>
           </div>
         )}
       </div>
