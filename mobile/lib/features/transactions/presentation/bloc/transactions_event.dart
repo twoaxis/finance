@@ -8,6 +8,8 @@ abstract class TransactionsEvent extends Equatable {
 
 class LoadTransactionsEvent extends TransactionsEvent {}
 
+class LoadMoreTransactionsEvent extends TransactionsEvent {}
+
 class AddTransactionEvent extends TransactionsEvent {
   final String name;
   final TransactionType type;

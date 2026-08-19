@@ -13,14 +13,18 @@ class TransactionsStateLoading extends TransactionsState {}
 class TransactionsStateLoaded extends TransactionsState {
   final List<Transaction> transactions;
   final Map<DateTime, List<Transaction>> groupedTransactions;
+  final bool hasReachedMax;
+  final Object? lastDocument;
 
   const TransactionsStateLoaded({
     required this.transactions, 
     required this.groupedTransactions,
+    this.hasReachedMax = false,
+    this.lastDocument,
   });
 
   @override
-  List<Object?> get props => [transactions, groupedTransactions];
+  List<Object?> get props => [transactions, groupedTransactions, hasReachedMax, lastDocument];
 }
 
 class TransactionsStateError extends TransactionsState {
