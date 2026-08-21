@@ -27,7 +27,7 @@ dependencies:
   rxdart: ^0.28.0
   shared_preferences: ^2.5.4
   package_info_plus: ^9.0.0
-  firebase_messaging: ^16.1.1
+  firebase_messaging: ^16.1.2
 
 dev_dependencies:
   flutter_test:
