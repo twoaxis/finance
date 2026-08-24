@@ -27,12 +27,24 @@ export function useTransactions() {
       const txs: Transaction[] = [];
       snapshot.forEach((doc) => {
         const data = doc.data();
+        const rawAmount = data.amount ?? data.value ?? 0;
+        const amount = typeof rawAmount === 'number' ? rawAmount : (parseFloat(rawAmount) || 0);
+
+        let date = new Date();
+        if (data.date && typeof data.date.toDate === 'function') {
+          date = data.date.toDate();
+        } else if (data.date instanceof Date) {
+          date = data.date;
+        } else if (data.date) {
+          date = new Date(data.date);
+        }
+
         txs.push({
           id: doc.id,
-          name: data.name,
-          amount: data.amount,
-          type: data.type,
-          date: data.date.toDate(),
+          name: data.name || '',
+          amount: amount,
+          type: data.type || 'expense',
+          date: date,
           category: data.category,
           source: data.source
         });
