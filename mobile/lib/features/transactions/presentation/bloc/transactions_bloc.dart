@@ -99,6 +99,7 @@ class TransactionsBloc extends Bloc<TransactionsEvent, TransactionsState> {
         source: event.source,
         category: event.category,
         date: date,
+        description: event.description,
       );
       
       developer.log("Added transaction with ID: $transactionId");
@@ -111,6 +112,7 @@ class TransactionsBloc extends Bloc<TransactionsEvent, TransactionsState> {
         date: date,
         source: event.source,
         category: event.category,
+        description: event.description,
       );
 
       var currentState = state;

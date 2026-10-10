@@ -16,19 +16,23 @@ class TransactionRepositoryImpl implements TransactionRepository {
 
   @override
   Future<String> addTransaction(String name, TransactionType type, double amount,
-      {String? source, String? category, DateTime? date}) async {
-    var docRef = await _firestore
-        .collection("users")
-        .doc(_auth.currentUser?.uid)
-        .collection("transactions")
-        .add({
+      {String? source, String? category, DateTime? date, String? description}) async {
+    final data = <String, dynamic>{
       "name": name,
       "type": type.name,
       "amount": amount,
       "date": date ?? DateTime.now(),
       "source": source,
       "category": category,
-    });
+    };
+    if (description != null && description.isNotEmpty) {
+      data["description"] = description;
+    }
+    var docRef = await _firestore
+        .collection("users")
+        .doc(_auth.currentUser?.uid)
+        .collection("transactions")
+        .add(data);
     return docRef.id;
   }
 

@@ -61,6 +61,11 @@ export function TransactionsPage() {
                 </div>
                 <div className="flex-1 min-w-0">
                   <h4 className="font-semibold truncate">{tx.name}</h4>
+                  {tx.description && (
+                    <p className="text-xs text-gray-500 dark:text-gray-400 truncate mb-0.5">
+                      {tx.description}
+                    </p>
+                  )}
                   <div className="flex items-center gap-2 text-sm text-gray-500">
                     <span>{tx.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
                     {tx.source && (

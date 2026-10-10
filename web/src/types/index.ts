@@ -56,4 +56,5 @@ export interface Transaction {
   date: Date;
   category?: string;
   source?: string;
+  description?: string;
 }

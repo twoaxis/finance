@@ -24,6 +24,7 @@ class QuickAddExpense extends StatefulWidget {
 class _QuickAddExpenseState extends State<QuickAddExpense> {
   bool pending = false;
   TextEditingController nameController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
   TextEditingController valueController = TextEditingController();
   TextEditingController dateController = TextEditingController();
   int balanceIndex = -1;
@@ -228,6 +229,14 @@ class _QuickAddExpenseState extends State<QuickAddExpense> {
                           ),
                           const SizedBox(height: 20),
                           ThemedInputField(
+                            label: "Description (optional)",
+                            controller: descriptionController,
+                            placeholder: "e.g. 55-inch OLED for living room",
+                            enabled: !pending,
+                            textInputAction: TextInputAction.next,
+                          ),
+                          const SizedBox(height: 20),
+                          ThemedInputField(
                             label: "Value",
                             controller: valueController,
                             placeholder: "500",
@@ -401,9 +410,13 @@ class _QuickAddExpenseState extends State<QuickAddExpense> {
                           source: balanceIndex != -1
                               ? balances[balanceIndex].name
                               : null,
+                          description: descriptionController.text.trim().isEmpty
+                              ? null
+                              : descriptionController.text.trim(),
                         ));
 
                         nameController.clear();
+                        descriptionController.clear();
                         valueController.clear();
 
                         if (context.mounted) {

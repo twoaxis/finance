@@ -17,6 +17,7 @@ class AddTransactionEvent extends TransactionsEvent {
   final String? source;
   final String? category;
   final DateTime? date;
+  final String? description;
 
   const AddTransactionEvent({
     required this.name,
@@ -25,10 +26,11 @@ class AddTransactionEvent extends TransactionsEvent {
     this.source,
     this.category,
     this.date,
+    this.description,
   });
 
   @override
-  List<Object?> get props => [name, type, amount, source, category, date];
+  List<Object?> get props => [name, type, amount, source, category, date, description];
 }
 
 class DeleteTransactionEvent extends TransactionsEvent {

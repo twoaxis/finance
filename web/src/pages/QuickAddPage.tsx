@@ -7,6 +7,12 @@ import { InputField } from '../components/InputField';
 import { CategoryPicker } from '../components/CategoryPicker';
 import { expenseCategoryIcons, incomeCategoryIcons } from '../utils/categories';
 
+function getInitialDateTime(): string {
+  const now = new Date();
+  const offset = now.getTimezoneOffset() * 60000;
+  return new Date(now.getTime() - offset).toISOString().slice(0, 16);
+}
+
 export function QuickAddPage() {
   const [searchParams] = useSearchParams();
   const initialType = searchParams.get('type') === 'income' ? 'income' : 'expense';
@@ -18,6 +24,8 @@ export function QuickAddPage() {
   const [type, setType] = useState<'income' | 'expense'>(initialType);
   const [amount, setAmount] = useState('');
   const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
+  const [dateTime, setDateTime] = useState(getInitialDateTime);
   const [category, setCategory] = useState<string | null>(null);
   const [source, setSource] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
@@ -31,15 +39,19 @@ export function QuickAddPage() {
     
     setPending(true);
     try {
+      const selectedDate = dateTime ? new Date(dateTime) : new Date();
       const txData: any = {
-        name,
+        name: name.trim(),
         amount: numAmount,
         type,
-        date: new Date(),
+        date: selectedDate,
       };
       
       if (category) txData.category = category;
       if (source) txData.source = source;
+      if (type === 'expense' && description.trim()) {
+        txData.description = description.trim();
+      }
 
       await addTransaction(txData);
 
@@ -77,7 +89,7 @@ export function QuickAddPage() {
         </button>
         <button
           className={`flex-1 py-2 rounded-lg font-medium transition-colors ${type === 'income' ? 'bg-primary shadow text-white' : 'text-gray-500 hover:text-gray-900 dark:hover:text-white'}`}
-          onClick={() => { setType('income'); setCategory(null); setSource(null); }}
+          onClick={() => { setType('income'); setCategory(null); setSource(null); setDescription(''); }}
         >
           Income
         </button>
@@ -97,10 +109,26 @@ export function QuickAddPage() {
         </div>
 
         <InputField 
-          label="Name / Description" 
+          label="Name" 
           value={name} 
           onChange={setName} 
           placeholder={type === 'expense' ? 'Groceries' : 'Salary'}
+        />
+
+        {type === 'expense' && (
+          <InputField 
+            label="Description (optional)" 
+            value={description} 
+            onChange={setDescription} 
+            placeholder="e.g. Weekly supermarket shopping"
+          />
+        )}
+
+        <InputField 
+          label="Date & Time" 
+          type="datetime-local"
+          value={dateTime} 
+          onChange={setDateTime} 
         />
 
         <div>

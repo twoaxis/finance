@@ -46,7 +46,8 @@ export function useTransactions() {
           type: data.type || 'expense',
           date: date,
           category: data.category,
-          source: data.source
+          source: data.source,
+          description: data.description
         });
       });
       

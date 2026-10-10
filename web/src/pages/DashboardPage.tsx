@@ -91,8 +91,13 @@ export function DashboardPage() {
                       {getCategoryIcon(tx.category)}
                     </span>
                   </div>
-                  <div className="flex-1">
-                    <h4 className="font-semibold">{tx.name}</h4>
+                  <div className="flex-1 min-w-0">
+                    <h4 className="font-semibold truncate">{tx.name}</h4>
+                    {tx.description && (
+                      <p className="text-xs text-gray-500 dark:text-gray-400 truncate mb-0.5">
+                        {tx.description}
+                      </p>
+                    )}
                     <p className="text-sm text-gray-500">
                       {tx.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
                     </p>

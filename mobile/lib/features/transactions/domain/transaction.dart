@@ -10,6 +10,7 @@ class Transaction extends Equatable {
   final DateTime date;
   final String? category;
   final String? source;
+  final String? description;
 
   const Transaction({
     required this.id,
@@ -19,10 +20,11 @@ class Transaction extends Equatable {
     required this.date,
     this.category,
     this.source,
+    this.description,
   });
 
   @override
-  List<Object?> get props => [id, name, amount, type, date, category, source];
+  List<Object?> get props => [id, name, amount, type, date, category, source, description];
 
   factory Transaction.fromFirestore(DocumentSnapshot doc) {
     var data = doc.data() as Map<String, dynamic>;
@@ -39,6 +41,7 @@ class Transaction extends Equatable {
       date: data["date"] != null ? (data["date"] as Timestamp).toDate() : DateTime.now(),
       category: data["category"],
       source: data["source"],
+      description: data["description"],
     );
   }
 }

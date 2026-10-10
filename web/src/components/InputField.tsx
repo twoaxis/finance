@@ -43,7 +43,7 @@ export function InputField({
           placeholder={placeholder}
           disabled={disabled}
           readOnly={readOnly || !!onFieldClick}
-          className={`w-full bg-container-light dark:bg-container-dark text-black dark:text-white rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-primary transition-all duration-200 ${
+          className={`w-full bg-container-light dark:bg-container-dark text-black dark:text-white [color-scheme:light] dark:[color-scheme:dark] rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-primary transition-all duration-200 ${
             (disabled || readOnly) && !onFieldClick ? 'opacity-70 cursor-not-allowed' : ''
           } ${onFieldClick ? 'cursor-pointer pointer-events-none' : ''}`}
         />

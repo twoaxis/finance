@@ -172,6 +172,15 @@ class _TransactionsPageState extends State<TransactionsPage> {
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Text(tx.name),
+                                              if (tx.description != null &&
+                                                  tx.description!.isNotEmpty)
+                                                Text(
+                                                  tx.description!,
+                                                  style: TextStyle(
+                                                    fontSize: 12,
+                                                    color: Colors.grey[400],
+                                                  ),
+                                                ),
                                               Text(
                                                   DateFormat('MMM d, y. hh:mm a')
                                                       .format(tx.date),
