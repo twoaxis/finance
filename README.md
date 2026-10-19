@@ -1,6 +1,8 @@
 
 # TwoAxis Finance
 
+This repo represents v1, which is now deprecated. Development has moved to v2, which is closed-source. This exists purely for reference and educational purposes.
+
 [![Website](https://img.shields.io/badge/Website-finance.twoaxis.org-blue)](https://finance.twoaxis.org)
 ![Build](https://img.shields.io/github/actions/workflow/status/twoaxis/finance/mobile-pull-request.yaml)
 
